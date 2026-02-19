@@ -1,5 +1,7 @@
-import type { MDXComponents } from "mdx/types";
+import type { ReactNode } from "react";
 
-export function getCaseStudyMdxComponents(): MDXComponents {
+type CaseStudyMdxComponents = Record<string, ReactNode>;
+
+export function getCaseStudyMdxComponents(): CaseStudyMdxComponents {
   return {};
 }
