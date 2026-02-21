@@ -313,6 +313,7 @@ body {
   }
 
   @keyframes orbit3d-depth {
+
     0%,
     100% {
       opacity: 1;
@@ -328,6 +329,7 @@ body {
   }
 
   @keyframes orbit3d-scale {
+
     0%,
     100% {
       transform: scale(1.08);
@@ -438,6 +440,7 @@ body {
   }
 
   @media (prefers-reduced-motion: reduce) {
+
     .orbit-3d-track,
     .orbit-3d-item,
     .orbit-3d-facing,
@@ -448,3 +451,30 @@ body {
 }
 
 
+@keyframes shimmer-x {
+  0% {
+    transform: translateX(-120%);
+  }
+
+  100% {
+    transform: translateX(120%);
+  }
+}
+
+.btn-shimmer {
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-shimmer::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  transform: translateX(-120%);
+  background: linear-gradient(90deg,
+      transparent,
+      rgba(255, 255, 255, 0.16),
+      transparent);
+  animation: shimmer-x 1.2s ease-in-out infinite;
+  pointer-events: none;
+}

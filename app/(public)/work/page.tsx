@@ -4,12 +4,13 @@ import { Container } from "@/components/layout/Container"
 import { WorkResults } from "@/features/work/components/WorkResults"
 
 interface WorkPageProps {
-  searchParams: { tag?: string }
+  searchParams: Promise<{ tag?: string }>
 }
 
 export default async function WorkPage({ searchParams }: WorkPageProps) {
-  const activeTag = searchParams.tag || "All"
-  const { projects, counts } = await getProjects(activeTag)
+  const { tag } = await searchParams
+  const activeTag = tag || "All"
+  const { projects, counts, tags } = await getProjects(activeTag)
 
   return (
     <section className="py-32">
@@ -21,7 +22,7 @@ export default async function WorkPage({ searchParams }: WorkPageProps) {
           </h1>
         </div>
 
-        <WorkFilters activeTag={activeTag} counts={counts} />
+        <WorkFilters activeTag={activeTag} counts={counts} filters={tags} />
 
         <div className="mt-20">
           <WorkResults
