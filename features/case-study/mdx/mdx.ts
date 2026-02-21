@@ -1,8 +1,16 @@
-export type CaseStudyMdxSource = {
-  slug: string;
-  path: string;
-};
+import fs from 'fs'
+import path from 'path'
 
-export function getCaseStudyMdxPath(slug: string): string {
-  return `content/projects/${slug}.mdx`;
+const root = process.cwd()
+
+export function getMDXBySlug(slug: string) {
+  const filePath = path.join(root, 'content', 'projects', `${slug}.mdx`)
+
+  if (!fs.existsSync(filePath)) {
+    return null
+  }
+
+  const source = fs.readFileSync(filePath, 'utf-8')
+
+  return source
 }
