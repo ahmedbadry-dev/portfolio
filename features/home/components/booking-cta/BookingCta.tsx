@@ -9,12 +9,9 @@ import Link from "next/link"
 export function BookingCta() {
   return (
     <section className="relative py-40 overflow-hidden">
-
-      {/* Subtle background glow */}
       <div className="pointer-events-none absolute inset-0 -z-10 bg-gradient-to-b from-background via-background to-primary/10" />
 
       <Container>
-
         <motion.div
           initial={{ opacity: 0, y: 60 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -22,15 +19,9 @@ export function BookingCta() {
           viewport={{ once: true }}
           className="mx-auto max-w-3xl text-center space-y-10"
         >
-
-          {/* <h2 className="text-4xl md:text-5xl font-medium tracking-tight leading-tight">
-            Let’s Build Something
-            <br />
-            Structured & Scalable.
-          </h2> */}
           <ShinyText
             className=" text-4xl md:text-5xl font-medium tracking-tight leading-tight"
-            text={`✨ Let’s Build Something Structured & Scalable.`}
+            text="Let's Build Something Structured & Scalable."
             speed={2}
             delay={0}
             color="color-mix(in oklab, var(--color-foreground ) 70%, transparent)"
@@ -43,9 +34,8 @@ export function BookingCta() {
           />
 
           <p className="text-muted-foreground text-lg leading-relaxed">
-            If you're building a serious product and care about
-            performance, architecture, and intentional UX —
-            let’s collaborate.
+            If you&apos;re building a serious product and care about
+            performance, architecture, and intentional UX, let&apos;s collaborate.
           </p>
 
           <Magnetic strength={25}>
@@ -56,10 +46,9 @@ export function BookingCta() {
               Start a Conversation
             </Link>
           </Magnetic>
-
         </motion.div>
-
       </Container>
     </section>
   )
 }
+
