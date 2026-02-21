@@ -1,3 +1,23 @@
----
-title: ""
----
+# Habit Tracker
+
+## Problem
+
+Users struggle with maintaining daily habits due to friction and poor feedback loops.
+
+## My Approach
+
+I built the system using App Router and Server Components
+to minimize client bundle size and improve TTFB.
+
+## Architecture Decisions
+
+- Server-first data fetching
+- Convex for real-time sync
+- Minimal client state
+
+## Performance Strategy
+
+<MetricBadge label="Lighthouse" value="96" />
+<MetricBadge label="TTFB" value="120ms" />
+
+Bundle size was reduced by 35% by removing unnecessary client hydration.
