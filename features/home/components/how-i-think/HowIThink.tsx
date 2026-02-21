@@ -5,26 +5,9 @@ import { Container } from "@/components/layout/Container"
 import { cn } from "@/lib/cn"
 import gsap from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
+import { howIThinkSteps } from "@/data/home"
 
 gsap.registerPlugin(ScrollTrigger)
-
-const steps = [
-  {
-    title: "Understand the Product",
-    description:
-      "Before writing code, I break down user flows and business goals to ensure every decision serves a purpose.",
-  },
-  {
-    title: "Design the Architecture",
-    description:
-      "I structure components, data flow, and state management carefully to avoid over-engineering while keeping scalability in mind.",
-  },
-  {
-    title: "Optimize for Performance",
-    description:
-      "From server-first rendering to bundle control and motion discipline — performance is never an afterthought.",
-  },
-]
 
 export function HowIThink() {
   const containerRef = useRef<HTMLDivElement>(null)
@@ -38,7 +21,6 @@ export function HowIThink() {
     const ctx = gsap.context(() => {
       const totalHeight = containerRef.current!.offsetHeight
 
-      // 🔹 Progress line draw
       gsap.to(progressRef.current, {
         height: totalHeight,
         ease: "none",
@@ -50,7 +32,6 @@ export function HowIThink() {
         },
       })
 
-      // 🔹 Glow reacts to scroll speed
       ScrollTrigger.create({
         trigger: containerRef.current,
         start: "top bottom",
@@ -67,12 +48,10 @@ export function HowIThink() {
         },
       })
 
-      // 🔹 Card animations
       cardsRef.current.forEach((card) => {
         const path = card.querySelector(".branch-border")
         const glow = card.querySelector(".card-glow")
 
-        // Continuous branch + border draw
         gsap.to(path, {
           strokeDashoffset: 0,
           duration: 1.4,
@@ -84,7 +63,6 @@ export function HowIThink() {
           },
         })
 
-        // Light spill
         gsap.fromTo(
           glow,
           { opacity: 0 },
@@ -98,7 +76,6 @@ export function HowIThink() {
           }
         )
 
-        // Slight parallax
         gsap.to(card, {
           yPercent: -5,
           ease: "none",
@@ -118,39 +95,30 @@ export function HowIThink() {
   return (
     <section className="relative py-40">
       <Container>
-
-        {/* Header */}
         <div className="mx-auto max-w-2xl text-center space-y-6 mb-28">
-          <h2 className="text-4xl font-medium tracking-tight">
-            How I Think
-          </h2>
+          <h2 className="text-4xl font-medium tracking-tight">How I Think</h2>
           <p className="text-muted-foreground leading-relaxed">
-            I don’t just build interfaces — I build structured, scalable
+            I don&apos;t just build interfaces - I build structured, scalable
             products. Every decision is intentional.
           </p>
         </div>
 
         <div ref={containerRef} className="relative">
-
-          {/* Base Line */}
           <div className="absolute left-1/2 top-0 h-full w-px -translate-x-1/2 bg-border/40" />
 
-          {/* Gradient Progress Line */}
           <div
             ref={progressRef}
             className="absolute left-1/2 top-0 w-px -translate-x-1/2 bg-gradient-to-b from-primary via-purple-400 to-transparent"
             style={{ height: 0 }}
           />
 
-          {/* Glow Trail */}
           <div
             ref={trailRef}
             className="absolute left-1/2 top-0 -translate-x-1/2 h-14 w-14 rounded-full bg-primary/40 blur-3xl opacity-60 pointer-events-none"
           />
 
           <div className="space-y-32">
-
-            {steps.map((step, index) => {
+            {howIThinkSteps.map((step, index) => {
               const isLeft = index % 2 === 0
 
               return (
@@ -158,15 +126,12 @@ export function HowIThink() {
                   key={index}
                   className="relative grid grid-cols-1 lg:grid-cols-2 items-center"
                 >
-
                   <div
                     className={cn(
                       "relative",
                       isLeft ? "lg:pr-16" : "lg:order-2 lg:pl-16"
                     )}
                   >
-
-                    {/* Continuous SVG Path */}
                     <svg
                       className="absolute inset-0 w-full h-full pointer-events-none"
                       viewBox="0 0 400 200"
@@ -205,7 +170,6 @@ export function HowIThink() {
                       />
                     </svg>
 
-                    {/* Card */}
                     <div
                       ref={(el) => {
                         if (el) cardsRef.current[index] = el
@@ -222,18 +186,14 @@ export function HowIThink() {
                         {step.description}
                       </p>
                     </div>
-
                   </div>
 
                   <div className="hidden lg:block" />
-
                 </div>
               )
             })}
-
           </div>
         </div>
-
       </Container>
     </section>
   )

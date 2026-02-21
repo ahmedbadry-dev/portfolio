@@ -5,14 +5,13 @@ import { cn } from "@/lib/cn"
 import { Magnetic } from "@/components/shared/Magnetic"
 import { motion } from "framer-motion"
 
-const filters = ["All", "Next.js", "Fullstack", "Performance"]
-
 interface Props {
   activeTag: string
   counts: Record<string, number>
+  filters: string[]
 }
 
-export function WorkFilters({ activeTag, counts }: Props) {
+export function WorkFilters({ activeTag, counts, filters }: Props) {
   const router = useRouter()
 
   const handleClick = (tag: string) => {

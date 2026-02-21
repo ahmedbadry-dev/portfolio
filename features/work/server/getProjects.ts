@@ -1,37 +1,23 @@
-export type Project = {
-  slug: string
-  title: string
-  tags: string[]
-}
+import { projectTags, projects } from "@/data/projects"
 
-const mockProjects: Project[] = [
-  {
-    slug: "habit-tracker",
-    title: "Habit Tracker",
-    tags: ["Next.js", "Performance", "Fullstack"],
-  },
-  {
-    slug: "ecommerce",
-    title: "E-Commerce",
-    tags: ["Next.js", "Fullstack"],
-  },
-]
-
-const ALL_TAGS = ["All", "Next.js", "Fullstack", "Performance"]
+export type Project = (typeof projects)[number]
 
 export async function getProjects(tag: string) {
+  const activeTag = projectTags.includes(tag) ? tag : "All"
   const filtered =
-    tag === "All"
-      ? mockProjects
-      : mockProjects.filter((p) => p.tags.includes(tag))
+    activeTag === "All"
+      ? projects
+      : projects.filter((project) => project.tags.includes(activeTag))
 
   const counts: Record<string, number> = {
-    All: mockProjects.length,
+    All: projects.length,
   }
 
-  for (const t of ALL_TAGS.filter((t) => t !== "All")) {
-    counts[t] = mockProjects.filter((p) => p.tags.includes(t)).length
+  for (const tagName of projectTags.filter((value) => value !== "All")) {
+    counts[tagName] = projects.filter((project) =>
+      project.tags.includes(tagName)
+    ).length
   }
 
-  return { projects: filtered, counts }
+  return { projects: filtered, counts, tags: projectTags }
 }

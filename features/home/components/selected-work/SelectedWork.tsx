@@ -5,33 +5,35 @@ import PremiumWorkCard from "@/features/work/components/PremiumWorkCard"
 import { useState } from "react"
 import { cn } from "@/lib/cn"
 import { Glass } from "@/components/shared/Glass"
+import { projectTags, projects } from "@/data/projects"
 
-const filters = ["All", "Next.js", "Fullstack", "Performance"]
+const filters = projectTags
+type ShowcaseProject = {
+  slug: string
+  title: string
+  description: string
+  tags: string[]
+  lighthouse: number
+  ttfb: number
+}
 
-const projects = [
-  {
-    title: "Habit Tracker",
-    description: "...",
-    stack: ["Next.js", "Fullstack", "Performance"],
-    lighthouse: 96,
-    ttfb: 120,
-  },
-  {
-    title: "E-Commerce Platform",
-    description: "...",
-    stack: ["Next.js", "Fullstack"],
-    lighthouse: 94,
-    ttfb: 140,
-  },
-]
+function hasShowcaseMetrics(
+  project: (typeof projects)[number]
+): project is ShowcaseProject {
+  return typeof project.lighthouse === "number" && typeof project.ttfb === "number"
+}
+
+const showcaseProjects = projects.filter(
+  hasShowcaseMetrics
+)
 
 
 export function SelectedWork() {
   const [active, setActive] = useState("All")
   const filtered =
     active === "All"
-      ? projects
-      : projects.filter((p) => p.stack.includes(active))
+      ? showcaseProjects
+      : showcaseProjects.filter((project) => project.tags.includes(active))
 
 
   return (
@@ -77,8 +79,12 @@ export function SelectedWork() {
 
           {filtered.map((project, index) => (
             <PremiumWorkCard
-              key={project.title}
-              {...project}
+              key={project.slug}
+              title={project.title}
+              description={project.description}
+              stack={project.tags}
+              lighthouse={project.lighthouse}
+              ttfb={project.ttfb}
               reverse={index % 2 !== 0}
             />
           ))}
