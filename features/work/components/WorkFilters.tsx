@@ -1,6 +1,6 @@
 "use client"
 
-import { useRouter, useSearchParams } from "next/navigation"
+import { useRouter } from "next/navigation"
 import { cn } from "@/lib/cn"
 import { Magnetic } from "@/components/shared/Magnetic"
 import { motion } from "framer-motion"
@@ -14,26 +14,16 @@ interface Props {
 
 export function WorkFilters({ activeTag, counts }: Props) {
   const router = useRouter()
-  const searchParams = useSearchParams()
 
   const handleClick = (tag: string) => {
-    const params = new URLSearchParams(searchParams.toString())
+    const nextUrl = tag === "All" ? "/work" : `/work?tag=${encodeURIComponent(tag)}`
 
-    if (tag === "All") {
-      params.delete("tag")
-    } else {
-      params.set("tag", tag)
-    }
-
-    router.push(`/work?${params.toString()}`, { scroll: false })
-
-    // smooth scroll reset
+    router.push(nextUrl, { scroll: false })
     window.scrollTo({ top: 0, behavior: "smooth" })
   }
 
   return (
     <div className="relative flex flex-wrap gap-6 items-center">
-
       {filters.map((tag) => {
         const isActive = activeTag === tag
 
@@ -52,12 +42,9 @@ export function WorkFilters({ activeTag, counts }: Props) {
                 )}
               >
                 {tag}
-                <span className="ml-2 text-xs opacity-60">
-                  {counts[tag] ?? 0}
-                </span>
+                <span className="ml-2 text-xs opacity-60">{counts[tag] ?? 0}</span>
               </span>
 
-              {/* Animated Underline */}
               {isActive && (
                 <motion.div
                   layoutId="active-underline"

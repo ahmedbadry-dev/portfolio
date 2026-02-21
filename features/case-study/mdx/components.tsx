@@ -15,3 +15,7 @@ export const mdxComponents = {
 
   MetricBadge,
 }
+
+export function getCaseStudyMdxComponents() {
+  return mdxComponents
+}
