@@ -2,8 +2,8 @@ import "./globals.css"
 import type { Metadata } from "next"
 import { Footer } from "@/components/layout/Footer"
 import { cn } from "@/lib/cn"
-import Particles from "@/components/Particles"
 import { Navbar } from "@/components/layout/Navbar"
+import { Toaster } from "@/components/ui/sonner"
 
 export const metadata: Metadata = {
   title: "AB.dev — Frontend Specialist",
@@ -29,8 +29,11 @@ export default function RootLayout({
             <Navbar />
             <main className="relative">
               {children}
+              <Toaster
+                position="top-center"
+                richColors
+              />
             </main>
-
             <Footer />
           </div>
         </div>
