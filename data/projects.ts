@@ -33,7 +33,7 @@ export const projects: Project[] = [
     screenshots: ['/globe.svg', '/window.svg', '/file.svg', '/next.svg'],
   },
   {
-    slug: 'product-feedback1',
+    slug: 'product-feedback',
     title: 'Product Feedback',
     description:
       'Feedback management product with clear moderation flow and scalable component architecture.',
