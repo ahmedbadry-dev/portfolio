@@ -1,13 +1,11 @@
 "use client"
 
 import { Container } from "@/components/layout/Container"
+import CardSwap, { Card as SwapCard } from "@/components/CardSwap"
 import PremiumWorkCard from "@/features/work/components/PremiumWorkCard"
-import { useState } from "react"
-import { cn } from "@/lib/cn"
-import { Glass } from "@/components/shared/Glass"
-import { projectTags, projects } from "@/data/projects"
+import { startTransition, useCallback, useMemo, useState } from "react"
+import { projects } from "@/data/projects"
 
-const filters = projectTags
 type ShowcaseProject = {
   slug: string
   title: string
@@ -26,73 +24,109 @@ function hasShowcaseMetrics(
 const showcaseProjects = projects.filter(
   hasShowcaseMetrics
 )
+const featuredProjects = showcaseProjects.slice(0, 3).reverse()
 
 
 export function SelectedWork() {
-  const [active, setActive] = useState("All")
-  const filtered =
-    active === "All"
-      ? showcaseProjects
-      : showcaseProjects.filter((project) => project.tags.includes(active))
+  const [activeCardIndex, setActiveCardIndex] = useState(0)
+  const visibleProjects = featuredProjects
+
+  const activeProject = visibleProjects[activeCardIndex] ?? visibleProjects[0]
+
+  const handleActiveCardChange = useCallback((nextIndex: number) => {
+    startTransition(() => {
+      setActiveCardIndex((prev) => (prev === nextIndex ? prev : nextIndex))
+    })
+  }, [])
+
+  const swapCards = useMemo(
+    () =>
+      visibleProjects.map((project) => (
+        <SwapCard
+          key={project.slug}
+          className="overflow-hidden border-border/60 bg-card/95 p-0 shadow-2xl"
+        >
+          <PremiumWorkCard
+            title={project.title}
+            description={project.description}
+            stack={project.tags}
+            lighthouse={project.lighthouse}
+            ttfb={project.ttfb}
+          />
+        </SwapCard>
+      )),
+    [visibleProjects]
+  )
 
 
   return (
-    <section className="relative py-40 overflow-hidden">
+    <section className="relative overflow-hidden py-32">
       <Container>
+        <div className="grid min-h-[640px] gap-8 rounded-3xl border border-border/50 bg-background/40 p-6 md:p-8 lg:grid-cols-5">
+          <div className="flex flex-col justify-between lg:col-span-2">
+            <div key={activeProject?.slug} className="space-y-4 motion-safe:[animation:fadeSlideIn_680ms_cubic-bezier(0.22,1,0.36,1)]">
+              <p className="text-sm uppercase tracking-[0.2em] text-muted-foreground">Selected Work</p>
+              <h2 className="text-3xl font-semibold tracking-tight md:text-4xl">
+                {activeProject?.title}
+              </h2>
+              <p className="text-sm leading-relaxed text-muted-foreground md:text-base">
+                {activeProject?.description || "Performance-focused product experience with strong UX and delivery quality."}
+              </p>
 
-        {/* Header */}
-        <div className="mb-16 space-y-4">
-          <h2 className="text-4xl font-medium tracking-tight">
-            Selected Work
-          </h2>
-        </div>
+              <div className="flex flex-wrap gap-2 pt-3">
+                {activeProject?.tags.map((tag) => (
+                  <span
+                    key={tag}
+                    className="rounded-full border border-border/60 bg-background/80 px-3 py-1 text-xs text-muted-foreground"
+                  >
+                    {tag}
+                  </span>
+                ))}
+              </div>
 
-        {/* Filters */}
-        <Glass className="mb-20 ">
-          <div className="flex flex-wrap gap-4 bg-secondary/40 rounded-2xl justify-center p-2">
-            {filters.map((item) => (
-
-              <button
-                key={item}
-                onClick={() => setActive(item)}
-                className={cn(
-                  "relative rounded-full px-6 py-2 text-sm transition-all duration-300",
-                  active === item
-                    ? "bg-primary text-primary-foreground border border-primary shadow-[0_0_30px_rgba(124,59,237,0.35)] hover:shadow-[0_0_40px_rgba(124,59,237,0.55)]"
-                    : "border border-border/50 bg-card/40 backdrop-blur-xl text-muted-foreground hover:border-primary/40 hover:bg-card/60"
-                )}
-              >
-                {active === item && (
-                  <span className="absolute inset-0 rounded-full bg-white/20 blur-md opacity-40 pointer-events-none" />
-                )}
-
-                <span className="relative z-10">{item}</span>
-              </button>
-
-            ))}
+              <div className="grid grid-cols-2 gap-3 pt-4 text-sm">
+                <div className="rounded-xl border border-border/50 bg-background/60 p-3">
+                  <p className="text-xs uppercase tracking-wider text-muted-foreground">Lighthouse</p>
+                  <p className="text-lg font-semibold">{activeProject?.lighthouse}</p>
+                </div>
+                <div className="rounded-xl border border-border/50 bg-background/60 p-3">
+                  <p className="text-xs uppercase tracking-wider text-muted-foreground">TTFB</p>
+                  <p className="text-lg font-semibold">{activeProject?.ttfb}ms</p>
+                </div>
+              </div>
+            </div>
           </div>
-        </Glass>
-        {/* Cards */}
 
-
-        <div className="space-y-10">
-
-          {filtered.map((project, index) => (
-            <PremiumWorkCard
-              key={project.slug}
-              title={project.title}
-              description={project.description}
-              stack={project.tags}
-              lighthouse={project.lighthouse}
-              ttfb={project.ttfb}
-              reverse={index % 2 !== 0}
-            />
-          ))}
+          <div className="relative min-h-[520px] overflow-visible rounded-2xl bg-gradient-to-br from-muted/40 via-background to-muted/20 lg:col-span-3">
+            <CardSwap
+              width="92%"
+              height={460}
+              position="center-right"
+              cardDistance={36}
+              verticalDistance={16}
+              dropOffset={220}
+              delay={3200}
+              pauseOnHover
+              easing="elastic"
+              onActiveCardChange={handleActiveCardChange}
+            >
+              {swapCards}
+            </CardSwap>
+          </div>
         </div>
-
-
-
       </Container>
+      <style jsx>{`
+        @keyframes fadeSlideIn {
+          from {
+            opacity: 0;
+            transform: translateY(4px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+      `}</style>
     </section>
   )
 }

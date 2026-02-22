@@ -13,24 +13,20 @@ export default async function WorkPage({ searchParams }: WorkPageProps) {
   const { projects, counts, tags } = await getProjects(activeTag)
 
   return (
-    <section className="py-32">
+    <section className="pt-8 pb-32">
       <Container>
+        <WorkFilters activeTag={activeTag} counts={counts} filters={tags} />
 
-        <div className="mb-16 space-y-4">
+        <div className="mb-10 mt-16 space-y-4">
           <h1 className="text-4xl font-medium tracking-tight">
             Selected Work
           </h1>
         </div>
 
-        <WorkFilters activeTag={activeTag} counts={counts} filters={tags} />
-
-        <div className="mt-20">
-          <WorkResults
-            activeTag={activeTag}
-            projects={projects}
-          />
-        </div>
-
+        <WorkResults
+          activeTag={activeTag}
+          projects={projects}
+        />
       </Container>
     </section>
   )
