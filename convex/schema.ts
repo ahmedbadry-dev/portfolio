@@ -1,1 +1,3 @@
-export default {};
+const schema = {}
+
+export default schema

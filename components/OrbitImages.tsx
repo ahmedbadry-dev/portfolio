@@ -234,6 +234,7 @@ export default function OrbitImages({
   const containerHeight = responsive ? 'auto' : (typeof height === 'number' ? height : (typeof width === 'number' ? width : 'auto'));
 
   const items = images.map((src, index) => (
+    // eslint-disable-next-line @next/next/no-img-element
     <img
       key={src}
       src={src}

@@ -87,6 +87,7 @@ export default function Orbit3D({
                       ["--orbit-tint-to" as string]: item.tintTo ?? "rgba(255, 255, 255, 0.1)",
                     }}
                   >
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
                       src={item.src}
                       alt={item.alt ?? "Technology icon"}
