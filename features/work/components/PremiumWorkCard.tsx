@@ -1,3 +1,4 @@
+import { memo } from "react"
 import { cn } from "@/lib/cn"
 import {
     StaggerContainer,
@@ -9,19 +10,33 @@ interface PremiumWorkCardProps {
     title: string
     description: string
     stack: string[]
-    lighthouse: number
-    ttfb: number
+    lighthouse?: number
+    ttfb?: number
+    imageCount?: number
     reverse?: boolean
 }
 
-export default function PremiumWorkCard({
+function PremiumWorkCard({
     title,
     description,
     stack,
     lighthouse,
     ttfb,
+    imageCount,
     reverse = false,
 }: PremiumWorkCardProps) {
+    const metrics = [
+        typeof lighthouse === "number"
+            ? { label: "Lighthouse", value: `${lighthouse}` }
+            : null,
+        typeof ttfb === "number"
+            ? { label: "TTFB", value: `${ttfb}ms` }
+            : null,
+        typeof imageCount === "number"
+            ? { label: "Images", value: `${imageCount}` }
+            : null,
+    ].filter((metric): metric is { label: string; value: string } => metric !== null)
+
     return (
         <div className="relative group rounded-3xl transition-all duration-500">
 
@@ -70,18 +85,14 @@ export default function PremiumWorkCard({
                     {/* Metrics */}
                     <StaggerItem>
                         <div className="space-y-4 text-sm text-muted-foreground lg:text-right">
-                            <div>
-                                <span className="text-foreground font-medium">
-                                    Lighthouse:
-                                </span>{" "}
-                                {lighthouse}
-                            </div>
-                            <div>
-                                <span className="text-foreground font-medium">
-                                    TTFB:
-                                </span>{" "}
-                                {ttfb}ms
-                            </div>
+                            {metrics.map((metric) => (
+                                <div key={metric.label}>
+                                    <span className="text-foreground font-medium">
+                                        {metric.label}:
+                                    </span>{" "}
+                                    {metric.value}
+                                </div>
+                            ))}
                         </div>
                     </StaggerItem>
 
@@ -91,3 +102,5 @@ export default function PremiumWorkCard({
         </div>
     )
 }
+
+export default memo(PremiumWorkCard)
