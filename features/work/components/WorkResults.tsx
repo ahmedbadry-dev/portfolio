@@ -4,8 +4,8 @@ import { useEffect, useState } from "react"
 import { AnimatePresence, motion } from "framer-motion"
 import { ChevronLeft, ChevronRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import PremiumWorkCard from "@/features/work/components/PremiumWorkCard"
 import type { Project } from "@/data/projects"
+import { WorkShowcaseCard } from "@/features/work/components/WorkShowcaseCard"
 
 interface Props {
   activeTag: string
@@ -92,10 +92,11 @@ export function WorkResults({ activeTag, projects }: Props) {
           exit={{ opacity: 0, x: -24 }}
           transition={{ duration: 0.3, ease: "easeOut" }}
         >
-          <PremiumWorkCard
+          <WorkShowcaseCard
+            slug={activeProject.slug}
             title={activeProject.title}
             description={activeProject.description}
-            stack={activeProject.tags}
+            tags={activeProject.tags}
             lighthouse={activeProject.lighthouse}
             ttfb={activeProject.ttfb}
             imageCount={activeProject.imageCount}
