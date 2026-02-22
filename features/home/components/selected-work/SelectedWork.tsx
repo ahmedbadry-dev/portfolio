@@ -9,6 +9,9 @@ import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { ArrowUpRight } from "lucide-react"
+import { WorkCardImg } from "./WorkCardImg"
+
+
 
 type ShowcaseProject = {
   slug: string
@@ -50,15 +53,25 @@ export function SelectedWork() {
       visibleProjects.map((project) => (
         <SwapCard
           key={project.slug}
-          className="overflow-hidden border-border/60 bg-card/95 p-0 shadow-2xl"
+          className="overflow-hidden bg-card/95 p-0 shadow-2xl"
         >
-          <PremiumWorkCard
+          {/* <PremiumWorkCard
             title={project.title}
             description={project.description}
             stack={project.tags}
             lighthouse={project.lighthouse}
             ttfb={project.ttfb}
-          />
+          /> */}
+          <WorkCardImg>
+            <div className="grid grid-cols-3 gap-2 h-full ">
+              <div className="bg-amber-400 rounded-r-md"></div>
+              <div className="flex flex-col gap-2">
+                <div className="bg-red-300 h-1/2 rounded-md"></div>
+                <div className="bg-red-700 h-1/2 rounded-md"></div>
+              </div>
+              <div className="bg-gray-700 rounded-l-md"></div>
+            </div>
+          </WorkCardImg>
         </SwapCard>
       )),
     [visibleProjects]
