@@ -2,7 +2,6 @@
 
 import { Container } from "@/components/layout/Container"
 import CardSwap, { Card as SwapCard } from "@/components/CardSwap"
-import PremiumWorkCard from "@/features/work/components/PremiumWorkCard"
 import { startTransition, useCallback, useMemo, useState } from "react"
 import { projects } from "@/data/projects"
 import Link from "next/link"
@@ -83,7 +82,7 @@ export function SelectedWork() {
       <Container>
         <div className="grid min-h-[640px] gap-8 rounded-3xl border border-border/50 bg-background/40 p-6 md:p-8 lg:grid-cols-5">
           <div className="flex flex-col justify-between lg:col-span-2">
-            <div key={activeProject?.slug} className="space-y-4 motion-safe:[animation:fadeSlideIn_680ms_cubic-bezier(0.22,1,0.36,1)]">
+            <div key={activeProject?.slug} className="space-y-4 motion-safe:animate-in motion-safe:fade-in motion-safe:slide-in-from-bottom-1 motion-safe:duration-300">
               <p className="text-sm uppercase tracking-[0.2em] text-muted-foreground">Selected Work</p>
               <h2 className="text-3xl font-semibold tracking-tight md:text-4xl">
                 {activeProject?.title}
@@ -155,18 +154,6 @@ export function SelectedWork() {
           </div>
         </div>
       </Container>
-      <style jsx>{`
-        @keyframes fadeSlideIn {
-          from {
-            opacity: 0;
-            transform: translateY(4px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-      `}</style>
     </section>
   )
 }

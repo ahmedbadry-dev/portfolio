@@ -1,11 +1,12 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { AnimatePresence, motion } from "framer-motion"
 import { ChevronLeft, ChevronRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import type { Project } from "@/data/projects"
 import { WorkShowcaseCard } from "@/features/work/components/WorkShowcaseCard"
+import { fadeInUp, motionDuration, motionEase } from "@/lib/motion"
 
 interface Props {
   activeTag: string
@@ -15,18 +16,14 @@ interface Props {
 export function WorkResults({ activeTag, projects }: Props) {
   const [index, setIndex] = useState(0)
 
-  useEffect(() => {
-    setIndex(0)
-  }, [activeTag, projects.length])
-
   if (projects.length === 0) {
     return (
       <motion.div
         key={activeTag}
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        exit={{ opacity: 0, y: -10 }}
-        transition={{ duration: 0.35 }}
+        initial={fadeInUp.initial}
+        animate={fadeInUp.animate}
+        exit={{ opacity: 0, y: -4 }}
+        transition={{ duration: motionDuration.base, ease: motionEase.standard }}
         className="mt-12 rounded-3xl border border-border/40 bg-card/40 p-16 text-center backdrop-blur-xl"
       >
         <p className="text-lg text-muted-foreground">
@@ -50,10 +47,10 @@ export function WorkResults({ activeTag, projects }: Props) {
   return (
     <motion.div
       key={activeTag}
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -10 }}
-      transition={{ duration: 0.35 }}
+      initial={fadeInUp.initial}
+      animate={fadeInUp.animate}
+      exit={{ opacity: 0, y: -4 }}
+      transition={{ duration: motionDuration.base, ease: motionEase.standard }}
       className="mt-12 space-y-8"
     >
       <div className="flex items-center justify-between gap-4">
@@ -87,10 +84,10 @@ export function WorkResults({ activeTag, projects }: Props) {
       <AnimatePresence mode="wait">
         <motion.div
           key={`${activeTag}-${activeProject.slug}`}
-          initial={{ opacity: 0, x: 24 }}
+          initial={{ opacity: 0, x: 12 }}
           animate={{ opacity: 1, x: 0 }}
-          exit={{ opacity: 0, x: -24 }}
-          transition={{ duration: 0.3, ease: "easeOut" }}
+          exit={{ opacity: 0, x: -12 }}
+          transition={{ duration: motionDuration.base, ease: motionEase.standard }}
         >
           <WorkShowcaseCard
             slug={activeProject.slug}

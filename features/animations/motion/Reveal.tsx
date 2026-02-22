@@ -2,19 +2,22 @@
 
 import { motion, useReducedMotion } from "framer-motion"
 import { cn } from "@/lib/cn"
+import { motionEase } from "@/lib/motion"
 
 interface RevealProps {
   children: React.ReactNode
   className?: string
   delay?: number
   y?: number
+  once?: boolean
 }
 
 export default function Reveal({
   children,
   className,
   delay = 0,
-  y = 20,
+  y = 8,
+  once = true,
 }: RevealProps) {
   const shouldReduceMotion = useReducedMotion()
 
@@ -26,11 +29,11 @@ export default function Reveal({
     <motion.div
       initial={{ opacity: 0, y }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-50px" }}
+      viewport={{ once, margin: "-60px" }}
       transition={{
-        duration: 0.7,
+        duration: 0.46,
         delay,
-        ease: [0.25, 0.1, 0.25, 1],
+        ease: motionEase.standard,
       }}
       className={cn(className)}
     >

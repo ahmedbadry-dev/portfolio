@@ -17,7 +17,6 @@ export default function HorizontalShowcase({ children }: Props) {
     const el = containerRef.current
     if (!el) return
 
-    const sections = el.children
     const totalWidth = el.scrollWidth - window.innerWidth
 
     gsap.to(el, {

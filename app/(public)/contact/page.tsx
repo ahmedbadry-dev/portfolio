@@ -1,5 +1,4 @@
 import { Container } from "@/components/layout/Container"
-import { Input } from "@/components/ui/input"
 import ContactForm from "@/features/contact/components/ContactForm"
 
 export default function ContactPage() {

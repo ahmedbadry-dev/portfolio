@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from "react"
 import Image from "next/image"
 import { AnimatePresence, motion } from "framer-motion"
 import { cn } from "@/lib/cn"
+import { motionDuration, motionEase } from "@/lib/motion"
 
 interface CaseImageCarouselProps {
   title: string
@@ -35,7 +36,7 @@ export function CaseImageCarousel({ title, screenshots }: CaseImageCarouselProps
               initial={{ opacity: 0, x: 26 }}
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: -26 }}
-              transition={{ duration: 0.45, ease: "easeOut" }}
+              transition={{ duration: motionDuration.slow, ease: motionEase.standard }}
               className="absolute inset-0"
             >
               <Image

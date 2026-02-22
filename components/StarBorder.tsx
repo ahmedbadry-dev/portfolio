@@ -19,14 +19,16 @@ const StarBorder = <T extends React.ElementType = 'button'>({
   ...rest
 }: StarBorderProps<T>) => {
   const Component = as || 'button';
+  const componentProps = rest as React.ComponentPropsWithoutRef<T>;
+  const componentStyle = (componentProps.style ?? {}) as React.CSSProperties;
 
   return (
     <Component
       className={`relative inline-block overflow-hidden rounded-[20px] ${className}`}
-      {...(rest as any)}
+      {...componentProps}
       style={{
         padding: `${thickness}px 0`,
-        ...(rest as any).style
+        ...componentStyle
       }}
     >
       <div
