@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation"
 import { cn } from "@/lib/cn"
 import { Magnetic } from "@/components/shared/Magnetic"
 import { motion } from "framer-motion"
+import { fadeInUp, motionDuration, motionEase } from "@/lib/motion"
 
 interface Props {
   activeTag: string
@@ -23,9 +24,9 @@ export function WorkFilters({ activeTag, counts, filters }: Props) {
 
   return (
     <motion.nav
-      initial={{ opacity: 0, y: -22 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5, ease: "easeOut" }}
+      initial={fadeInUp.initial}
+      animate={fadeInUp.animate}
+      transition={{ duration: motionDuration.slow, ease: motionEase.standard }}
       className="sticky top-20 z-40 rounded-2xl border border-border/40 bg-background/70 px-4 py-3 backdrop-blur-xl"
     >
       <div className="relative flex flex-wrap gap-4 items-center justify-center md:justify-start">

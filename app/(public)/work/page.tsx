@@ -24,6 +24,7 @@ export default async function WorkPage({ searchParams }: WorkPageProps) {
         </div>
 
         <WorkResults
+          key={activeTag}
           activeTag={activeTag}
           projects={projects}
         />
