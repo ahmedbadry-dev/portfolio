@@ -5,6 +5,10 @@ import CardSwap, { Card as SwapCard } from "@/components/CardSwap"
 import PremiumWorkCard from "@/features/work/components/PremiumWorkCard"
 import { startTransition, useCallback, useMemo, useState } from "react"
 import { projects } from "@/data/projects"
+import Link from "next/link"
+import { useRouter } from "next/navigation"
+import { Button } from "@/components/ui/button"
+import { ArrowUpRight } from "lucide-react"
 
 type ShowcaseProject = {
   slug: string
@@ -29,9 +33,11 @@ const featuredProjects = showcaseProjects.slice(0, 3).reverse()
 
 export function SelectedWork() {
   const [activeCardIndex, setActiveCardIndex] = useState(0)
+  const router = useRouter()
   const visibleProjects = featuredProjects
 
   const activeProject = visibleProjects[activeCardIndex] ?? visibleProjects[0]
+  const activeProjectHref = activeProject ? `/projects/${activeProject.slug}` : "/projects"
 
   const handleActiveCardChange = useCallback((nextIndex: number) => {
     startTransition(() => {
@@ -94,16 +100,37 @@ export function SelectedWork() {
                   <p className="text-lg font-semibold">{activeProject?.ttfb}ms</p>
                 </div>
               </div>
+
+              <div className="pt-4">
+                <Button asChild>
+                  <Link href={activeProjectHref}>
+                    View Case Study
+                    <ArrowUpRight className="size-4" />
+                  </Link>
+                </Button>
+              </div>
             </div>
           </div>
 
-          <div className="relative min-h-[520px] overflow-visible rounded-2xl bg-gradient-to-br from-muted/40 via-background to-muted/20 lg:col-span-3">
+          <div
+            role="link"
+            tabIndex={0}
+            aria-label={`Open ${activeProject?.title} case study`}
+            onClick={() => router.push(activeProjectHref)}
+            onKeyDown={(event) => {
+              if (event.key === "Enter" || event.key === " ") {
+                event.preventDefault()
+                router.push(activeProjectHref)
+              }
+            }}
+            className="relative min-h-[520px] cursor-pointer overflow-visible rounded-2xl bg-gradient-to-br from-muted/40 via-background to-muted/20 transition-shadow duration-300 hover:shadow-[0_0_35px_rgba(124,59,237,0.18)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 lg:col-span-3"
+          >
             <CardSwap
               width="92%"
               height={460}
               position="center-right"
               cardDistance={36}
-              verticalDistance={16}
+              verticalDistance={40}
               dropOffset={220}
               delay={3200}
               pauseOnHover

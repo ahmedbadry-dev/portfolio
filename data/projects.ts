@@ -6,6 +6,7 @@ export type Project = {
   lighthouse?: number
   ttfb?: number
   imageCount?: number
+  screenshots?: string[]
 }
 
 export const projects: Project[] = [
@@ -18,6 +19,7 @@ export const projects: Project[] = [
     lighthouse: 96,
     ttfb: 120,
     imageCount: 8,
+    screenshots: ['/window.svg', '/next.svg', '/globe.svg', '/file.svg'],
   },
   {
     slug: 'ecommerce',
@@ -28,14 +30,18 @@ export const projects: Project[] = [
     lighthouse: 94,
     ttfb: 140,
     imageCount: 12,
+    screenshots: ['/globe.svg', '/window.svg', '/file.svg', '/next.svg'],
   },
   {
-    slug: 'product-feedback',
+    slug: 'product-feedback1',
     title: 'Product Feedback',
     description:
       'Feedback management product with clear moderation flow and scalable component architecture.',
     tags: ['Next.js'],
-    imageCount: 6,
+    lighthouse: 94,
+    ttfb: 140,
+    imageCount: 12,
+    screenshots: ['/file.svg', '/window.svg', '/next.svg', '/globe.svg'],
   },
 ]
 

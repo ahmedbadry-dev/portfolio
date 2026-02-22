@@ -90,7 +90,7 @@ const CardSwap: React.FC<CardSwapProps> = ({
   pauseOnHover = false,
   onCardClick,
   onActiveCardChange,
-  skewAmount = 6,
+  skewAmount = 4,
   easing = 'elastic',
   children
 }) => {
