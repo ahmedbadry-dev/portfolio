@@ -1,19 +1,6 @@
-import {
-  Hero,
-  SelectedWork,
-  HowIThink,
-  EngineeringPrinciples,
-  BookingCta,
-} from "@/features/home"
+import { HomeContainer } from "@/features/home/HomeContainer"
 
 export default function HomePage() {
-  return (
-    <>
-      <Hero />
-      <SelectedWork />
-      <HowIThink />
-      <EngineeringPrinciples />
-      <BookingCta />
-    </>
-  )
+  return <HomeContainer />
 }
+
