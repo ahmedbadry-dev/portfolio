@@ -1,12 +1,12 @@
 "use client"
 
-import { useState } from "react"
 import { AnimatePresence, motion } from "framer-motion"
 import { ChevronLeft, ChevronRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import type { Project } from "@/data/projects"
 import { WorkShowcaseCard } from "@/features/work/components/WorkShowcaseCard"
 import { fadeInUp, motionDuration, motionEase } from "@/lib/motion"
+import { useWorkController } from "@/features/work/useWorkController"
 
 interface Props {
   activeTag: string
@@ -14,7 +14,9 @@ interface Props {
 }
 
 export function WorkResults({ activeTag, projects }: Props) {
-  const [index, setIndex] = useState(0)
+  const { index, showPrev, showNext } = useWorkController({
+    projectsLength: Math.max(projects.length, 1),
+  })
 
   if (projects.length === 0) {
     return (
@@ -35,14 +37,6 @@ export function WorkResults({ activeTag, projects }: Props) {
 
   const safeIndex = index % projects.length
   const activeProject = projects[safeIndex]
-
-  const showPrev = () => {
-    setIndex((prev) => (prev - 1 + projects.length) % projects.length)
-  }
-
-  const showNext = () => {
-    setIndex((prev) => (prev + 1) % projects.length)
-  }
 
   return (
     <motion.div

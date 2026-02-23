@@ -2,6 +2,7 @@ export const motionDuration = {
   fast: 0.2,
   base: 0.3,
   slow: 0.4,
+  reveal: 0.48,
 } as const
 
 export const motionEase = {
@@ -13,4 +14,7 @@ export const fadeInUp = {
   initial: { opacity: 0, y: 4 },
   animate: { opacity: 1, y: 0 },
 } as const
+
+export const revealDistance = 12 as const
+export const staggerDelay = 0.05 as const
 

@@ -2,89 +2,80 @@
 
 import { motion, useReducedMotion, type Variants } from "framer-motion"
 import { cn } from "@/lib/cn"
+import { motionDuration, motionEase, revealDistance, staggerDelay } from "@/lib/motion"
 
 interface ContainerProps {
-    children: React.ReactNode
-    className?: string
+  children: React.ReactNode
+  className?: string
+  once?: boolean
 }
 
 interface ItemProps {
-    children: React.ReactNode
-    className?: string
+  children: React.ReactNode
+  className?: string
 }
 
-/* ----------------------------- */
-/* Variants */
-/* ----------------------------- */
-
 const containerVariants: Variants = {
-    hidden: {},
-    visible: {
-        transition: {
-            staggerChildren: 0.12,
-            delayChildren: 0.1,
-        },
+  hidden: {},
+  visible: {
+    transition: {
+      staggerChildren: staggerDelay,
     },
+  },
 }
 
 const itemVariants: Variants = {
-    hidden: {
-        opacity: 0,
-        y: 20,
+  hidden: {
+    opacity: 0,
+    y: revealDistance,
+  },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: motionDuration.reveal,
+      ease: motionEase.standard,
     },
-    visible: {
-        opacity: 1,
-        y: 0,
-        transition: {
-            duration: 0.7,
-            ease: [0.25, 0.1, 0.25, 1] as [number, number, number, number],
-        },
-    },
+  },
 }
 
-/* ----------------------------- */
-/* Components */
-/* ----------------------------- */
-
 export function StaggerContainer({
-    children,
-    className,
+  children,
+  className,
+  once = true,
 }: ContainerProps) {
-    const shouldReduceMotion = useReducedMotion()
+  const shouldReduceMotion = useReducedMotion()
 
-    if (shouldReduceMotion) {
-        return <div className={className}>{children}</div>
-    }
+  if (shouldReduceMotion) {
+    return <div className={className}>{children}</div>
+  }
 
-    return (
-        <motion.div
-            variants={containerVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-50px" }}
-            className={cn(className)}
-        >
-            {children}
-        </motion.div>
-    )
+  return (
+    <motion.div
+      variants={containerVariants}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once, margin: "-60px" }}
+      className={cn(className)}
+    >
+      {children}
+    </motion.div>
+  )
 }
 
 export function StaggerItem({
-    children,
-    className,
+  children,
+  className,
 }: ItemProps) {
-    const shouldReduceMotion = useReducedMotion()
+  const shouldReduceMotion = useReducedMotion()
 
-    if (shouldReduceMotion) {
-        return <div className={className}>{children}</div>
-    }
+  if (shouldReduceMotion) {
+    return <div className={className}>{children}</div>
+  }
 
-    return (
-        <motion.div
-            variants={itemVariants}
-            className={cn(className)}
-        >
-            {children}
-        </motion.div>
-    )
+  return (
+    <motion.div variants={itemVariants} className={cn(className)}>
+      {children}
+    </motion.div>
+  )
 }

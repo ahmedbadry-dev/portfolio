@@ -1,23 +1,124 @@
-# Habit Tracker
+---
+title: 'Habit Tracker System'
+slug: 'habit-tracker'
+type: 'fullstack'
+status: 'production'
+stack:
+  - Next.js 16 (App Router)
+  - TypeScript
+  - Convex
+  - Better Auth
+  - Tailwind CSS v4
+  - shadcn/ui
+---
 
-## Problem
+## Overview
 
-Users struggle with maintaining daily habits due to friction and poor feedback loops.
+Habit Tracker is a fullstack, real-time habit tracking system built with a hybrid server/client architecture.  
+It supports daily and weekly habits across boolean and numeric targets, with server-authoritative streak computation and analytics aggregation.
 
-## My Approach
+The goal was to build a system where business logic lives on the backend while maintaining an instant, optimistic UI experience.
 
-I built the system using App Router and Server Components
-to minimize client bundle size and improve TTFB.
+---
 
-## Architecture Decisions
+## The Problem
 
-- Server-first data fetching
-- Convex for real-time sync
-- Minimal client state
+Most habit apps struggle with:
+
+- Supporting multiple habit frequency models (daily vs weekly)
+- Handling numeric vs boolean completion
+- Computing streaks accurately across time windows
+- Preventing UI-level business rule duplication
+- Maintaining performance at scale
+
+This project solves these by centralizing domain logic server-side and aligning data modeling with query patterns.
+
+---
+
+## Architecture Strategy
+
+### Rendering Model
+
+Hybrid architecture:
+
+- Server Components for auth-aware data preloading
+- Client Components for interactivity and realtime updates
+- Suspense boundaries for progressive loading
+
+### Data Strategy
+
+Convex schema designed around:
+
+- userId + habitId + dateKey
+- Composite indexes for daily upserts
+- Archived filtering via indexed flags
+
+All queries are user-scoped and date-scoped.
+
+### Domain Logic
+
+Streak and completion logic computed server-side:
+
+- Daily boolean habits
+- Daily numeric habits
+- Weekly boolean habits
+- Weekly numeric target habits
+
+No streak logic duplication inside UI.
+
+---
 
 ## Performance Strategy
 
-<MetricBadge label="Lighthouse" value="96" />
-<MetricBadge label="TTFB" value="120ms" />
+- Optimistic updates on mutations
+- Suspense + skeleton loading states
+- Query skipping for unauthenticated states
+- Bounded log-window reads (~400 days)
+- Strict transform-only animations
 
-Bundle size was reduced by 35% by removing unnecessary client hydration.
+---
+
+## Security Model
+
+- Ownership checks before habit updates
+- Zod validation on forms
+- Convex arg validators on all functions
+- Auth token verification on server preloads
+- Environment validation for sensitive keys
+
+---
+
+## Complex Engineering Challenges
+
+- Weekly completion derived from aggregate log windows
+- Accurate longest/current streak computation
+- Preventing invalid mutation paths
+- Push subscription upsert with uniqueness enforcement
+- Previous-period comparison in analytics
+
+---
+
+## Deep Architecture
+
+(See architecture visual below.)
+
+---
+
+## What I Learned
+
+- Business rules must live server-side when data integrity matters.
+- Schema design should mirror query patterns, not UI shape.
+- Hybrid rendering requires strict boundary discipline.
+- Optimistic UI is powerful only when paired with backend authority.
+- Clean architecture increases development velocity over time.
+
+---
+
+## Outcome
+
+Delivered a production-grade habit tracking system with:
+
+- Real-time reactive UX
+- Accurate streak and analytics logic
+- Scalable indexed data modeling
+- Secure mutation flows
