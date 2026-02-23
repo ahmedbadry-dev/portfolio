@@ -25,7 +25,7 @@ export default function RootLayout({
       >
         {/* Main Frame */}
         <div className="relative mx-auto max-w-350 px-6 lg:px-8">
-          <div className="relative min-h-screen overflow-hidden">
+          <div className="relative min-h-screen overflow-x-hidden">
             <Navbar />
             <main className="relative">
               {children}

@@ -37,7 +37,7 @@ export function CaseStudyView({ project, sections, progressItems }: CaseStudyVie
           </Reveal>
         </div>
 
-        <div className="mt-12 grid gap-10 lg:grid-cols-[minmax(0,1fr)_220px]">
+        <div className="mt-12 grid gap-10 lg:items-start lg:grid-cols-[minmax(0,1fr)_220px] ">
           <div className="space-y-8">
             <Reveal>
               <CaseStudySectionCard
@@ -212,7 +212,9 @@ export function CaseStudyView({ project, sections, progressItems }: CaseStudyVie
             </Reveal>
           </div>
 
-          <StickyProgressNav items={progressItems} />
+          <div className="hidden lg:block lg:self-start">
+            <StickyProgressNav items={progressItems} />
+          </div>
         </div>
       </Container>
     </article>

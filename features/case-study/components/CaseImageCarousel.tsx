@@ -41,10 +41,10 @@ const CarouselSlide = memo(function CarouselSlide({
   return (
     <motion.div
       key={`${src}-${index}`}
-      initial={reducedMotion ? false : { opacity: 0, x: 26 }}
-      animate={{ opacity: 1, x: 0 }}
-      exit={reducedMotion ? { opacity: 0 } : { opacity: 0, x: -26 }}
-      transition={{ duration: motionDuration.slow, ease: motionEase.standard }}
+      initial={reducedMotion ? false : { opacity: 0, scale: 1.01 }}
+      animate={{ opacity: 1, scale: 1 }}
+      exit={reducedMotion ? { opacity: 0 } : { opacity: 0, scale: 0.995 }}
+      transition={{ duration: motionDuration.reveal, ease: motionEase.standard }}
       className="absolute inset-0 will-change-transform"
       aria-live="off"
     >
@@ -190,7 +190,7 @@ function CaseImageCarouselComponent({
         className="group relative isolate overflow-hidden rounded-2xl [contain:layout_paint_style]"
       >
         <motion.div className="relative aspect-[16/8] w-full" style={{ y: parallaxY }}>
-          <AnimatePresence mode="wait">
+          <AnimatePresence mode="sync">
             <CarouselSlide
               src={slides[safeIndex]}
               title={title}
