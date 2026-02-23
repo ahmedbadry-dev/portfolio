@@ -1,6 +1,6 @@
 "use client"
 
-import { useMemo } from "react"
+import { useCallback, useMemo, type MouseEvent } from "react"
 import { motion } from "framer-motion"
 import { cn } from "@/lib/cn"
 import { motionDuration, motionEase } from "@/lib/motion"
@@ -20,14 +20,34 @@ export function StickyProgressNav({ items }: StickyProgressNavProps) {
   const ids = useMemo(() => items.map((item) => item.id), [items])
   const activeId = useSectionObserver(ids)
   const { direction, hasScrolled } = useScrollDirection()
+  const handleNavClick = useCallback((event: MouseEvent<HTMLAnchorElement>) => {
+    const href = event.currentTarget.getAttribute("href")
+    if (!href?.startsWith("#")) return
+
+    const id = href.slice(1)
+    const target = document.getElementById(id)
+    if (!target) return
+
+    event.preventDefault()
+
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    const offset = 112
+    const top = target.getBoundingClientRect().top + window.scrollY - offset
+
+    window.scrollTo({
+      top,
+      behavior: reduceMotion ? "auto" : "smooth",
+    })
+  }, [])
 
   return (
-    <aside className="sticky top-24 hidden h-fit lg:block">
+    <aside className="sticky top-24 h-fit w-[220px]">
       <motion.nav
         aria-label="Case study progress"
+        initial={{ y: 8, opacity: 0.88 }}
         animate={{
-          y: direction === "down" ? 2 : 0,
-          opacity: hasScrolled ? 1 : 0.92,
+          y: direction === "down" ? 7 : 0,
+          opacity: hasScrolled ? 1 : 0.9,
         }}
         transition={{ duration: motionDuration.base, ease: motionEase.standard }}
         className={cn(
@@ -36,7 +56,6 @@ export function StickyProgressNav({ items }: StickyProgressNavProps) {
             ? "border-border/70 bg-background/85 backdrop-blur-sm"
             : "border-border/45 bg-background/70"
         )}
-        style={{ width: 220 }}
       >
         <div className="relative pl-4">
           <div className="absolute left-0 top-1 bottom-1 w-px bg-border/70" />
@@ -59,6 +78,7 @@ export function StickyProgressNav({ items }: StickyProgressNavProps) {
                   ) : null}
                   <a
                     href={`#${item.id}`}
+                    onClick={handleNavClick}
                     aria-current={isActive ? "location" : undefined}
                     className={cn(
                       "inline-block origin-left rounded-sm px-1.5 py-0.5 text-xs transition-all duration-300",

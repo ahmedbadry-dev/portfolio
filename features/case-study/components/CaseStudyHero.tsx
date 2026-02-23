@@ -1,4 +1,5 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { BitsLogoLoop } from "@/components/shared/BitsLogoLoop"
 import { MetricBadge } from "@/components/shared/MetricBadge"
 import { TagPills } from "@/components/shared/TagPills"
 import type { ProjectRecord } from "@/data/projects"
@@ -6,6 +7,7 @@ import type { ProjectRecord } from "@/data/projects"
 type CaseStudyHeroProps = {
   project: ProjectRecord
 }
+
 
 export function CaseStudyHero({ project }: CaseStudyHeroProps) {
   return (
@@ -29,7 +31,7 @@ export function CaseStudyHero({ project }: CaseStudyHeroProps) {
           </span>
         </div>
         <TagPills tags={project.meta.tags} />
-        <TagPills tags={project.meta.stack} />
+        <BitsLogoLoop stack={project.meta.stack} />
       </div>
 
       {project.metrics?.lighthouse || project.metrics?.ttfb ? (
