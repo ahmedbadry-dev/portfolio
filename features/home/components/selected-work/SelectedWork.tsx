@@ -2,50 +2,22 @@
 
 import { Container } from "@/components/layout/Container"
 import CardSwap, { Card as SwapCard } from "@/components/CardSwap"
-import { startTransition, useCallback, useMemo, useState } from "react"
+import { useMemo } from "react"
 import { projects } from "@/data/projects"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { ArrowUpRight } from "lucide-react"
 import { WorkCardImg } from "./WorkCardImg"
-
-
-
-type ShowcaseProject = {
-  slug: string
-  title: string
-  description: string
-  tags: string[]
-  lighthouse: number
-  ttfb: number
-}
-
-function hasShowcaseMetrics(
-  project: (typeof projects)[number]
-): project is ShowcaseProject {
-  return typeof project.lighthouse === "number" && typeof project.ttfb === "number"
-}
-
-const showcaseProjects = projects.filter(
-  hasShowcaseMetrics
-)
-const featuredProjects = showcaseProjects.slice(0, 3).reverse()
+import { useSelectedWorkController } from "./useSelectedWorkController"
 
 
 export function SelectedWork() {
-  const [activeCardIndex, setActiveCardIndex] = useState(0)
   const router = useRouter()
+  const { featuredProjects, activeProject, handleActiveCardChange } =
+    useSelectedWorkController(projects)
   const visibleProjects = featuredProjects
-
-  const activeProject = visibleProjects[activeCardIndex] ?? visibleProjects[0]
   const activeProjectHref = activeProject ? `/projects/${activeProject.slug}` : "/projects"
-
-  const handleActiveCardChange = useCallback((nextIndex: number) => {
-    startTransition(() => {
-      setActiveCardIndex((prev) => (prev === nextIndex ? prev : nextIndex))
-    })
-  }, [])
 
   const swapCards = useMemo(
     () =>
