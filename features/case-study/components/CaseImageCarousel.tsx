@@ -99,7 +99,6 @@ function CaseImageCarouselComponent({
   title,
   screenshots,
 }: CaseImageCarouselProps) {
-  console.count("Carousel render")
   const reduceMotion = Boolean(useReducedMotion())
   const rootRef = useRef<HTMLDivElement>(null)
   const slides = useMemo(

@@ -17,7 +17,6 @@ type StickyProgressNavProps = {
 }
 
 export function StickyProgressNav({ items }: StickyProgressNavProps) {
-  console.count("StickyProgressNav render")
   const ids = useMemo(() => items.map((item) => item.id), [items])
   const activeId = useSectionObserver(ids)
   const { direction, hasScrolled } = useScrollDirection()
