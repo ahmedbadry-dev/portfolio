@@ -1,68 +1,75 @@
 import Image from "next/image";
-import ME from "@/public/me.png";
+import ME from "@/public/me/me6.png";
 import Orbit3D from "@/components/shared/Orbit3D";
 import { StaggerContainer, StaggerItem } from "@/features/animations/motion/Stagger";
 import { heroOrbitImages } from "@/data/home";
 
 export const HeroImg = () => {
     return (
-        <StaggerContainer className="w-full max-w-[520px]">
+        <StaggerContainer className="mx-auto flex w-full max-w-[680px] justify-center">
             <StaggerItem>
                 <Orbit3D
                     images={heroOrbitImages}
-                    radiusX={165}
+                    radiusX={190}
                     radiusY={0}
-                    orbitOffsetY={92}
+                    orbitOffsetY={108}
                     duration={22}
-                    itemSize={46}
+                    itemSize={50}
                     className="mx-auto md:hidden"
                 >
-                    <Image
-                        src={ME}
-                        alt="Profile photo"
-                        width={200}
-                        height={200}
-                        className="h-[200px] w-[200px] rounded-2xl shadow-2xl"
-                        priority
-                    />
+                    <div className="relative h-[240px] w-[240px] overflow-hidden rounded-2xl">
+                        <Image
+                            src={ME}
+                            alt="Profile photo"
+                            width={240}
+                            height={240}
+                            className="h-full w-full object-cover"
+                            priority
+                        />
+                    </div>
                 </Orbit3D>
 
                 <Orbit3D
                     images={heroOrbitImages}
-                    radiusX={200}
+                    radiusX={235}
                     radiusY={0}
-                    orbitOffsetY={118}
+                    orbitOffsetY={136}
                     duration={20}
-                    itemSize={54}
+                    itemSize={58}
                     className="mx-auto hidden md:flex lg:hidden"
                 >
-                    <Image
-                        src={ME}
-                        alt="Profile photo"
-                        width={236}
-                        height={236}
-                        className="h-[236px] w-[236px] rounded-2xl shadow-2xl"
-                        priority
-                    />
+                    <div className="relative h-[290px] w-[290px] overflow-hidden rounded-2xl">
+                        <Image
+                            src={ME}
+                            alt="Profile photo"
+                            width={290}
+                            height={290}
+                            className="h-full w-full object-cover"
+                            priority
+                        />
+                    </div>
                 </Orbit3D>
 
                 <Orbit3D
                     images={heroOrbitImages}
-                    radiusX={230}
+                    radiusX={280}
                     radiusY={0}
-                    orbitOffsetY={140}
+                    orbitOffsetY={160}
                     duration={18}
-                    itemSize={60}
+                    itemSize={64}
                     className="mx-auto hidden lg:flex"
                 >
-                    <Image
-                        src={ME}
-                        alt="Profile photo"
-                        width={260}
-                        height={260}
-                        className="h-[260px] w-[260px] rounded-2xl shadow-2xl"
-                        priority
-                    />
+                    <div className="relative h-[440px] w-[440px] overflow-hidden rounded-2xl">
+                        <Image
+                            src={ME}
+                            alt="Profile photo"
+                            width={390}
+                            height={390}
+                            className="h-full w-full object-contain aspect-square"
+                            priority
+                        />
+
+                    </div>
                 </Orbit3D>
             </StaggerItem>
         </StaggerContainer>
