@@ -8,9 +8,14 @@ import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { ArrowUpRight } from "lucide-react"
-import { WorkCardImg } from "./WorkCardImg"
-import { useSelectedWorkController } from "./useSelectedWorkController"
+import { WorkCardImg } from "@/features/home/components/selected-work/WorkCardImg"
+import { useSelectedWorkController } from "@/features/home/components/selected-work/useSelectedWorkController"
 
+import m1 from '@/public/screenshots/habit-tracker/dark-pig-dash.png'
+import m2 from '@/public/screenshots/habit-tracker/light-dash.png'
+import m3 from '@/public/screenshots/habit-tracker/dark-habits-statistic.png'
+import m4 from '@/public/screenshots/habit-tracker/dark-statistic.png'
+import Image from "next/image"
 
 export function SelectedWork() {
   const router = useRouter()
@@ -26,21 +31,25 @@ export function SelectedWork() {
           key={project.slug}
           className="overflow-hidden bg-card/95 p-0 shadow-2xl"
         >
-          {/* <PremiumWorkCard
-            title={project.title}
-            description={project.description}
-            stack={project.tags}
-            lighthouse={project.lighthouse}
-            ttfb={project.ttfb}
-          /> */}
           <WorkCardImg>
-            <div className="grid grid-cols-3 gap-2 h-full ">
-              <div className="bg-amber-400 rounded-r-md"></div>
-              <div className="flex flex-col gap-2">
-                <div className="bg-red-300 h-1/2 rounded-md"></div>
-                <div className="bg-red-700 h-1/2 rounded-md"></div>
+            <div className="grid grid-cols-3 gap-2 h-full">
+              <div className="bg-amber-400 col-span-2">
+                <Image src={m1} alt="dark dashboard image" className="w-full h-full object-cover " />
               </div>
-              <div className="bg-gray-700 rounded-l-md"></div>
+              <div className="flex flex-col gap-2">
+                <div className="bg-red-300 h-1/3 rounded-l-md">
+                  <Image src={m3} alt="dark dashboard image" className="w-full h-full object-cover  rounded-bl-md" />
+                </div>
+                <div className="bg-red-700 h-1/3 rounded-l-md">
+                  <Image src={m2} alt="dark dashboard image" className="w-full h-full object-cover  rounded-l-md" />
+                </div>
+                <div className="bg-red-700 h-1/3 rounded-l-md">
+                  <Image src={m4} alt="dark dashboard image" className="w-full h-full object-cover  rounded-tl-md" />
+                </div>
+              </div>
+              {/* <div className="bg-gray-700 rounded-l-md">
+                <Image src={m4} alt="dark dashboard image" />
+              </div> */}
             </div>
           </WorkCardImg>
         </SwapCard>
@@ -52,40 +61,55 @@ export function SelectedWork() {
   return (
     <section className="relative overflow-hidden py-32">
       <Container>
-        <div className="grid min-h-[640px] gap-8 rounded-3xl border border-border/50 bg-background/40 p-6 md:p-8 lg:grid-cols-5">
-          <div className="flex flex-col justify-between lg:col-span-2">
-            <div key={activeProject?.slug} className="space-y-4 motion-safe:animate-in motion-safe:fade-in motion-safe:slide-in-from-bottom-1 motion-safe:duration-300">
-              <p className="text-sm uppercase tracking-[0.2em] text-muted-foreground">Selected Work</p>
-              <h2 className="text-3xl font-semibold tracking-tight md:text-4xl">
-                {activeProject?.title}
-              </h2>
-              <p className="text-sm leading-relaxed text-muted-foreground md:text-base">
-                {activeProject?.description || "Performance-focused product experience with strong UX and delivery quality."}
-              </p>
+        <div className="grid min-h-160 gap-8 rounded-3xl border border-border/50 bg-background/40 p-6 md:p-8 lg:grid-cols-5">
+          <div className="flex flex-col lg:col-span-2">
+            <div
+              key={activeProject?.slug}
+              className="flex h-full flex-col motion-safe:animate-in motion-safe:fade-in motion-safe:slide-in-from-bottom-1 motion-safe:duration-300"
+            >
+              <div className="space-y-4">
+                <p className="text-sm uppercase tracking-[0.2em] text-muted-foreground">
+                  Selected Work
+                </p>
 
-              <div className="flex flex-wrap gap-2 pt-3">
-                {activeProject?.tags.map((tag) => (
-                  <span
-                    key={tag}
-                    className="rounded-full border border-border/60 bg-background/80 px-3 py-1 text-xs text-muted-foreground"
-                  >
-                    {tag}
-                  </span>
-                ))}
+                <h2 className="text-3xl font-semibold tracking-tight md:text-4xl">
+                  {activeProject?.title}
+                </h2>
+
+                <p className="text-sm leading-relaxed text-muted-foreground md:text-base">
+                  {activeProject?.description ||
+                    "Performance-focused product experience with strong UX and delivery quality."}
+                </p>
+
+                <div className="flex flex-wrap gap-2 pt-3">
+                  {activeProject?.tags.map((tag) => (
+                    <span
+                      key={tag}
+                      className="rounded-full border border-border/60 bg-background/80 px-3 py-1 text-xs text-muted-foreground"
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+
+                <div className="grid grid-cols-2 gap-3 pt-4 text-sm">
+                  <div className="rounded-xl border border-border/50 bg-background/60 p-3">
+                    <p className="text-xs uppercase tracking-wider text-muted-foreground">
+                      Lighthouse
+                    </p>
+                    <p className="text-lg font-semibold">{activeProject?.lighthouse}</p>
+                  </div>
+
+                  <div className="rounded-xl border border-border/50 bg-background/60 p-3">
+                    <p className="text-xs uppercase tracking-wider text-muted-foreground">
+                      TTFB
+                    </p>
+                    <p className="text-lg font-semibold">{activeProject?.ttfb}ms</p>
+                  </div>
+                </div>
               </div>
 
-              <div className="grid grid-cols-2 gap-3 pt-4 text-sm">
-                <div className="rounded-xl border border-border/50 bg-background/60 p-3">
-                  <p className="text-xs uppercase tracking-wider text-muted-foreground">Lighthouse</p>
-                  <p className="text-lg font-semibold">{activeProject?.lighthouse}</p>
-                </div>
-                <div className="rounded-xl border border-border/50 bg-background/60 p-3">
-                  <p className="text-xs uppercase tracking-wider text-muted-foreground">TTFB</p>
-                  <p className="text-lg font-semibold">{activeProject?.ttfb}ms</p>
-                </div>
-              </div>
-
-              <div className="pt-4">
+              <div className="mt-auto pt-6">
                 <Button asChild>
                   <Link href={activeProjectHref}>
                     View Case Study
@@ -107,7 +131,7 @@ export function SelectedWork() {
                 router.push(activeProjectHref)
               }
             }}
-            className="relative min-h-[520px] cursor-pointer overflow-visible rounded-2xl bg-gradient-to-br from-muted/40 via-background to-muted/20 transition-shadow duration-300 hover:shadow-[0_0_35px_rgba(124,59,237,0.18)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 lg:col-span-3"
+            className="relative min-h-130 cursor-pointer overflow-visible rounded-2xl bg-linear-to-br from-muted/40 via-background to-muted/20 transition-shadow duration-300 hover:shadow-[0_0_35px_rgba(124,59,237,0.18)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 lg:col-span-3"
           >
             <CardSwap
               width="92%"

@@ -8,11 +8,10 @@ import { fadeInUp, motionDuration, motionEase } from "@/lib/motion"
 
 interface Props {
   activeTag: string
-  counts: Record<string, number>
   filters: string[]
 }
 
-export function WorkFilters({ activeTag, counts, filters }: Props) {
+export function WorkFilters({ activeTag, filters }: Props) {
   const router = useRouter()
 
   const handleClick = (tag: string) => {
@@ -48,7 +47,6 @@ export function WorkFilters({ activeTag, counts, filters }: Props) {
                   )}
                 >
                   {tag}
-                  <span className="ml-2 text-xs opacity-60">{counts[tag] ?? 0}</span>
                 </span>
 
                 {isActive && (

@@ -1,4 +1,5 @@
 import { getCaseStudyPageData } from "@/services/caseStudyService"
+import type { ProjectScreenshots } from "@/data/projects"
 
 export type CaseStudy = {
   slug: string
@@ -27,7 +28,7 @@ export type CaseStudy = {
   lighthouse?: number
   ttfb?: number
   imageCount?: number
-  screenshots: string[]
+  screenshots: ProjectScreenshots
   source: string
 }
 

@@ -91,6 +91,7 @@ export function WorkResults({ activeTag, projects }: Props) {
             lighthouse={activeProject.lighthouse}
             ttfb={activeProject.ttfb}
             imageCount={activeProject.imageCount}
+            screenshots={activeProject.screenshots}
           />
         </motion.div>
       </AnimatePresence>
