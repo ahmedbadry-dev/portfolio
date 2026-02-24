@@ -24,12 +24,12 @@ export function AboutView({ data }: AboutViewProps) {
 
   return (
     <div className="py-32">
-      <Container>
+      <Container className="relative">
+        <div className="pointer-events-none absolute -inset-32 -z-10">
+          <LightRays raysColor="#7c3bed" raysSpeed={1} lightSpread={0.5} fadeDistance={1.5} mouseInfluence={0} />
+        </div>
         <div className="relative mx-auto max-w-5xl space-y-32">
           <section id="hero" className="relative isolate space-y-8">
-            <div className="pointer-events-none absolute inset-0 -z-10 opacity-35">
-              <LightRays raysColor="#7c3bed" raysSpeed={1.15} lightSpread={1.25} fadeDistance={1.05} />
-            </div>
             <div className="grid items-center gap-8 md:grid-cols-[1.5fr_1fr] md:gap-10">
               <Reveal className="order-2 space-y-5 md:order-1" delay={0.04}>
                 <h1 className="max-w-3xl text-4xl font-medium tracking-tight md:text-5xl md:leading-[1.05]">
