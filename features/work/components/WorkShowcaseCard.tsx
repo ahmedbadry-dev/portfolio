@@ -5,6 +5,13 @@ import { Glass } from "@/components/shared/Glass"
 import { TagPills } from "@/components/shared/TagPills"
 import { MetricBadge } from "@/components/shared/MetricBadge"
 import { Button } from "@/components/ui/button"
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel"
 import type { ProjectScreenshots } from "@/data/projects"
 
 interface WorkShowcaseCardProps {
@@ -89,37 +96,71 @@ export function WorkShowcaseCard({
           </div>
         </div>
 
-        <div className="grid h-115 w-full grid-cols-3 gap-3 md:gap-4">
-          {(previewImages.length > 0
-            ? previewImages
-            : Array.from({ length: 3 }).map(() => null)
-          ).map((img, index) => {
-            const seed = `${slug}-${index}`
-            const from = getDirectionBySeed(seed)
+        <div className="w-full">
+          <div className="md:hidden">
+            <Carousel opts={{ align: "start", loop: true }} className="w-full">
+              <CarouselContent>
+                {(previewImages.length > 0
+                  ? previewImages
+                  : Array.from({ length: 3 }).map(() => null)
+                ).map((img, index) => {
+                  const seed = `${slug}-mobile-${index}`
+                  return (
+                    <CarouselItem key={seed}>
+                      <div className="relative h-[420px] overflow-hidden rounded-2xl border border-border/40 bg-muted/20">
+                        {img ? (
+                          <div
+                            className="absolute inset-0 bg-no-repeat bg-contain bg-center"
+                            style={{ backgroundImage: `url(${img})` }}
+                          />
+                        ) : (
+                          <>
+                            <div className="absolute inset-0 bg-gradient-to-br from-primary/25 via-transparent to-primary/10" />
+                            <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(255,255,255,0.22),transparent_55%)]" />
+                          </>
+                        )}
+                      </div>
+                    </CarouselItem>
+                  )
+                })}
+              </CarouselContent>
+              <CarouselPrevious className="left-3 top-1/2 -translate-y-1/2" />
+              <CarouselNext className="right-3 top-1/2 -translate-y-1/2" />
+            </Carousel>
+          </div>
 
-            return (
-              <motion.div
-                key={seed}
-                initial={{ opacity: 0, x: from.x, y: from.y, filter: "blur(8px)" }}
-                animate={{ opacity: 1, x: 0, y: 0, filter: "blur(0px)" }}
-                transition={{ duration: 0.55, ease: "easeOut", delay: index * 0.08 }}
-                whileHover={{ scale: 0.98 }}
-                className="relative overflow-hidden rounded-2xl border border-border/40 bg-muted/20"
-              >
-                {img ? (
-                  <div
-                    className="absolute inset-0 bg-cover bg-center"
-                    style={{ backgroundImage: `url(${img})` }}
-                  />
-                ) : (
-                  <>
-                    <div className="absolute inset-0 bg-gradient-to-br from-primary/25 via-transparent to-primary/10" />
-                    <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(255,255,255,0.22),transparent_55%)]" />
-                  </>
-                )}
-              </motion.div>
-            )
-          })}
+          <div className="hidden h-115 grid-cols-3 gap-3 md:grid md:gap-4">
+            {(previewImages.length > 0
+              ? previewImages
+              : Array.from({ length: 3 }).map(() => null)
+            ).map((img, index) => {
+              const seed = `${slug}-${index}`
+              const from = getDirectionBySeed(seed)
+
+              return (
+                <motion.div
+                  key={seed}
+                  initial={{ opacity: 0, x: from.x, y: from.y, filter: "blur(8px)" }}
+                  animate={{ opacity: 1, x: 0, y: 0, filter: "blur(0px)" }}
+                  transition={{ duration: 0.55, ease: "easeOut", delay: index * 0.08 }}
+                  whileHover={{ scale: 0.98 }}
+                  className="relative overflow-hidden rounded-2xl border border-border/40 bg-muted/20"
+                >
+                  {img ? (
+                    <div
+                      className="absolute inset-0 bg-cover bg-center"
+                      style={{ backgroundImage: `url(${img})` }}
+                    />
+                  ) : (
+                    <>
+                      <div className="absolute inset-0 bg-gradient-to-br from-primary/25 via-transparent to-primary/10" />
+                      <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(255,255,255,0.22),transparent_55%)]" />
+                    </>
+                  )}
+                </motion.div>
+              )
+            })}
+          </div>
         </div>
       </div>
     </Glass>
