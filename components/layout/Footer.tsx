@@ -1,24 +1,55 @@
 "use client"
 
-import { useState } from "react"
+import { useCallback, useEffect, useRef, type CSSProperties, type MouseEvent } from "react"
 import Link from "next/link"
 import { Container } from "./Container"
 import { Magnetic } from "@/components/shared/Magnetic"
 import { Github, Linkedin, Mail } from "lucide-react"
 
 export function Footer() {
-  const [position, setPosition] = useState({ x: 0, y: 0 })
+  const footerRef = useRef<HTMLElement | null>(null)
+  const rafRef = useRef<number | null>(null)
+  const pointerRef = useRef({ x: 0, y: 0 })
+
+  useEffect(() => {
+    return () => {
+      if (rafRef.current !== null) {
+        cancelAnimationFrame(rafRef.current)
+      }
+    }
+  }, [])
+
+  const handleMouseMove = useCallback(
+    (e: MouseEvent<HTMLElement>) => {
+      const rect = e.currentTarget.getBoundingClientRect()
+      pointerRef.current = {
+        x: e.clientX - rect.left,
+        y: e.clientY - rect.top,
+      }
+
+      if (rafRef.current !== null) return
+      rafRef.current = requestAnimationFrame(() => {
+        if (footerRef.current) {
+          footerRef.current.style.setProperty("--mx", `${pointerRef.current.x}px`)
+          footerRef.current.style.setProperty("--my", `${pointerRef.current.y}px`)
+        }
+        rafRef.current = null
+      })
+    },
+    []
+  )
 
   return (
     <footer
+      ref={footerRef}
       className="relative mt-20 bg-background/60 backdrop-blur-xl overflow-hidden"
-      onMouseMove={(e) => {
-        const rect = e.currentTarget.getBoundingClientRect()
-        setPosition({
-          x: e.clientX - rect.left,
-          y: e.clientY - rect.top,
-        })
-      }}
+      onMouseMove={handleMouseMove}
+      style={
+        {
+          "--mx": "50%",
+          "--my": "50%",
+        } as CSSProperties
+      }
     >
       {/* Moving Gradient Line */}
       <div className="absolute top-0 left-0 w-full h-px footer-gradient-line opacity-60" />
@@ -31,7 +62,7 @@ export function Footer() {
         className="pointer-events-none absolute inset-0 opacity-40"
         style={{
           background: `radial-gradient(
-            600px circle at ${position.x}px ${position.y}px,
+            600px circle at var(--mx) var(--my),
             rgba(124, 59, 237, 0.15),
             transparent 60%
           )`,
@@ -93,6 +124,7 @@ export function Footer() {
                 <a
                   href="https://github.com/yourusername"
                   target="_blank"
+                  rel="noopener noreferrer"
                   className="text-muted-foreground hover:text-primary transition-colors"
                 >
                   <Github size={18} className="footer-icon" />
@@ -103,6 +135,7 @@ export function Footer() {
                 <a
                   href="https://linkedin.com/in/yourusername"
                   target="_blank"
+                  rel="noopener noreferrer"
                   className="text-muted-foreground hover:text-primary transition-colors"
                 >
                   <Linkedin size={18} className="footer-icon" />
