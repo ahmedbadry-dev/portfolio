@@ -1,9 +1,11 @@
 import Link from "next/link"
+import { motion } from "framer-motion"
 import { ArrowUpRight } from "lucide-react"
 import { Glass } from "@/components/shared/Glass"
 import { TagPills } from "@/components/shared/TagPills"
 import { MetricBadge } from "@/components/shared/MetricBadge"
 import { Button } from "@/components/ui/button"
+import type { ProjectScreenshots } from "@/data/projects"
 
 interface WorkShowcaseCardProps {
   slug: string
@@ -13,6 +15,7 @@ interface WorkShowcaseCardProps {
   lighthouse?: number
   ttfb?: number
   imageCount?: number
+  screenshots?: ProjectScreenshots
 }
 
 export function WorkShowcaseCard({
@@ -23,6 +26,7 @@ export function WorkShowcaseCard({
   lighthouse,
   ttfb,
   imageCount,
+  screenshots,
 }: WorkShowcaseCardProps) {
   const metrics: Array<{ label: string; value: string | number }> = []
 
@@ -36,9 +40,24 @@ export function WorkShowcaseCard({
     metrics.push({ label: "Screens", value: imageCount })
   }
 
+  const previewImages = (screenshots?.mobile?.length
+    ? screenshots.mobile
+    : screenshots?.desktop ?? []
+  ).slice(0, 3)
+  const directionOffsets = [
+    { x: 0, y: -56 },
+    { x: 0, y: 56 },
+    { x: -56, y: 0 },
+    { x: 56, y: 0 },
+  ]
+  const getDirectionBySeed = (seed: string) => {
+    const hash = seed.split("").reduce((acc, ch) => acc + ch.charCodeAt(0), 0)
+    return directionOffsets[hash % directionOffsets.length]
+  }
+
   return (
     <Glass className="rounded-3xl p-6 md:p-8 lg:p-10">
-      <div className="grid gap-8 lg:grid-cols-[1fr_1fr] lg:gap-10">
+      <div className="grid gap-8 lg:grid-cols-[1fr_1.5fr] lg:gap-10">
         <div className="flex min-w-0 flex-col justify-between gap-8">
           <div className="space-y-5">
             <h3 className="text-2xl font-semibold tracking-tight md:text-3xl">
@@ -70,19 +89,37 @@ export function WorkShowcaseCard({
           </div>
         </div>
 
-        <div className="grid grid-cols-2 gap-3 md:gap-4">
-          {Array.from({ length: 4 }).map((_, index) => (
-            <div
-              key={index}
-              className="relative aspect-[4/3] overflow-hidden rounded-2xl border border-border/40 bg-muted/20"
-            >
-              <div className="absolute inset-0 bg-gradient-to-br from-primary/25 via-transparent to-primary/10" />
-              <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(255,255,255,0.22),transparent_55%)]" />
-              <div className="absolute bottom-3 left-3 rounded-full border border-border/50 bg-background/60 px-2.5 py-1 text-[11px] text-muted-foreground backdrop-blur">
-                Preview {index + 1}
-              </div>
-            </div>
-          ))}
+        <div className="grid h-115 w-full grid-cols-3 gap-3 md:gap-4">
+          {(previewImages.length > 0
+            ? previewImages
+            : Array.from({ length: 3 }).map(() => null)
+          ).map((img, index) => {
+            const seed = `${slug}-${index}`
+            const from = getDirectionBySeed(seed)
+
+            return (
+              <motion.div
+                key={seed}
+                initial={{ opacity: 0, x: from.x, y: from.y, filter: "blur(8px)" }}
+                animate={{ opacity: 1, x: 0, y: 0, filter: "blur(0px)" }}
+                transition={{ duration: 0.55, ease: "easeOut", delay: index * 0.08 }}
+                whileHover={{ scale: 0.98 }}
+                className="relative overflow-hidden rounded-2xl border border-border/40 bg-muted/20"
+              >
+                {img ? (
+                  <div
+                    className="absolute inset-0 bg-cover bg-center"
+                    style={{ backgroundImage: `url(${img})` }}
+                  />
+                ) : (
+                  <>
+                    <div className="absolute inset-0 bg-gradient-to-br from-primary/25 via-transparent to-primary/10" />
+                    <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(255,255,255,0.22),transparent_55%)]" />
+                  </>
+                )}
+              </motion.div>
+            )
+          })}
         </div>
       </div>
     </Glass>

@@ -19,10 +19,11 @@ import {
 } from "framer-motion"
 import { cn } from "@/lib/cn"
 import { motionDuration, motionEase } from "@/lib/motion"
+import type { ProjectScreenshots } from "@/data/projects"
 
 interface CaseImageCarouselProps {
   title: string
-  screenshots?: string[]
+  screenshots?: ProjectScreenshots
 }
 
 const AUTO_PLAY_INTERVAL_MS = 3800
@@ -102,7 +103,13 @@ function CaseImageCarouselComponent({
   const reduceMotion = Boolean(useReducedMotion())
   const rootRef = useRef<HTMLDivElement>(null)
   const slides = useMemo(
-    () => (screenshots && screenshots.length > 0 ? screenshots : ["/window.svg"]),
+    () => {
+      const desktop = screenshots?.desktop ?? []
+      const mobile = screenshots?.mobile ?? []
+      if (desktop.length > 0) return desktop
+      if (mobile.length > 0) return mobile
+      return ["/window.svg"]
+    },
     [screenshots]
   )
   const [activeIndex, setActiveIndex] = useState(0)
