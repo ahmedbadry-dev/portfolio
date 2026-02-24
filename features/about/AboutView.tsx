@@ -6,6 +6,8 @@ import { Container } from "@/components/layout/Container"
 import { AboutDeepDiveTabs } from "@/features/about/components/AboutDeepDiveTabs"
 import Reveal from "@/features/animations/motion/Reveal"
 import type { AboutPageData } from "@/services/aboutService"
+import me from '@/public/me/me1.png'
+import LightRays from "@/components/LightRays"
 
 type AboutViewProps = {
   data: AboutPageData
@@ -23,11 +25,14 @@ export function AboutView({ data }: AboutViewProps) {
   return (
     <div className="py-32">
       <Container>
-        <div className="mx-auto max-w-[900px] space-y-32">
-          <section id="hero" className="space-y-8">
-            <div className="grid items-start gap-8 md:grid-cols-[1fr_auto] md:gap-10">
+        <div className="relative mx-auto max-w-5xl space-y-32">
+          <section id="hero" className="relative isolate space-y-8">
+            <div className="pointer-events-none absolute inset-0 -z-10 opacity-35">
+              <LightRays raysColor="#7c3bed" raysSpeed={1.15} lightSpread={1.25} fadeDistance={1.05} />
+            </div>
+            <div className="grid items-center gap-8 md:grid-cols-[1.5fr_1fr] md:gap-10">
               <Reveal className="order-2 space-y-5 md:order-1" delay={0.04}>
-                <h1 className="max-w-3xl text-4xl font-semibold tracking-tight md:text-5xl md:leading-[1.05]">
+                <h1 className="max-w-3xl text-4xl font-medium tracking-tight md:text-5xl md:leading-[1.05]">
                   {aboutHero.title}
                 </h1>
                 <div className="h-px w-14 bg-border" />
@@ -50,9 +55,9 @@ export function AboutView({ data }: AboutViewProps) {
               </Reveal>
 
               <Reveal className="order-1 md:order-2" delay={0.1}>
-                <div className="aspect-square w-32 overflow-hidden rounded-lg border border-border bg-card sm:w-36 md:w-40">
+                <div className="aspect-square w-full overflow-hidden rounded-lg border border-border bg-card">
                   <Image
-                    src="/me.png"
+                    src={me}
                     alt="Portrait photo"
                     width={160}
                     height={160}
@@ -191,3 +196,5 @@ export function AboutView({ data }: AboutViewProps) {
     </div>
   )
 }
+
+
