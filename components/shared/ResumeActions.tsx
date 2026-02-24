@@ -115,7 +115,7 @@ export function ResumeActions({
 
   return (
     <div className={cn("flex items-center gap-2", className)}>
-      <Button asChild variant={"secondary"} className="h-11 px-6 rounded-full text-sm shadow-md transition sm:px-8 sm:text-base hover:text-primary">
+      <Button asChild variant={"outline"} className="h-11 px-6 rounded-full text-sm shadow-md transition sm:px-8 sm:text-base hover:text-primary">
         <a href={pdfPath} download={fileName}>
           Download Resume
         </a>
