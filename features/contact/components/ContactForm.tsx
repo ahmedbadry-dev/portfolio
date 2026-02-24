@@ -34,6 +34,7 @@ export default function ContactForm() {
     handleSubmit,
     reset,
     control,
+    register,
     formState: { isSubmitting },
   } = useForm<ContactInput>({
     resolver: zodResolver(contactSchema),
@@ -47,27 +48,33 @@ export default function ContactForm() {
   })
 
   async function onSubmit(values: ContactInput) {
-    const promise = fetch("/api/contact", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(values),
-    })
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(values),
+      })
 
-    toast.promise(promise, {
-      loading: "Sending message...",
-      success: async () => {
-        reset()
-        return "Message sent successfully 🚀"
-      },
-      error: async (res) => {
+      if (!response.ok) {
+        let message = "Something went wrong"
         try {
-          const data = await res.json()
-          return data?.message || "Something went wrong"
+          const data: { message?: string } = await response.json()
+          if (data.message) {
+            message = data.message
+          }
         } catch {
-          return "Something went wrong"
+          // Keep fallback message.
         }
-      },
-    })
+        throw new Error(message)
+      }
+
+      toast.success("Message sent successfully")
+      reset()
+    } catch (error) {
+      const message =
+        error instanceof Error ? error.message : "Something went wrong"
+      toast.error(message)
+    }
   }
 
   return (
@@ -82,7 +89,7 @@ export default function ContactForm() {
               className="hidden"
               tabIndex={-1}
               autoComplete="off"
-              {...control.register?.("website")}
+              {...register("website")}
             />
 
             {/* Name */}

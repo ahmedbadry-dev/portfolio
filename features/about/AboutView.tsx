@@ -39,7 +39,10 @@ export function AboutView({ data }: AboutViewProps) {
                     <Link href="/work">View Work</Link>
                   </Button>
                   <Button asChild variant="outline">
-                    <a href="/resume.pdf" target="_blank" rel="noreferrer">
+                    <a
+                      href="/cv/cv.pdf"
+                      download="cv.pdf"
+                    >
                       Download Resume
                     </a>
                   </Button>

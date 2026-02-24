@@ -1,13 +1,14 @@
 "use client"
 
 import { motion } from "framer-motion"
-import { Button, buttonVariants } from "@/components/ui/button"
+import { buttonVariants } from "@/components/ui/button"
 import {
     StaggerContainer,
     StaggerItem,
 } from "@/features/animations/motion/Stagger"
 import Link from "next/link"
 import { cn } from "@/lib/utils"
+import { ResumeActions } from "@/components/shared/ResumeActions"
 
 function AnimatedHeadline({
     text,
@@ -96,11 +97,7 @@ export default function HeroContent() {
                             View Work
                         </Link>
 
-                        <Link href={'#'}
-                            className={cn(buttonVariants({ variant: "secondary" }), 'h-11 rounded-full px-6 text-sm transition sm:px-8 sm:text-base')}
-                        >
-                            Download Resume
-                        </Link>
+                        <ResumeActions />
                     </div>
                 </StaggerItem>
 
