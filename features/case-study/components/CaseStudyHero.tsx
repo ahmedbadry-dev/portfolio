@@ -11,17 +11,17 @@ type CaseStudyHeroProps = {
 
 export function CaseStudyHero({ project }: CaseStudyHeroProps) {
   return (
-    <section id="summary" className="space-y-8">
-      <div className="space-y-4">
-        <h1 className="text-3xl font-semibold tracking-tight md:text-4xl">
+    <section id="summary" className="space-y-6 md:space-y-8">
+      <div className="space-y-3 md:space-y-4">
+        <h1 className="text-2xl font-semibold tracking-tight sm:text-3xl md:text-4xl">
           {project.meta.title}
         </h1>
-        <p className="max-w-3xl leading-relaxed text-muted-foreground">
+        <p className="max-w-3xl text-sm leading-relaxed text-muted-foreground sm:text-base">
           {project.shortDescription}
         </p>
       </div>
 
-      <div className="space-y-4">
+      <div className="space-y-3 md:space-y-4">
         <div className="flex flex-wrap gap-2">
           <span className="rounded-full border border-border/60 px-3 py-1 text-xs text-muted-foreground">
             {project.meta.type}
@@ -30,7 +30,7 @@ export function CaseStudyHero({ project }: CaseStudyHeroProps) {
             {project.meta.status}
           </span>
         </div>
-        <TagPills tags={project.meta.tags} />
+        <TagPills tags={project.meta.tags} tagClassName="px-3 py-1 text-xs sm:text-sm" />
         <BitsLogoLoop stack={project.meta.stack} />
       </div>
 

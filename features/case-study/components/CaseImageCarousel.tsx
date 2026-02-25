@@ -71,7 +71,7 @@ const CarouselDots = memo(function CarouselDots({
   onSelect: (index: number) => void
 }) {
   return (
-    <div className="mt-4 flex justify-center gap-2">
+    <div className="flex justify-center gap-2">
       {Array.from({ length: slidesLength }).map((_, index) => {
         const isActive = index === activeIndex
 
@@ -196,7 +196,7 @@ function CaseImageCarouselComponent({
         transition={{ duration: motionDuration.reveal, ease: motionEase.standard }}
         className="group relative isolate overflow-hidden rounded-2xl [contain:layout_paint_style]"
       >
-        <motion.div className="relative aspect-[16/8] w-full" style={{ y: parallaxY }}>
+        <motion.div className="relative aspect-[16/10] w-full sm:aspect-[16/8]" style={{ y: parallaxY }}>
           <AnimatePresence mode="sync">
             <CarouselSlide
               src={slides[safeIndex]}
@@ -218,11 +218,13 @@ function CaseImageCarouselComponent({
         Slide {safeIndex + 1} of {slides.length}
       </p>
 
-      <CarouselDots
-        slidesLength={slides.length}
-        activeIndex={safeIndex}
-        onSelect={goToSlide}
-      />
+      <div className="mt-3 md:mt-4">
+        <CarouselDots
+          slidesLength={slides.length}
+          activeIndex={safeIndex}
+          onSelect={goToSlide}
+        />
+      </div>
     </div>
   )
 }

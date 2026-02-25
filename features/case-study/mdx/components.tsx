@@ -4,7 +4,7 @@ import { Dot } from "lucide-react"
 
 export const mdxComponents = {
   h1: (props: ComponentPropsWithoutRef<"h1">) => (
-    <h1 className="text-4xl font-medium tracking-tight mb-6" {...props} />
+    <h1 className="mb-6 text-3xl font-medium tracking-tight md:text-4xl" {...props} />
   ),
 
   h2: (props: ComponentPropsWithoutRef<"h2">) => (
