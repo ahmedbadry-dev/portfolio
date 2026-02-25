@@ -8,10 +8,10 @@ import { engineeringPrinciples } from "@/data/home"
 
 export function EngineeringPrinciples() {
   return (
-    <section className="relative py-40">
+    <section className="relative py-20 md:py-32 lg:py-40">
       <Container>
-        <div className="mx-auto max-w-2xl text-center space-y-6 mb-24">
-          <h2 className="text-4xl font-medium tracking-tight">
+        <div className="mx-auto mb-12 max-w-2xl space-y-4 text-center md:mb-16 md:space-y-6 lg:mb-24">
+          <h2 className="text-3xl font-medium tracking-tight md:text-4xl">
             Engineering Principles
           </h2>
           <p className="text-muted-foreground leading-relaxed">
@@ -21,7 +21,7 @@ export function EngineeringPrinciples() {
           </p>
         </div>
 
-        <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-4 sm:gap-6 md:grid-cols-2 lg:grid-cols-3 lg:gap-10">
           {engineeringPrinciples.map((item, index) => (
             <motion.div
               key={item.title}
@@ -32,9 +32,9 @@ export function EngineeringPrinciples() {
             >
               <motion.div whileHover={{ y: -6 }} transition={{ duration: 0.3 }}>
                 <Magnetic strength={30}>
-                  <Glass className="p-10 rounded-3xl border border-border/40 backdrop-blur-2xl transition-all duration-300 hover:shadow-[0_0_40px_rgba(124,59,237,0.15)]">
-                    <div className="space-y-6">
-                      <h3 className="text-xl font-medium tracking-tight">
+                  <Glass className="rounded-3xl border border-border/40 p-6 backdrop-blur-2xl transition-all duration-300 hover:shadow-[0_0_40px_rgba(124,59,237,0.15)] sm:p-8 lg:p-10">
+                    <div className="space-y-4 sm:space-y-6">
+                      <h3 className="text-lg font-medium tracking-tight sm:text-xl">
                         {item.title}
                       </h3>
 

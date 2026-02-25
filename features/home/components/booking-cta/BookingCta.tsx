@@ -8,7 +8,7 @@ import Link from "next/link"
 
 export function BookingCta() {
   return (
-    <section className="relative py-40 overflow-hidden">
+    <section className="relative overflow-hidden py-20 md:py-32 lg:py-40">
       <div className="pointer-events-none absolute inset-0 -z-10 bg-gradient-to-b from-background via-background to-primary/10" />
 
       <Container>
@@ -17,10 +17,10 @@ export function BookingCta() {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
           viewport={{ once: true }}
-          className="mx-auto max-w-3xl text-center space-y-10"
+          className="mx-auto max-w-3xl space-y-6 text-center md:space-y-10"
         >
           <ShinyText
-            className=" text-4xl md:text-5xl font-medium tracking-tight leading-tight"
+            className="text-3xl font-medium leading-tight tracking-tight sm:text-4xl md:text-5xl"
             text="Let's Build Something Structured & Scalable."
             speed={2}
             delay={0}
@@ -33,7 +33,7 @@ export function BookingCta() {
             disabled={false}
           />
 
-          <p className="text-muted-foreground text-lg leading-relaxed">
+          <p className="text-base leading-relaxed text-muted-foreground md:text-lg">
             If you&apos;re building a serious product and care about
             performance, architecture, and intentional UX, let&apos;s collaborate.
           </p>
@@ -41,7 +41,7 @@ export function BookingCta() {
           <Magnetic strength={25}>
             <Link
               href="/contact"
-              className="inline-flex items-center justify-center rounded-full px-10 py-4 text-lg font-medium transition-all duration-300 bg-primary text-primary-foreground hover:shadow-[0_0_40px_rgba(124,59,237,0.45)]"
+              className="inline-flex w-full items-center justify-center rounded-full bg-primary px-8 py-3.5 text-base font-medium text-primary-foreground transition-all duration-300 hover:shadow-[0_0_40px_rgba(124,59,237,0.45)] sm:w-auto sm:px-10 sm:py-4 sm:text-lg"
             >
               Start a Conversation
             </Link>

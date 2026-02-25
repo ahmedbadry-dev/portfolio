@@ -53,21 +53,21 @@ function AnimatedHeadline({
 
 export default function HeroContent() {
     return (
-        <div className="space-y-7 text-center sm:space-y-9 lg:text-left">
+        <div className="space-y-6 text-center sm:space-y-8 lg:text-left">
             <StaggerContainer className="space-y-5 sm:space-y-6">
 
                 <StaggerItem>
                     <AnimatedHeadline
                         text="Ahmed Badry"
-                        className="text-4xl font-medium leading-[1.05] tracking-tight md:text-5xl lg:text-6xl"
+                        className="text-3xl font-medium leading-[1.05] tracking-tight sm:text-4xl md:text-5xl lg:text-6xl"
                     />
                 </StaggerItem>
 
 
                 <StaggerItem>
-                    <h2 className="text-lg font-medium text-muted-foreground sm:text-xl lg:text-3xl">
-                        <span className="mr-5">Frontend</span>
-                        <div className="relative inline-block px-6 py-4">
+                    <h2 className="flex flex-col items-center gap-3 text-lg font-medium text-muted-foreground md:flex-row md:justify-center sm:text-xl lg:items-start lg:text-3xl">
+                        <span>Frontend</span>
+                        <div className="relative inline-block px-5 py-3 sm:px-6 sm:py-4">
                             <span className="text-lg font-medium text-white sm:text-xl lg:text-3xl">
                                 Specialist
                             </span>
@@ -82,17 +82,17 @@ export default function HeroContent() {
                 </StaggerItem>
 
                 <StaggerItem>
-                    <div className="space-y-2 text-base text-muted-foreground sm:space-y-3 sm:text-lg">
+                    <div className="space-y-2 text-sm text-muted-foreground sm:space-y-3 sm:text-base lg:text-lg">
                         <p>Building cutting-edge web experiences</p>
                         <p>Elevating performance & design</p>
                     </div>
                 </StaggerItem>
 
                 <StaggerItem>
-                    <div className="flex flex-row items-center justify-center gap-3 pt-2 sm:gap-4 lg:justify-start lg:gap-5 lg:pt-4">
+                    <div className="flex w-full flex-col items-stretch justify-center gap-3 pt-2 sm:flex-row sm:items-center sm:gap-4 lg:justify-start lg:gap-5 lg:pt-4">
                         <Link
                             href={'/work'}
-                            className={cn(buttonVariants(), 'h-11 px-6 text-sm shadow-md transition sm:px-8 sm:text-base')}
+                            className={cn(buttonVariants(), 'h-11 w-full px-6 text-sm shadow-md transition sm:w-auto sm:px-8 sm:text-base')}
                         >
                             View Work
                         </Link>
