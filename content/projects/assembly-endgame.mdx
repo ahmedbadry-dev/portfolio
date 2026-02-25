@@ -1,0 +1,97 @@
+﻿---
+title: 'Assembly Endgame'
+slug: 'assembly-endgame'
+type: 'frontend'
+status: 'production'
+stack:
+  - React 19
+  - TypeScript
+  - Tailwind CSS v4
+  - Vite 7
+---
+
+## Overview
+
+Assembly Endgame is a Hangman-style browser game built with React and TypeScript.
+
+Game rules are isolated inside a custom hook, ensuring deterministic state transitions and synchronized visual feedback.
+
+---
+
+## The Problem
+
+Implement a word guessing game that:
+
+- Tracks correct and incorrect guesses
+- Limits attempts to 8 wrong guesses
+- Locks input after terminal state
+- Maps life loss visually
+- Supports replay lifecycle
+
+---
+
+## Architecture Strategy
+
+Layer-based separation:
+
+hooks/ -> useGameLogic
+components/ -> UI blocks
+data/ -> static datasets
+types/ -> GameState definitions
+
+Game logic fully encapsulated in the custom hook.
+
+---
+
+## Performance Strategy
+
+- Functional state updates to avoid stale transitions.
+- Single in-memory state object.
+- O(n) evaluation for guesses.
+- Conditional confetti rendering only on win.
+
+No network calls or async logic.
+
+---
+
+## Security & Validation
+
+- Duplicate guess prevention.
+- Input locked when game not in playing state.
+- Controlled keyboard input surface.
+- Disabled guessed buttons.
+
+---
+
+## Complex Engineering Challenges
+
+- Deterministic state transition modeling.
+- Synchronizing life overlays with state.
+- Preventing stale state bugs.
+- Ensuring win detection correctness.
+
+---
+
+## Deep Architecture
+
+(See architecture visual below.)
+
+---
+
+## What I Learned
+
+- Domain logic belongs in custom hooks.
+- Functional updates prevent stale state issues.
+- Derived status simplifies transition complexity.
+- UI must reflect state deterministically.
+
+---
+
+## Outcome
+
+Delivered a fully playable browser game with:
+
+- Deterministic state transitions
+- Visual life-to-overlay mapping
+- Win celebration effect
+- Replay lifecycle handling

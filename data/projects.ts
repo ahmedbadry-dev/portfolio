@@ -1,10 +1,10 @@
 export type ProjectMeta = {
   slug: string
   title: string
-  type: 'fullstack' | 'frontend' | 'system'
+  type: "fullstack" | "frontend" | "system" | "SPA"
   tags: string[]
   stack: string[]
-  status: 'production' | 'in-progress'
+  status: "production" | "in-progress" | "Completed"
 }
 
 export type ProjectDetails = {
@@ -51,8 +51,8 @@ export type Project = {
   description: string
   tags: string[]
   stack: string[]
-  type: ProjectMeta['type']
-  status: ProjectMeta['status']
+  type: ProjectMeta["type"]
+  status: ProjectMeta["status"]
   lighthouse?: number
   ttfb?: number
   imageCount?: number
@@ -62,173 +62,311 @@ export type Project = {
 const projectRecords: ProjectRecord[] = [
   {
     meta: {
-      slug: 'habit-tracker',
-      title: 'Habit Tracker',
-      type: 'fullstack',
-      tags: ['Next.js', 'Fullstack'],
-      stack: ['Next.js', 'TypeScript', 'Convex', 'TailwindCSS'],
-      status: 'production',
+      slug: "habit-tracker",
+      title: "Habit Tracker",
+      type: "fullstack",
+      tags: ["Next.js", "Fullstack", "TypeScript"],
+      stack: [
+        "Next.js 16",
+        "TypeScript",
+        "Convex",
+        "Better Auth",
+        "Tailwind CSS v4",
+      ],
+      status: "production",
     },
     shortDescription:
-      'Habit tracking system focused on low-latency interactions and predictable UX.',
+      "Real-time habit tracking platform with server-side streak computation and optimistic UI.",
     seo: {
-      title: 'Habit Tracker Case Study',
+      title: "Habit Tracker Case Study",
       description:
-        'Server-first habit tracking platform with measurable rendering and latency improvements.',
+        "Server-authoritative habit tracking system with realtime UX and scalable data modeling.",
     },
     details: {
       highlights: [
-        'Server-first route strategy with controlled client islands',
-        'Static-first content model for predictable delivery',
-        'Strict feature boundaries to reduce regression risk',
+        "Hybrid server/client rendering with auth-aware preloading",
+        "Server-authoritative streak and completion logic",
+        "Realtime updates with optimistic interactions",
       ],
       architecture: {
-        rendering:
-          'App Router server components with selective client hydration',
-        data: 'Static metadata layer + MDX narrative source',
-        domain: 'Habit planning, activity tracking, and consistency workflows',
-        performance: 'Reduced hydration and improved route interaction latency',
+        rendering: "App Router with selective client components and Suspense boundaries",
+        data: "Convex schema using userId, habitId, and dateKey-based query patterns",
+        domain:
+          "Daily and weekly habits supporting both boolean and numeric completion models",
+        performance: "Bounded history reads with optimistic mutations and lightweight animation",
       },
       complexity: [
-        'UI/State coordination across filter-heavy screens',
-        'Balancing interactive UX with server-first rendering',
+        "Weekly completion derived from date-window aggregation",
+        "Accurate longest/current streak calculation across modes",
       ],
       security: [
-        'Server action boundaries for form inputs',
-        'Strict data ownership between route and feature layers',
+        "Ownership checks on all mutations",
+        "Validator-first input constraints in forms and Convex functions",
       ],
       lessons: [
-        'Architectural clarity removes performance bottlenecks early',
-        'Explicit boundaries simplify long-term iteration',
+        "Schema design should follow query patterns rather than UI shape",
+        "Optimistic UX is safest when business rules stay server-side",
       ],
     },
     metrics: {
       lighthouse: 90,
       ttfb: 120,
     },
-    imageCount: 8,
+    imageCount: 12,
     screenshots: {
       desktop: [
-        '/screenshots/habit-tracker/crs-1.png',
-        '/screenshots/habit-tracker/crs-2.png',
-        '/screenshots/habit-tracker/crs-3.png',
-        '/screenshots/habit-tracker/crs-4.png',
-        '/screenshots/habit-tracker/crs-5.png',
-        '/screenshots/habit-tracker/crs-6.png',
-        '/screenshots/habit-tracker/crs-7.png',
+        "/screenshots/habit-tracker/crs-1.png",
+        "/screenshots/habit-tracker/crs-2.png",
+        "/screenshots/habit-tracker/crs-3.png",
+        "/screenshots/habit-tracker/crs-4.png",
+        "/screenshots/habit-tracker/crs-5.png",
+        "/screenshots/habit-tracker/crs-6.png",
+        "/screenshots/habit-tracker/crs-7.png",
       ],
       mobile: [
-        '/screenshots/habit-tracker/mobile/mob-3.png',
-        '/screenshots/habit-tracker/mobile/mob-1.png',
-        '/screenshots/habit-tracker/mobile/mob-4.png',
-        '/screenshots/habit-tracker/mobile/mob-2.png',
-        '/screenshots/habit-tracker/mobile/mob-5.png',
+        "/screenshots/habit-tracker/mobile/mob-1.png",
+        "/screenshots/habit-tracker/mobile/mob-2.png",
+        "/screenshots/habit-tracker/mobile/mob-3.png",
+        "/screenshots/habit-tracker/mobile/mob-4.png",
+        "/screenshots/habit-tracker/mobile/mob-5.png",
       ],
     },
   },
   {
     meta: {
-      slug: 'ecommerce',
-      title: 'E-Commerce Platform',
-      type: 'fullstack',
-      tags: ['Next.js', 'React', 'Fullstack', 'CSS/HTML'],
-      stack: ['Next.js', 'TypeScript', 'React', 'TailwindCSS'],
-      status: 'production',
+      slug: "splitter",
+      title: "Splitter",
+      type: "frontend",
+      tags: ["TypeScript", "Architecture", "Algorithm"],
+      stack: [
+        "TypeScript (Strict Mode)",
+        "Vite 7",
+        "Tailwind CSS v4",
+        "Vanilla DOM APIs",
+      ],
+      status: "production",
     },
     shortDescription:
-      'Commerce experience built for speed, conversion, and resilient architecture.',
+      "Client-side expense settlement engine with deterministic, float-safe debt simplification.",
     seo: {
-      title: 'E-Commerce Platform Case Study',
+      title: "Splitter Case Study",
       description:
-        'High-performance e-commerce frontend architecture with static-first and server-first decisions.',
+        "Expense splitting system using layered architecture and a two-pointer settlement algorithm.",
     },
     details: {
       highlights: [
-        'Separation of metadata and narrative content',
-        'Reusable feature modules for listing and case-study flows',
-        'Predictable rendering strategy across public routes',
+        "Service-layer settlement engine with sorted two-pointer resolution",
+        "Map-based indexing for O(1) identity checks and lookups",
+        "Float tolerance safeguards for deterministic financial output",
       ],
       architecture: {
-        rendering:
-          'Server components for routes, client components for interaction islands',
-        data: 'Normalized static data model with MDX-backed narratives',
-        domain: 'Catalog discovery and conversion-oriented browsing flows',
-        performance: 'Lean client bundles with explicit hydration boundaries',
-      },
-      complexity: [
-        'Maintaining visual richness with minimal runtime cost',
-        'Consistent routing and data contracts across feature modules',
-      ],
-      security: [
-        'No direct client trust for sensitive flows',
-        'Server-side boundaries for data handling',
-      ],
-      lessons: [
-        'UI quality and performance can coexist with clear architecture',
-        'Structured metadata enables faster iteration',
-      ],
-    },
-    metrics: {
-      lighthouse: 94,
-      ttfb: 140,
-    },
-    imageCount: 12,
-    screenshots: {
-      desktop: ['/globe.svg', '/window.svg', '/file.svg', '/next.svg'],
-      mobile: [],
-    },
-  },
-  {
-    meta: {
-      slug: 'product-feedback',
-      title: 'Product Feedback',
-      type: 'system',
-      tags: ['Next.js', 'React', 'CSS/HTML'],
-      stack: ['Next.js', 'TypeScript', 'MDX'],
-      status: 'in-progress',
-    },
-    shortDescription:
-      'Feedback management product with clear moderation flow and scalable component architecture.',
-    seo: {
-      title: 'Product Feedback Case Study',
-      description:
-        'System-focused case study covering architecture boundaries and static-first content strategy.',
-    },
-    details: {
-      highlights: [
-        'Structured moderation surface with predictable UI states',
-        'Feature-driven folder boundaries and route contracts',
-        'Reusable metadata + MDX narrative separation',
-      ],
-      architecture: {
-        rendering:
-          'Static generation for case pages with route-level server rendering',
-        data: 'Normalized project schema for UI and SEO metadata',
-        domain: 'Feedback triage, prioritization, and decision visibility',
+        rendering: "Client-side DOM rendering on a static HTML shell",
+        data: "In-memory entities with runtime validation at model boundaries",
+        domain:
+          "Expense tracking, net-balance computation, and settlement simplification",
         performance:
-          'Controlled transitions and low-overhead component composition',
+          "DocumentFragment batching and small O(n) passes per settlement run",
       },
       complexity: [
-        'Keeping architecture extensible while preserving simplicity',
-        'Balancing documentation depth with UI clarity',
+        "Settlement minimization with sorted creditor/debtor pointers",
+        "Preventing precision residue in repeated calculations",
       ],
       security: [
-        'Clear trust boundaries between route and interactive layers',
-        'Predictable data ownership by feature module',
+        "Input trimming and duplicate identity prevention",
+        "Defensive DOM resolution and UI-level error containment",
       ],
       lessons: [
-        'Normalized schemas reduce feature-coupling over time',
-        'Small, explicit contracts improve maintainability',
+        "Financial logic needs explicit numeric tolerance design",
+        "Layered boundaries improve reliability even in small apps",
       ],
     },
-    metrics: {
-      lighthouse: 94,
-      ttfb: 140,
-    },
-    imageCount: 12,
+    imageCount: 6,
     screenshots: {
-      desktop: ['/file.svg', '/window.svg', '/next.svg', '/globe.svg'],
-      mobile: [],
+      desktop: [
+        "/screenshots/splitter/crs-1.png",
+        "/screenshots/splitter/crs-2.png",
+      ],
+      mobile: [
+        "/screenshots/splitter/mobile/mob-1.png",
+        "/screenshots/splitter/mobile/mob-2.png",
+        "/screenshots/splitter/mobile/mob-3.png",
+        "/screenshots/splitter/mobile/mob-4.png",
+      ],
+    },
+  },
+  {
+    meta: {
+      slug: "product-feedback",
+      title: "Product Feedback",
+      type: "frontend",
+      tags: ["React", "Redux", "SPA"],
+      stack: [
+        "React 19",
+        "Redux Toolkit",
+        "React Router DOM 7",
+        "Tailwind CSS v4",
+        "Vite 7",
+      ],
+      status: "production",
+    },
+    shortDescription:
+      "SPA feedback lifecycle system with reducer-driven consistency across suggestions and comments.",
+    seo: {
+      title: "Product Feedback Case Study",
+      description:
+        "Redux-powered feedback board with route-driven UX flows and deterministic state transitions.",
+    },
+    details: {
+      highlights: [
+        "Centralized reducer logic for cross-entity consistency",
+        "Route-driven modal UX for add/edit lifecycle",
+        "Single-pass roadmap aggregation and memoized derivations",
+      ],
+      architecture: {
+        rendering: "Client-side SPA with nested routing",
+        data: "Denormalized local state with keyed comment lookup by suggestionId",
+        domain: "Suggestion, comment, and voting lifecycle management",
+        performance: "useMemo/useCallback optimization on derived and handler-heavy flows",
+      },
+      complexity: [
+        "Maintaining relational consistency without backend authority",
+        "Keeping route state and entity updates synchronized",
+      ],
+      security: [
+        "Required field and length validation for user input",
+        "Route guarding and destructive-action confirmation",
+      ],
+      lessons: [
+        "Denormalized state can speed reads but raises consistency overhead",
+        "Route-driven interaction can replace global UI state cleanly",
+      ],
+    },
+    imageCount: 9,
+    screenshots: {
+      desktop: [
+        "/screenshots/prodact-feadback/crs-1.png",
+        "/screenshots/prodact-feadback/crs-2.png",
+        "/screenshots/prodact-feadback/crs-3.png",
+        "/screenshots/prodact-feadback/crs-4.png",
+      ],
+      mobile: [
+        "/screenshots/prodact-feadback/mobile/mob-1.png",
+        "/screenshots/prodact-feadback/mobile/mob-2.png",
+        "/screenshots/prodact-feadback/mobile/mob-3.png",
+        "/screenshots/prodact-feadback/mobile/mob-4.png",
+        "/screenshots/prodact-feadback/mobile/mob-5.png",
+      ],
+    },
+  },
+  {
+    meta: {
+      slug: "assembly-endgame",
+      title: "Assembly Endgame",
+      type: "frontend",
+      tags: ["React", "TypeScript", "Game"],
+      stack: ["React 19", "TypeScript", "Tailwind CSS v4", "Vite 7"],
+      status: "production",
+    },
+    shortDescription:
+      "Hangman-style browser game with deterministic state transitions and synchronized visual feedback.",
+    seo: {
+      title: "Assembly Endgame Case Study",
+      description:
+        "React + TypeScript word game with custom-hook state modeling and win/loss flow control.",
+    },
+    details: {
+      highlights: [
+        "Custom hook encapsulating complete game rules and transitions",
+        "Input lock and duplicate-guess guards for deterministic gameplay",
+        "Life overlay synchronization with terminal-state logic",
+      ],
+      architecture: {
+        rendering: "Client-side UI with component-driven game board and keyboard",
+        data: "Static word and keyboard datasets with one in-memory game state",
+        domain: "Guess validation, lives management, and terminal-state derivation",
+        performance: "Single state object updates and conditional celebration rendering",
+      },
+      complexity: [
+        "Maintaining deterministic transitions under repeated inputs",
+        "Synchronizing visual life indicators with gameplay outcomes",
+      ],
+      security: [
+        "Duplicate guess prevention and terminal-state input locking",
+        "Controlled input surface with disabled interactions",
+      ],
+      lessons: [
+        "Domain logic is clearer when isolated in a dedicated hook",
+        "Derived state reduces bug-prone flag synchronization",
+      ],
+    },
+    imageCount: 7,
+    screenshots: {
+      desktop: [
+        "/screenshots/assembly-endgame/crs-1.png",
+        "/screenshots/assembly-endgame/crs-2.png",
+        "/screenshots/assembly-endgame/crs-3.png",
+        "/screenshots/assembly-endgame/crs-4.png",
+      ],
+      mobile: [
+        "/screenshots/assembly-endgame/mobile/mob-1.png",
+        "/screenshots/assembly-endgame/mobile/mob-2.png",
+        "/screenshots/assembly-endgame/mobile/mob-3.png",
+      ],
+    },
+  },
+  {
+    meta: {
+      slug: "tenzies",
+      title: "Tenzies",
+      type: "frontend",
+      tags: ["React", "TypeScript", "Game"],
+      stack: ["React 19", "TypeScript (Strict)", "Tailwind CSS v4", "Vite 7"],
+      status: "production",
+    },
+    shortDescription:
+      "Interactive dice game with selective reroll logic and strict value-lock rules.",
+    seo: {
+      title: "Tenzies Case Study",
+      description:
+        "React dice game focused on deterministic rule enforcement and immutable state updates.",
+    },
+    details: {
+      highlights: [
+        "Selective reroll preserving locked dice across turns",
+        "First-lock value enforcement for subsequent selections",
+        "Win-state derivation using immutable array transformations",
+      ],
+      architecture: {
+        rendering: "Client-side React composition with small presentational modules",
+        data: "Fixed-size dice array seeded locally and updated immutably",
+        domain: "Lock-and-roll game rules with replay lifecycle support",
+        performance: "Small O(n) operations with functional updates preventing stale reads",
+      },
+      complexity: [
+        "Enforcing value-match constraints after first user lock",
+        "Keeping replay reset and win derivation fully deterministic",
+      ],
+      security: [
+        "Semantic button-driven interactions only",
+        "Stable ID-based rendering and typed props",
+      ],
+      lessons: [
+        "Functional updates make transition logic safer",
+        "Simple data modeling can still support strict domain rules",
+      ],
+    },
+    imageCount: 6,
+    screenshots: {
+      desktop: [
+        "/screenshots/tenzies/crs-1.png",
+        "/screenshots/tenzies/crs-2.png",
+        "/screenshots/tenzies/crs-3.png",
+      ],
+      mobile: [
+        "/screenshots/tenzies/mobile/mob-1.png",
+        "/screenshots/tenzies/mobile/mob-2.png",
+        "/screenshots/tenzies/mobile/mob-3.png",
+      ],
     },
   },
 ]
@@ -251,7 +389,16 @@ function toProjectListItem(project: ProjectRecord): Project {
 
 export const projects: Project[] = projectRecords.map(toProjectListItem)
 
-export const projectTags = ['All', 'React', 'Next.js', 'Fullstack', 'CSS/HTML']
+export const projectTags = [
+  "All",
+  "React",
+  "Next.js",
+  "Fullstack",
+  "TypeScript",
+  "Redux",
+  "SPA",
+  "Game",
+]
 
 export function getProjectBySlug(slug: string): ProjectRecord | null {
   return projectRecords.find((project) => project.meta.slug === slug) ?? null
