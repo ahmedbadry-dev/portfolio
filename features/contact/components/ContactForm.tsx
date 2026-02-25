@@ -155,7 +155,7 @@ export default function ContactForm() {
                     </InputGroupAddon>
                   </InputGroup>
 
-                  <FieldDescription>
+                  <FieldDescription className="text-xs sm:text-base">
                     Include goals, timeline, and technical context.
                   </FieldDescription>
 

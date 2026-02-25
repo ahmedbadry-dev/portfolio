@@ -25,9 +25,6 @@ export function AboutView({ data }: AboutViewProps) {
   return (
     <div className="py-32">
       <Container className="relative">
-        <div className="pointer-events-none absolute -inset-32 -z-10">
-          <LightRays raysColor="#7c3bed" raysSpeed={1} lightSpread={0.5} fadeDistance={1.5} mouseInfluence={0} />
-        </div>
         <div className="relative mx-auto max-w-5xl space-y-32">
           <section id="hero" className="relative isolate space-y-8">
             <div className="grid items-center gap-8 md:grid-cols-[1.5fr_1fr] md:gap-10">

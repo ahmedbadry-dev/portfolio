@@ -1,0 +1,89 @@
+---
+title: 'Tenzies Dice Game'
+slug: 'tenzies'
+type: 'frontend'
+status: 'production'
+stack:
+  - React 19
+  - TypeScript (Strict)
+  - Tailwind CSS v4
+  - Vite 7
+---
+
+## Overview
+
+Tenzies is a browser-based dice game implementing selective reroll logic and value-lock enforcement through immutable state transitions.
+
+---
+
+## The Problem
+
+Build a deterministic dice game where:
+
+- Players lock dice
+- Only matching values can be locked after first selection
+- Only unlocked dice reroll
+- Win when all dice are locked
+
+---
+
+## Architecture Strategy
+
+- Main component owns state
+- Presentational components separated
+- Seed data stored in local module
+- Immutable updates via `map` and spread
+- Functional state transitions
+
+---
+
+## Performance Strategy
+
+- Small fixed array (10 dice)
+- O(n) state updates
+- Conditional confetti rendering
+- Functional updates prevent stale reads
+
+---
+
+## Security & Validation
+
+- Controlled input via semantic buttons
+- Rule-based lock enforcement
+- Typed components and props
+- Stable ID-based list rendering
+
+---
+
+## Complex Engineering Challenges
+
+- Enforcing first-lock value constraint
+- Selective reroll logic
+- Win derivation correctness
+- Replay reset flow
+
+---
+
+## Deep Architecture
+
+(See architecture visual below.)
+
+---
+
+## What I Learned
+
+- Derived state is cleaner than manual flags
+- Functional updates guarantee transition safety
+- Immutable updates simplify reasoning
+- Even small games benefit from architectural discipline
+
+---
+
+## Outcome
+
+Delivered a production-ready interactive dice game with:
+
+- Deterministic state transitions
+- Rule-based lock enforcement
+- Replay lifecycle
+- Automated CI deployment

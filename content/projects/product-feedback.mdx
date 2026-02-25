@@ -1,3 +1,118 @@
 ---
-title: ""
+title: 'Product Feedback System'
+slug: 'product-feedback'
+type: 'frontend'
+status: 'production'
+stack:
+  - React 19
+  - Redux Toolkit
+  - React Router DOM 7
+  - Tailwind CSS v4
+  - Vite 7
 ---
+
+## Overview
+
+Product Feedback is a client-side feedback lifecycle system built with React and Redux Toolkit.
+
+It models relational domain data (suggestions and comments) entirely in local state while enforcing cross-entity consistency through centralized reducers.
+
+---
+
+## The Problem
+
+A feedback board must support:
+
+- Suggestion CRUD
+- Comment lifecycle
+- Upvote toggling
+- Roadmap grouping
+- Derived state aggregation
+
+All without backend infrastructure.
+
+---
+
+## Architecture Strategy
+
+### Rendering Model
+
+Client-side SPA using nested routing.
+
+### State Architecture
+
+Single Redux slice:
+```ts
+{
+  suggestions: Suggestion[],
+  comments: { [suggestionId]: Comment[] }
+}
+```
+
+---
+
+### Routing Strategy
+
+- Route-driven modal pattern
+- Nested layout composition
+- Wildcard fallback redirect
+
+---
+
+## Performance Strategy
+
+- `useMemo` for roadmap count derivation.
+- `useMemo` for feedback lookup by id.
+- `useCallback` for stable handlers.
+- Single-pass aggregation loop.
+- O(1) comment lookup via keyed object map.
+
+All updates are synchronous local state writes.
+
+---
+
+## Security & Validation
+
+- Required field validation.
+- Comment length capped at 250.
+- Trim-based empty check.
+- Destructive delete confirmation.
+- Invalid route guard.
+
+No external input surface or backend exposure.
+
+---
+
+## Complex Engineering Challenges
+
+- Maintaining relational consistency without normalization.
+- Preventing negative upvotes.
+- Synchronizing route-driven modals with state.
+- Ensuring deterministic derived state aggregation.
+
+---
+
+## Deep Architecture
+
+(See architecture visual below.)
+
+---
+
+## What I Learned
+
+- Client-side relational modeling increases reducer responsibility.
+- Denormalized state improves read performance.
+- Route-driven modals reduce global UI state complexity.
+- Entity normalization would scale better long-term.
+- Domain logic discipline is critical without backend authority.
+
+---
+
+## Outcome
+
+Delivered a deployable SPA feedback system with:
+
+- Relational state modeling
+- Route-driven UX flows
+- Deterministic reducer consistency
+- CI-based GitHub Pages deployment

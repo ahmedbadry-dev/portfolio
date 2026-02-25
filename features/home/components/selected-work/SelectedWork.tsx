@@ -32,24 +32,21 @@ export function SelectedWork() {
           className="overflow-hidden bg-card/95 p-0 shadow-2xl"
         >
           <WorkCardImg>
-            <div className="grid grid-cols-3 gap-2 h-full">
-              <div className="bg-amber-400 col-span-2">
-                <Image src={m1} alt="dark dashboard image" className="w-full h-full object-cover " />
+            <div className="h-full md:grid md:grid-cols-3 md:gap-2">
+              <div className="h-full overflow-hidden rounded-xl md:col-span-2">
+                <Image src={m1} alt="dark dashboard image" className="h-full w-full object-cover" />
               </div>
-              <div className="flex flex-col gap-2">
-                <div className="bg-red-300 h-1/3 rounded-l-md">
-                  <Image src={m3} alt="dark dashboard image" className="w-full h-full object-cover  rounded-bl-md" />
+              <div className="hidden md:flex md:flex-col md:gap-2">
+                <div className="h-1/3 overflow-hidden rounded-l-md">
+                  <Image src={m3} alt="dark dashboard image" className="h-full w-full rounded-bl-md object-cover" />
                 </div>
-                <div className="bg-red-700 h-1/3 rounded-l-md">
-                  <Image src={m2} alt="dark dashboard image" className="w-full h-full object-cover  rounded-l-md" />
+                <div className="h-1/3 overflow-hidden rounded-l-md">
+                  <Image src={m2} alt="dark dashboard image" className="h-full w-full rounded-l-md object-cover" />
                 </div>
-                <div className="bg-red-700 h-1/3 rounded-l-md">
-                  <Image src={m4} alt="dark dashboard image" className="w-full h-full object-cover  rounded-tl-md" />
+                <div className="h-1/3 overflow-hidden rounded-l-md">
+                  <Image src={m4} alt="dark dashboard image" className="h-full w-full rounded-tl-md object-cover" />
                 </div>
               </div>
-              {/* <div className="bg-gray-700 rounded-l-md">
-                <Image src={m4} alt="dark dashboard image" />
-              </div> */}
             </div>
           </WorkCardImg>
         </SwapCard>
@@ -61,13 +58,12 @@ export function SelectedWork() {
   return (
     <section className="relative overflow-hidden py-32">
       <Container>
-        <div className="grid min-h-160 gap-8 rounded-3xl border border-border/50 bg-background/40 p-6 md:p-8 lg:grid-cols-5">
+        <div className="grid gap-20 rounded-3xl border border-border/50 bg-background/40 p-4 sm:p-5 md:p-8 lg:min-h-[40rem] lg:grid-cols-5 lg:gap-8">
           <div className="flex flex-col lg:col-span-2">
             <div
-              key={activeProject?.slug}
-              className="flex h-full flex-col motion-safe:animate-in motion-safe:fade-in motion-safe:slide-in-from-bottom-1 motion-safe:duration-300"
+              className="flex h-full min-h-[29rem] flex-col motion-safe:animate-in motion-safe:fade-in motion-safe:slide-in-from-bottom-1 motion-safe:duration-300 lg:min-h-0"
             >
-              <div className="space-y-4">
+              <div className="flex-1 space-y-4">
                 <p className="text-sm uppercase tracking-[0.2em] text-muted-foreground">
                   Selected Work
                 </p>
@@ -131,11 +127,11 @@ export function SelectedWork() {
                 router.push(activeProjectHref)
               }
             }}
-            className="relative min-h-130 cursor-pointer overflow-visible rounded-2xl bg-linear-to-br from-muted/40 via-background to-muted/20 transition-shadow duration-300 hover:shadow-[0_0_35px_rgba(124,59,237,0.18)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 lg:col-span-3"
+            className="relative min-h-[21rem] cursor-pointer overflow-visible rounded-2xl bg-linear-to-br from-muted/40 via-background to-muted/20 transition-shadow duration-300 hover:shadow-[0_0_35px_rgba(124,59,237,0.18)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 sm:min-h-[24rem] md:min-h-[28rem] lg:col-span-3 lg:min-h-[32rem]"
           >
             <CardSwap
-              width="92%"
-              height={460}
+              width="min(100%, 52rem)"
+              height="min(72vw, 28rem)"
               position="center-right"
               cardDistance={36}
               verticalDistance={40}

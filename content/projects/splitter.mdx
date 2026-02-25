@@ -1,0 +1,124 @@
+﻿---
+title: 'Splitter - Expense Settlement Engine'
+slug: 'splitter'
+type: 'frontend'
+status: 'production'
+stack:
+  - TypeScript (Strict Mode)
+  - Vite 7
+  - Tailwind CSS v4
+  - Vanilla DOM APIs
+  - GitHub Pages (CI)
+---
+
+## Overview
+
+Splitter is a client-side expense tracking and settlement system built entirely with strict TypeScript and a layered architecture.
+
+It allows users to add participants, record shared expenses, and compute simplified settlements directly in the browser without backend infrastructure.
+
+The goal was to implement deterministic financial resolution logic while preserving architectural clarity and runtime validation discipline.
+
+---
+
+## The Problem
+
+Splitting group expenses typically involves:
+
+- Manual spreadsheet calculations
+- Floating-point precision errors
+- Redundant back-and-forth transactions
+- Backend-heavy tooling for a lightweight need
+
+The challenge was to design a purely client-side system that:
+
+- Accurately computes net balances
+- Minimizes settlement transactions
+- Avoids floating-point rounding artifacts
+- Remains fully static and deployable
+
+---
+
+## Architecture Strategy
+
+### Rendering Model
+
+Client-side DOM manipulation on a static HTML shell.  
+No SSR, no hydration layer.
+
+### Structural Layering
+
+models/ -> Entity validation & ID generation
+services/ -> Settlement logic & business rules
+ui/ -> Event handling & DOM rendering
+utils/ -> DOM helpers & toast abstraction
+main.ts -> Application bootstrap
+
+### Architectural Patterns
+
+- Service Layer Pattern
+- Dependency Injection between services
+- Class-based OOP encapsulation
+- Runtime validation at model level
+
+Business logic remains UI-agnostic.
+
+---
+
+## Performance Strategy
+
+- `Map` for O(1) user lookup and duplicate prevention.
+- `DocumentFragment` batching for DOM updates.
+- Amount normalization to 2 decimals.
+- 0.01 epsilon tolerance to suppress floating-point noise.
+- Minimal O(n) operations per settlement run.
+
+No network latency - fully deterministic execution.
+
+---
+
+## Security & Validation
+
+- Username trimming and duplicate rejection.
+- Non-positive amount rejection.
+- Payer must exist in `UserService`.
+- Defensive DOM element resolution.
+- UI-level try/catch with toast error handling.
+
+Validation enforced across UI, model, and service layers.
+
+---
+
+## Complex Engineering Challenges
+
+- Financial precision handling in JavaScript.
+- Settlement minimization using sorted two-pointer resolution.
+- Maintaining immutability boundaries in class-based architecture.
+- Multi-layer validation redundancy.
+
+---
+
+## Deep Architecture
+
+(See architecture visual below.)
+
+---
+
+## What I Learned
+
+- Financial systems require explicit precision tolerance safeguards.
+- Layer separation improves maintainability even in small apps.
+- Map-based indexing simplifies relational constraints.
+- Business logic should remain independent of rendering.
+- Deterministic modeling prevents hidden mutation bugs.
+
+---
+
+## Outcome
+
+Delivered a fully static, CI-deployed expense engine capable of:
+
+- Accurate balance computation
+- Debt simplification
+- Deterministic output
+- Clean architectural separation
