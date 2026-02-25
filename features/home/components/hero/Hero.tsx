@@ -5,7 +5,7 @@ import { HeroImg } from "./HeroImg"
 
 export function Hero() {
   return (
-    <section className="relative overflow-visible py-14 sm:py-18 lg:overflow-hidden lg:py-28">
+    <section className="relative overflow-visible py-10 sm:py-14 lg:overflow-hidden lg:py-28">
 
       {/* 🌌 Particles Background (Hero only) */}
       <div className="absolute inset-0 -z-10 pointer-events-none">
@@ -23,7 +23,7 @@ export function Hero() {
       </div>
 
       <Container>
-        <div className="grid grid-cols-1 items-center gap-20  lg:grid-cols-[1.1fr_0.9fr] lg:gap-16">
+        <div className="grid grid-cols-1 items-center gap-20 sm:gap-16 lg:grid-cols-[1.1fr_0.9fr] lg:gap-16">
 
           {/* Left Content */}
           <div className="order-1 flex w-full justify-center lg:order-1 lg:justify-start">

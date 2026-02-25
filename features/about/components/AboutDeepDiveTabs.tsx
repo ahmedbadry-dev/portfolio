@@ -27,30 +27,32 @@ export function AboutDeepDiveTabs({ items }: AboutDeepDiveTabsProps) {
   }
 
   return (
-    <div className="space-y-8">
-      <div className="flex flex-wrap gap-2 border-b border-border pb-3">
-        {items.map((item) => {
-          const isActive = item.id === activeItem.id
+    <div className="space-y-6 md:space-y-8">
+      <div className="overflow-x-auto pb-1 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
+        <div className="flex w-max min-w-full gap-2 border-b border-border pb-3">
+          {items.map((item) => {
+            const isActive = item.id === activeItem.id
 
-          return (
-            <button
-              key={item.id}
-              type="button"
-              onClick={() => setActiveId(item.id)}
-              className={cn(
-                "rounded-md px-3 py-1.5 text-sm transition-colors duration-200",
-                isActive
-                  ? "bg-secondary text-foreground"
-                  : "text-muted-foreground hover:text-foreground"
-              )}
-            >
-              {item.label}
-            </button>
-          )
-        })}
+            return (
+              <button
+                key={item.id}
+                type="button"
+                onClick={() => setActiveId(item.id)}
+                className={cn(
+                  "shrink-0 rounded-md px-3 py-1.5 text-sm transition-colors duration-200",
+                  isActive
+                    ? "bg-secondary text-foreground"
+                    : "text-muted-foreground hover:text-foreground"
+                )}
+              >
+                {item.label}
+              </button>
+            )
+          })}
+        </div>
       </div>
 
-      <div className="min-h-[280px]">
+      <div className="min-h-[240px] md:min-h-[280px]">
         <AnimatePresence mode="wait">
           <motion.dl
             key={activeItem.id}

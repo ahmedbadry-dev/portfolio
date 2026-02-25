@@ -3,7 +3,9 @@ import {
   AlertTriangle,
   BookOpen,
   Boxes,
+  ExternalLink,
   Gauge,
+  Github,
   Route,
   ShieldCheck,
   Sparkles,
@@ -23,10 +25,13 @@ import type { CaseStudyPageData } from "@/services/caseStudyService"
 type CaseStudyViewProps = CaseStudyPageData
 
 export function CaseStudyView({ project, sections, progressItems }: CaseStudyViewProps) {
+  const liveDemoUrl = project.links.liveDemo.trim()
+  const githubUrl = project.links.gitHub.trim()
+
   return (
-    <article className="py-20 md:py-24">
+    <article className="py-14 md:py-20 lg:py-24">
       <Container>
-        <div className="space-y-10">
+        <div className="space-y-8 md:space-y-10">
           <CaseImageCarousel
             title={project.meta.title}
             screenshots={project.screenshots}
@@ -35,9 +40,37 @@ export function CaseStudyView({ project, sections, progressItems }: CaseStudyVie
           <Reveal delay={0.06}>
             <CaseStudyHero project={project} />
           </Reveal>
+
+          <Reveal delay={0.1}>
+            <div className="grid grid-cols-1 gap-2.5 sm:flex sm:flex-wrap sm:items-center">
+              <Button asChild variant="secondary" className="w-full justify-center sm:w-auto">
+                <a
+                  href={liveDemoUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={`Open ${project.meta.title} live demo`}
+                >
+                  <ExternalLink className="size-4" />
+                  Live Demo
+                </a>
+              </Button>
+
+              <Button asChild variant="outline" className="w-full justify-center sm:w-auto">
+                <a
+                  href={githubUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={`Open ${project.meta.title} GitHub repository`}
+                >
+                  <Github className="size-4" />
+                  GitHub
+                </a>
+              </Button>
+            </div>
+          </Reveal>
         </div>
 
-        <div className="mt-12 grid gap-10 lg:items-start lg:grid-cols-[minmax(0,1fr)_220px] ">
+        <div className="mt-8 grid gap-8 md:mt-12 md:gap-10 lg:items-start lg:grid-cols-[minmax(0,1fr)_220px] ">
           <div className="space-y-8">
             <Reveal>
               <CaseStudySectionCard
@@ -195,15 +228,15 @@ export function CaseStudyView({ project, sections, progressItems }: CaseStudyVie
             </Reveal>
 
             <Reveal delay={0.35} fromScale={0.98}>
-              <section id="cta" className="rounded-xl border border-border/70 bg-card/45 p-8">
+              <section id="cta" className="rounded-xl border border-border/70 bg-card/45 p-5 sm:p-6 md:p-8">
                 <div className="space-y-4 text-center">
-                  <p className="mx-auto max-w-2xl text-lg font-medium leading-relaxed tracking-tight">
+                  <p className="mx-auto max-w-2xl text-base font-medium leading-relaxed tracking-tight sm:text-lg">
                     Building a serious product with high engineering standards?
                     Let&apos;s architect it with clarity.
                   </p>
                   <Button
                     asChild
-                    className="transition-all duration-300 hover:-translate-y-0.5 hover:border-primary/50 hover:shadow-sm"
+                    className="w-full transition-all duration-300 hover:-translate-y-0.5 hover:border-primary/50 hover:shadow-sm sm:w-auto"
                   >
                     <Link href="/contact">Start a Conversation</Link>
                   </Button>

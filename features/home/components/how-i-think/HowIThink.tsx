@@ -93,10 +93,10 @@ export function HowIThink() {
   }, [])
 
   return (
-    <section className="relative py-40">
+    <section className="relative py-20 md:py-32 lg:py-40">
       <Container>
-        <div className="mx-auto max-w-2xl text-center space-y-6 mb-28">
-          <h2 className="text-4xl font-medium tracking-tight">How I Think</h2>
+        <div className="mx-auto mb-12 max-w-2xl space-y-4 text-center md:mb-20 md:space-y-6 lg:mb-28">
+          <h2 className="text-3xl font-medium tracking-tight md:text-4xl">How I Think</h2>
           <p className="text-muted-foreground leading-relaxed">
             I don&apos;t just build interfaces - I build structured, scalable
             products. Every decision is intentional.
@@ -104,20 +104,20 @@ export function HowIThink() {
         </div>
 
         <div ref={containerRef} className="relative">
-          <div className="absolute left-1/2 top-0 h-full w-px -translate-x-1/2 bg-border/40" />
+          <div className="absolute left-1/2 top-0 hidden h-full w-px -translate-x-1/2 bg-border/40 lg:block" />
 
           <div
             ref={progressRef}
-            className="absolute left-1/2 top-0 w-px -translate-x-1/2 bg-gradient-to-b from-primary via-purple-400 to-transparent"
+            className="absolute left-1/2 top-0 hidden w-px -translate-x-1/2 bg-gradient-to-b from-primary via-purple-400 to-transparent lg:block"
             style={{ height: 0 }}
           />
 
           <div
             ref={trailRef}
-            className="absolute left-1/2 top-0 -translate-x-1/2 h-14 w-14 rounded-full bg-primary/40 blur-3xl opacity-60 pointer-events-none"
+            className="pointer-events-none absolute left-1/2 top-0 hidden h-14 w-14 -translate-x-1/2 rounded-full bg-primary/40 opacity-60 blur-3xl lg:block"
           />
 
-          <div className="space-y-32">
+          <div className="space-y-10 md:space-y-16 lg:space-y-32">
             {howIThinkSteps.map((step, index) => {
               const isLeft = index % 2 === 0
 
@@ -174,11 +174,11 @@ export function HowIThink() {
                       ref={(el) => {
                         if (el) cardsRef.current[index] = el
                       }}
-                      className="relative rounded-2xl p-8 bg-card/40 backdrop-blur-xl"
+                      className="relative rounded-2xl border border-border/50 bg-card/40 p-5 backdrop-blur-xl sm:p-6 lg:border-none lg:p-8"
                     >
                       <div className="card-glow absolute inset-0 rounded-2xl bg-primary/20 blur-2xl opacity-0 pointer-events-none" />
 
-                      <h3 className="text-xl font-medium mb-3 relative z-10">
+                      <h3 className="relative z-10 mb-3 text-lg font-medium sm:text-xl">
                         {step.title}
                       </h3>
 

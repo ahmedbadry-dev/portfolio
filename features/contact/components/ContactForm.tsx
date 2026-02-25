@@ -79,7 +79,7 @@ export default function ContactForm() {
 
   return (
     <Card className="w-full border-0 bg-card/40 backdrop-blur-xl">
-      <CardContent>
+      <CardContent className="px-4 py-5 sm:px-6 sm:py-6">
         <form id="contact-form" onSubmit={handleSubmit(onSubmit)}>
           <FieldGroup>
 
@@ -170,13 +170,14 @@ export default function ContactForm() {
         </form>
       </CardContent>
 
-      <CardFooter>
-        <Field orientation="horizontal">
+      <CardFooter className="px-4 pb-5 sm:px-6 sm:pb-6">
+        <Field orientation="responsive">
           <Button
             type="button"
             variant="outline"
             onClick={() => reset()}
             disabled={isSubmitting}
+            className="w-full md:w-auto"
           >
             Reset
           </Button>
