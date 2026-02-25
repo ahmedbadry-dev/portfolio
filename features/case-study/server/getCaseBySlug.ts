@@ -7,7 +7,7 @@ export type CaseStudy = {
   shortDescription: string
   tags: string[]
   stack: string[]
-  type: "fullstack" | "frontend" | "system"
+  type: "fullstack" | "frontend" | "system" | "SPA"
   status: "production" | "in-progress"
   seo: {
     title: string
