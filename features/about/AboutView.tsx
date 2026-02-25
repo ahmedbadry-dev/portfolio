@@ -23,24 +23,24 @@ export function AboutView({ data }: AboutViewProps) {
   } = data
 
   return (
-    <div className="py-32">
+    <div className="py-16 md:py-24 lg:py-32">
       <Container className="relative">
-        <div className="relative mx-auto max-w-5xl space-y-32">
-          <section id="hero" className="relative isolate space-y-8">
+        <div className="relative mx-auto max-w-5xl space-y-16 md:space-y-24 lg:space-y-32">
+          <section id="hero" className="relative isolate space-y-6 md:space-y-8">
             <div className="grid items-center gap-8 md:grid-cols-[1.5fr_1fr] md:gap-10">
               <Reveal className="order-2 space-y-5 md:order-1" delay={0.04}>
-                <h1 className="max-w-3xl text-4xl font-medium tracking-tight md:text-5xl md:leading-[1.05]">
+                <h1 className="max-w-3xl text-3xl font-medium tracking-tight sm:text-4xl md:text-5xl md:leading-[1.05]">
                   {aboutHero.title}
                 </h1>
                 <div className="h-px w-14 bg-border" />
-                <p className="max-w-2xl text-lg leading-relaxed text-muted-foreground">
+                <p className="max-w-2xl text-base leading-relaxed text-muted-foreground md:text-lg">
                   {aboutHero.description}
                 </p>
-                <div className="flex flex-wrap items-center gap-3 pt-1">
-                  <Button asChild>
+                <div className="grid grid-cols-1 gap-3 pt-1 sm:flex sm:flex-wrap sm:items-center">
+                  <Button asChild className="w-full sm:w-auto">
                     <Link href="/work">View Work</Link>
                   </Button>
-                  <Button asChild variant="outline">
+                  <Button asChild variant="outline" className="w-full sm:w-auto">
                     <a
                       href="/cv/cv.pdf"
                       download="cv.pdf"
@@ -68,17 +68,17 @@ export function AboutView({ data }: AboutViewProps) {
             <div className="h-px w-full bg-border" />
           </section>
 
-          <section id="philosophy" className="space-y-12">
+          <section id="philosophy" className="space-y-8 md:space-y-12">
             <Reveal>
               <h2 className="text-2xl font-semibold tracking-tight">
                 Engineering Philosophy
               </h2>
             </Reveal>
-            <div className="space-y-12">
+            <div className="space-y-8 md:space-y-12">
               {engineeringPhilosophy.map((item, index) => (
                 <Reveal key={item.number} delay={index * 0.05}>
-                  <article className="grid gap-5 pb-10 md:grid-cols-[120px_1fr]">
-                    <p className="text-5xl font-semibold tracking-tight text-foreground/15">
+                  <article className="grid gap-4 pb-8 md:grid-cols-[120px_1fr] md:gap-5 md:pb-10">
+                    <p className="text-4xl font-semibold tracking-tight text-foreground/15 md:text-5xl">
                       {item.number}
                     </p>
                     <div className="space-y-2">
@@ -97,7 +97,7 @@ export function AboutView({ data }: AboutViewProps) {
         </div>
       </Container>
 
-      <section id="pillars" className="py-32">
+      <section id="pillars" className="py-16 md:py-24 lg:py-32">
         <Container>
           <div className="mx-auto max-w-[1200px] space-y-10">
             <Reveal>
@@ -106,7 +106,7 @@ export function AboutView({ data }: AboutViewProps) {
               </h2>
             </Reveal>
 
-            <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+            <div className="grid gap-4 sm:gap-6 md:grid-cols-2 xl:grid-cols-3">
               {corePillars.map((pillar, index) => (
                 <Reveal key={pillar.title} delay={index * 0.05}>
                   <Card className="border-border/90 bg-card/50 shadow-none">
@@ -132,7 +132,7 @@ export function AboutView({ data }: AboutViewProps) {
       </section>
 
       <Container>
-        <div className="mx-auto max-w-[900px] space-y-32">
+        <div className="mx-auto max-w-[900px] space-y-16 md:space-y-24 lg:space-y-32">
           <section id="deep-dive" className="space-y-8">
             <Reveal>
               <h2 className="text-2xl font-semibold tracking-tight">
@@ -173,16 +173,16 @@ export function AboutView({ data }: AboutViewProps) {
             </div>
           </section>
 
-          <section id="cta" className="pt-8 text-center">
+          <section id="cta" className="pt-4 text-center md:pt-8">
             <Reveal>
-              <p className="mx-auto max-w-2xl text-xl font-medium leading-relaxed tracking-tight md:text-2xl">
+              <p className="mx-auto max-w-2xl text-lg font-medium leading-relaxed tracking-tight md:text-2xl">
                 If you&apos;re building a serious product and value structure over
                 surface - let&apos;s collaborate.
               </p>
             </Reveal>
             <Reveal delay={0.06}>
               <div className="mt-8">
-                <Button asChild size="lg">
+                <Button asChild size="lg" className="w-full sm:w-auto">
                   <Link href="/contact">Start a Conversation</Link>
                 </Button>
               </div>
