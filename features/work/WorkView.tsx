@@ -11,12 +11,17 @@ type WorkViewProps = {
 
 export function WorkView({ activeTag, projects, tags }: WorkViewProps) {
   return (
-    <section className="pt-8 pb-32">
+    <section className="pb-20 pt-6 md:pb-32 md:pt-8">
       <Container>
         <WorkFilters activeTag={activeTag} filters={tags} />
 
-        <div className="mb-10 mt-16 space-y-4">
-          <h1 className="text-4xl font-medium tracking-tight">Selected Work</h1>
+        <div className="mb-6 mt-8 space-y-2 md:mb-10 md:mt-16 md:space-y-4">
+          <h1 className="text-3xl font-medium tracking-tight md:text-4xl">
+            Selected Work
+          </h1>
+          <p className="max-w-2xl text-sm text-muted-foreground md:text-base">
+            Swipe projects, open the live demo, and review implementation details.
+          </p>
         </div>
 
         <WorkResults key={activeTag} activeTag={activeTag} projects={projects} />

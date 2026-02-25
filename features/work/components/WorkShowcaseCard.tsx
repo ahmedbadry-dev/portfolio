@@ -1,6 +1,6 @@
 import Link from "next/link"
 import { motion } from "framer-motion"
-import { ArrowUpRight } from "lucide-react"
+import { ArrowUpRight, ExternalLink, Github } from "lucide-react"
 import { Glass } from "@/components/shared/Glass"
 import { TagPills } from "@/components/shared/TagPills"
 import { MetricBadge } from "@/components/shared/MetricBadge"
@@ -23,6 +23,10 @@ interface WorkShowcaseCardProps {
   ttfb?: number
   imageCount?: number
   screenshots?: ProjectScreenshots
+  links: {
+    liveDemo: string
+    gitHub: string
+  }
 }
 
 export function WorkShowcaseCard({
@@ -34,6 +38,7 @@ export function WorkShowcaseCard({
   ttfb,
   imageCount,
   screenshots,
+  links,
 }: WorkShowcaseCardProps) {
   const metrics: Array<{ label: string; value: string | number }> = []
 
@@ -51,6 +56,8 @@ export function WorkShowcaseCard({
     ? screenshots.mobile
     : screenshots?.desktop ?? []
   ).slice(0, 3)
+  const liveDemoUrl = links.liveDemo.trim()
+  const githubUrl = links.gitHub.trim()
   const directionOffsets = [
     { x: 0, y: -56 },
     { x: 0, y: 56 },
@@ -63,42 +70,75 @@ export function WorkShowcaseCard({
   }
 
   return (
-    <Glass className="rounded-3xl p-6 md:p-8 lg:p-10">
+    <Glass className="rounded-3xl p-4 sm:p-5 md:p-8 lg:p-10">
       <div className="grid gap-8 lg:grid-cols-[1fr_1.5fr] lg:gap-10">
-        <div className="flex min-w-0 flex-col justify-between gap-8">
+        <div className="order-2 flex min-w-0 flex-col justify-between gap-6 md:gap-8 lg:order-1">
           <div className="space-y-5">
-            <h3 className="text-2xl font-semibold tracking-tight md:text-3xl">
+            <h3 className="text-xl font-semibold tracking-tight sm:text-2xl md:text-3xl">
               {title}
             </h3>
-            <p className="text-muted-foreground leading-relaxed">{description}</p>
-            <TagPills tags={tags} />
+            <p className="text-sm leading-relaxed text-muted-foreground sm:text-base">
+              {description}
+            </p>
+            <TagPills
+              tags={tags}
+              className="gap-2 md:gap-3"
+              tagClassName="px-3 py-1 text-xs sm:text-sm"
+            />
           </div>
 
-          <div className="space-y-5">
+          <div className="space-y-4 md:space-y-5">
             {metrics.length > 0 ? (
-              <div className="flex flex-wrap gap-2">
+              <div className="flex flex-wrap gap-1.5 sm:gap-2">
                 {metrics.map((metric) => (
                   <MetricBadge
                     key={metric.label}
                     label={metric.label}
                     value={metric.value}
+                    className="text-xs sm:text-sm"
                   />
                 ))}
               </div>
             ) : null}
 
-            <Button asChild>
-              <Link href={`/projects/${slug}`}>
-                View Case Study
-                <ArrowUpRight className="size-4" />
-              </Link>
-            </Button>
+            <div className="grid grid-cols-1 gap-2.5 sm:flex sm:flex-wrap sm:items-center">
+              <Button asChild className="w-full justify-center sm:w-auto">
+                <Link href={`/projects/${slug}`}>
+                  View Case Study
+                  <ArrowUpRight className="size-4" />
+                </Link>
+              </Button>
+
+              <Button variant="secondary" asChild className="w-full justify-center sm:w-auto">
+                <a
+                  href={liveDemoUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={`Open ${title} live demo`}
+                >
+                  <ExternalLink className="size-4" />
+                  Live Demo
+                </a>
+              </Button>
+
+              <Button variant="outline" asChild className="w-full justify-center sm:w-auto">
+                <a
+                  href={githubUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={`Open ${title} GitHub repository`}
+                >
+                  <Github className="size-4" />
+                  GitHub
+                </a>
+              </Button>
+            </div>
           </div>
         </div>
 
-        <div className="w-full">
+        <div className="order-1 w-full lg:order-2">
           <div className="md:hidden">
-            <Carousel opts={{ align: "start", loop: true }} className="w-full">
+            <Carousel opts={{ align: "start", loop: true }} className="w-full px-1">
               <CarouselContent>
                 {(previewImages.length > 0
                   ? previewImages
@@ -107,7 +147,7 @@ export function WorkShowcaseCard({
                   const seed = `${slug}-mobile-${index}`
                   return (
                     <CarouselItem key={seed}>
-                      <div className="relative h-[420px] overflow-hidden rounded-2xl border border-border/40 bg-muted/20">
+                      <div className="relative h-[360px] overflow-hidden rounded-2xl border border-border/40 bg-muted/20 sm:h-[420px]">
                         {img ? (
                           <div
                             className="absolute inset-0 bg-no-repeat bg-contain bg-center"
@@ -124,8 +164,8 @@ export function WorkShowcaseCard({
                   )
                 })}
               </CarouselContent>
-              <CarouselPrevious className="left-3 top-1/2 -translate-y-1/2" />
-              <CarouselNext className="right-3 top-1/2 -translate-y-1/2" />
+              <CarouselPrevious className="left-3 top-1/2 -translate-y-1/2 border-border/70 bg-background/90 shadow-md" />
+              <CarouselNext className="right-3 top-1/2 -translate-y-1/2 border-border/70 bg-background/90 shadow-md" />
             </Carousel>
           </div>
 

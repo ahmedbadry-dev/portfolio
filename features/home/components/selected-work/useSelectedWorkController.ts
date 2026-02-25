@@ -1,22 +1,24 @@
-"use client"
+'use client'
 
-import { startTransition, useCallback, useMemo, useState } from "react"
-import type { Project } from "@/data/projects"
+import { startTransition, useCallback, useMemo, useState } from 'react'
+import type { Project } from '@/data/projects'
 
-type ShowcaseProject = Project & {
-  lighthouse: number
-  ttfb: number
-}
-
-function hasShowcaseMetrics(project: Project): project is ShowcaseProject {
-  return typeof project.lighthouse === "number" && typeof project.ttfb === "number"
-}
+const FEATURED_SLUGS = [
+  'habit-tracker',
+  'product-feedback',
+  'splitter',
+] as const
 
 export function useSelectedWorkController(projects: Project[]) {
-  const featuredProjects = useMemo(
-    () => projects.filter(hasShowcaseMetrics).slice(0, 3).reverse(),
-    [projects]
-  )
+  const featuredProjects = useMemo(() => {
+    const projectsBySlug = new Map(
+      projects.map((project) => [project.slug, project])
+    )
+
+    return FEATURED_SLUGS.map((slug) => projectsBySlug.get(slug)).filter(
+      (project): project is Project => Boolean(project)
+    )
+  }, [projects])
   const [activeCardIndex, setActiveCardIndex] = useState(0)
 
   const activeProject = featuredProjects[activeCardIndex] ?? featuredProjects[0]
@@ -29,4 +31,3 @@ export function useSelectedWorkController(projects: Project[]) {
 
   return { featuredProjects, activeProject, handleActiveCardChange }
 }
-

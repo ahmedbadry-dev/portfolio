@@ -26,21 +26,22 @@ export function WorkFilters({ activeTag, filters }: Props) {
       initial={fadeInUp.initial}
       animate={fadeInUp.animate}
       transition={{ duration: motionDuration.slow, ease: motionEase.standard }}
-      className="sticky top-20 z-40 rounded-2xl border border-border/40 bg-background/70 px-4 py-3 backdrop-blur-xl"
+      className="sticky top-16 z-40 rounded-2xl border border-border/40 bg-background/75 px-3 py-2 shadow-sm backdrop-blur-xl md:top-20 md:px-4 md:py-3"
     >
-      <div className="relative flex flex-wrap gap-4 items-center justify-center md:justify-start">
+      <div className="overflow-x-auto pb-1 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
+        <div className="relative flex w-max min-w-full items-center gap-2 md:w-auto md:flex-wrap md:gap-3">
         {filters.map((tag) => {
           const isActive = activeTag === tag
 
           return (
-            <Magnetic key={tag} strength={35}>
+            <Magnetic key={tag} className="shrink-0" strength={35}>
               <button
                 onClick={() => handleClick(tag)}
-                className="relative px-5 py-2 text-sm transition-colors duration-300"
+                className="relative rounded-full border border-border/50 bg-background/50 px-4 py-2 text-sm transition-colors duration-300 md:px-5"
               >
                 <span
                   className={cn(
-                    "relative z-10",
+                    "relative z-10 font-medium",
                     isActive
                       ? "text-foreground"
                       : "text-muted-foreground hover:text-foreground"
@@ -51,8 +52,8 @@ export function WorkFilters({ activeTag, filters }: Props) {
 
                 {isActive && (
                   <motion.div
-                    layoutId="active-underline"
-                    className="absolute left-0 bottom-0 h-px w-full bg-primary"
+                    layoutId="active-filter-pill"
+                    className="absolute inset-0 rounded-full border border-primary/30 bg-primary/10"
                     transition={{ type: "spring", stiffness: 300, damping: 25 }}
                   />
                 )}
@@ -60,6 +61,7 @@ export function WorkFilters({ activeTag, filters }: Props) {
             </Magnetic>
           )
         })}
+        </div>
       </div>
     </motion.nav>
   )
