@@ -65,8 +65,8 @@ export default function HeroContent() {
 
 
                 <StaggerItem>
-                    <h2 className="flex flex-col items-center gap-3 text-lg font-medium text-muted-foreground md:flex-row md:justify-center sm:text-xl lg:items-start lg:text-3xl">
-                        <span>Frontend</span>
+                    <h2 className="flex flex-col items-center gap-3 text-lg font-medium text-muted-foreground sm:text-xl md:flex-row md:items-center md:justify-center lg:justify-start lg:text-3xl">
+                        <span className="h-full">Frontend</span>
                         <div className="relative inline-block px-5 py-3 sm:px-6 sm:py-4">
                             <span className="text-lg font-medium text-white sm:text-xl lg:text-3xl">
                                 Specialist
