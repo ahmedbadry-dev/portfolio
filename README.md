@@ -38,8 +38,6 @@ Production-grade frontend engineering • Performance-first UI • Case-study dr
 
 # 🖼️ Website Preview
 
-> Replace screenshots inside `public/screenshots`.
-
 ---
 
 ## 🏠 Home — Hero Experience
@@ -363,10 +361,10 @@ Ahmed Badry
 Frontend Engineer
 
 🐙 GitHub
-https://github.com/&lt;your-username>
+https://github.com/ahmedbadry-dev
 
 💼 LinkedIn
-https://www.linkedin.com/in/&lt;your-profile>
+https://www.linkedin.com/in/ahmedbadry-dev
 
 ---
 

@@ -1,14 +1,78 @@
 import "./globals.css"
-import type { Metadata } from "next"
+import type { Metadata, Viewport } from "next"
 import { Footer } from "@/components/layout/Footer"
-import { cn } from "@/lib/cn"
 import { Navbar } from "@/components/layout/Navbar"
 import { Toaster } from "@/components/ui/sonner"
+import { cn } from "@/lib/cn"
+import { getMetadataBase } from "@/lib/seo"
+
+const defaultDescription =
+  "Frontend Engineer building scalable Next.js + React systems with strong architecture, performance discipline, and polished UI."
+
+const twitterCreator = process.env.NEXT_PUBLIC_TWITTER_HANDLE?.trim() || undefined
 
 export const metadata: Metadata = {
-  title: "AB.dev — Frontend Specialist",
-  description:
-    "Building cutting-edge web experiences. Elevating performance & design.",
+  metadataBase: getMetadataBase(),
+  title: {
+    default: "Ahmed Badry - Frontend Engineer",
+    template: "%s | Ahmed Badry - Frontend Engineer",
+  },
+  description: defaultDescription,
+  keywords: [
+    "Frontend Engineer",
+    "Next.js",
+    "React",
+    "TypeScript",
+    "Performance",
+    "UI Engineering",
+    "Architecture",
+  ],
+  alternates: {
+    canonical: "/",
+  },
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    url: "/",
+    siteName: "AB.dev",
+    title: "Ahmed Badry - Frontend Engineer",
+    description: defaultDescription,
+    images: [
+      {
+        url: "/og-default.png",
+        width: 1200,
+        height: 630,
+        alt: "Ahmed Badry - Frontend Engineer",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Ahmed Badry - Frontend Engineer",
+    description: defaultDescription,
+    images: ["/og-default.png"],
+    ...(twitterCreator ? { creator: twitterCreator } : {}),
+  },
+  icons: {
+    icon: [{ url: "/favicon.ico" }],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      noimageindex: false,
+    },
+  },
+}
+
+export const viewport: Viewport = {
+  themeColor: [
+    { media: "(prefers-color-scheme: dark)", color: "#0B0B10" },
+    { media: "(prefers-color-scheme: light)", color: "#ffffff" },
+  ],
+  colorScheme: "dark light",
 }
 
 export default function RootLayout({
@@ -23,21 +87,16 @@ export default function RootLayout({
           "min-h-screen bg-background text-foreground antialiased overflow-x-hidden"
         )}
       >
-        {/* Main Frame */}
         <div className="relative mx-auto max-w-350 px-6 lg:px-8">
           <div className="relative min-h-screen overflow-x-hidden">
             <Navbar />
             <main className="relative">
               {children}
-              <Toaster
-                position="top-center"
-                richColors
-              />
+              <Toaster position="top-center" richColors />
             </main>
             <Footer />
           </div>
         </div>
-
       </body>
     </html>
   )
