@@ -1,27 +1,27 @@
-import React, { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 
 const useMedia = (queries: string[], values: number[], defaultValue: number): number => {
-  const get = () => {
+  const getValue = useCallback(() => {
     if (typeof window === 'undefined' || typeof window.matchMedia !== 'function') {
       return defaultValue;
     }
     const index = queries.findIndex(q => window.matchMedia(q).matches);
     return values[index] ?? defaultValue;
-  };
+  }, [defaultValue, queries, values]);
 
-  const [value, setValue] = useState<number>(defaultValue);
+  const [value, setValue] = useState<number>(getValue);
 
   useEffect(() => {
     if (typeof window === 'undefined' || typeof window.matchMedia !== 'function') return;
 
     const mediaQueries = queries.map(q => window.matchMedia(q));
-    const handler = () => setValue(get());
+    const handler = () => setValue(getValue());
 
     handler();
     mediaQueries.forEach(mq => mq.addEventListener('change', handler));
     return () => mediaQueries.forEach(mq => mq.removeEventListener('change', handler));
-  }, [queries, values, defaultValue]);
+  }, [getValue, queries]);
 
   return value;
 };
@@ -112,10 +112,9 @@ const Masonry: React.FC<MasonryProps> = ({
   );
 
   const [containerRef, { width }] = useMeasure<HTMLDivElement>();
-  const [imagesReady, setImagesReady] = useState(false);
-  const [imageRatios, setImageRatios] = useState<Record<string, number>>({});
+  const [imageRatios, setImageRatios] = useState<Record<string, number> | null>(null);
 
-  const getInitialPosition = (item: GridItem) => {
+  const getInitialPosition = useCallback((item: GridItem) => {
     const containerRect = containerRef.current?.getBoundingClientRect();
     if (!containerRect) return { x: item.x, y: item.y };
 
@@ -142,17 +141,23 @@ const Masonry: React.FC<MasonryProps> = ({
       default:
         return { x: item.x, y: item.y + 100 };
     }
-  };
+  }, [animateFrom, containerRef]);
 
   useEffect(() => {
-    setImagesReady(false);
+    let active = true;
     preloadImages(items.map(i => i.img)).then(ratios => {
-      setImageRatios(ratios);
-      setImagesReady(true);
+      if (active) {
+        setImageRatios(ratios);
+      }
     });
+
+    return () => {
+      active = false;
+    };
   }, [items]);
 
   const { grid, totalHeight } = useMemo(() => {
+    const ratios = imageRatios ?? {};
     if (!width) return { grid: [] as GridItem[], totalHeight: 0 };
     const colHeights = new Array(columns).fill(0);
     const gap = 16;
@@ -162,7 +167,7 @@ const Masonry: React.FC<MasonryProps> = ({
     const gridItems = items.map(child => {
       const col = colHeights.indexOf(Math.min(...colHeights));
       const x = col * (columnWidth + gap);
-      const ratio = imageRatios[child.img];
+      const ratio = ratios[child.img];
       const fallbackHeight = child.height / 2;
       const height = ratio ? Math.max(columnWidth * ratio, 140) : fallbackHeight;
       const y = colHeights[col];
@@ -179,7 +184,7 @@ const Masonry: React.FC<MasonryProps> = ({
   const hasMounted = useRef(false);
 
   useLayoutEffect(() => {
-    if (!imagesReady) return;
+    if (!imageRatios) return;
 
     grid.forEach((item, index) => {
       const selector = `[data-key="${item.id}"]`;
@@ -217,7 +222,7 @@ const Masonry: React.FC<MasonryProps> = ({
     });
 
     hasMounted.current = true;
-  }, [grid, imagesReady, stagger, animateFrom, blurToFocus, duration, ease]);
+  }, [grid, imageRatios, stagger, animateFrom, blurToFocus, duration, ease, getInitialPosition]);
 
   const handleMouseEnter = (id: string, element: HTMLElement) => {
     if (scaleOnHover) {

@@ -7,7 +7,6 @@ import { AboutDeepDiveTabs } from "@/features/about/components/AboutDeepDiveTabs
 import Reveal from "@/features/animations/motion/Reveal"
 import type { AboutPageData } from "@/services/aboutService"
 import me from '@/public/me/me1.png'
-import LightRays from "@/components/LightRays"
 
 type AboutViewProps = {
   data: AboutPageData

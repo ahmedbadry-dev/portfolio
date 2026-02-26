@@ -19,6 +19,11 @@ export const mdxComponents = {
     <p className="text-muted-foreground leading-relaxed mb-4" {...props} />
   ),
 
+  img: (props: ComponentPropsWithoutRef<"img">) => (
+    // Keep MDX images fluid on small screens.
+    <img className="h-auto w-full max-w-full rounded-lg" loading="lazy" {...props} />
+  ),
+
   ul: (props: ComponentPropsWithoutRef<"ul">) => (
     <ul className="space-y-2 my-4" {...props} />
   ),
@@ -31,6 +36,22 @@ export const mdxComponents = {
   ),
 
   hr: () => <div className="my-8 h-px w-full bg-border" />,
+
+  code: (props: ComponentPropsWithoutRef<"code">) => (
+    <code className="rounded bg-muted px-1 py-0.5 text-[0.9em]" {...props} />
+  ),
+
+  pre: (props: ComponentPropsWithoutRef<"pre">) => (
+    <div className="my-4 w-full overflow-x-auto rounded-lg border border-border/70 bg-muted/35 p-3">
+      <pre className="min-w-max text-sm leading-relaxed" {...props} />
+    </div>
+  ),
+
+  table: (props: ComponentPropsWithoutRef<"table">) => (
+    <div className="my-4 w-full overflow-x-auto">
+      <table className="w-full min-w-[560px] border-collapse text-sm" {...props} />
+    </div>
+  ),
 
   MetricBadge,
 }
