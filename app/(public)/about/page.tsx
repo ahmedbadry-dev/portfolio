@@ -1,4 +1,6 @@
 import type { Metadata } from "next"
+import { Suspense } from "react"
+import { AboutPageSkeleton } from "@/components/layout/RouteSkeletons"
 import { AboutContainer } from "@/features/about/AboutContainer"
 import { buildPageMetadata } from "@/lib/seo"
 import { getAboutPageData } from "@/services/aboutService"
@@ -15,6 +17,10 @@ export function generateMetadata(): Metadata {
 export default function AboutPage() {
   const data = getAboutPageData()
 
-  return <AboutContainer data={data} />
+  return (
+    <Suspense fallback={<AboutPageSkeleton />}>
+      <AboutContainer data={data} />
+    </Suspense>
+  )
 }
 

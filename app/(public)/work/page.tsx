@@ -1,4 +1,6 @@
 import type { Metadata } from "next"
+import { Suspense } from "react"
+import { WorkPageSkeleton } from "@/components/layout/RouteSkeletons"
 import { WorkContainer } from "@/features/work/WorkContainer"
 import { buildPageMetadata } from "@/lib/seo"
 import { getWorkPageData } from "@/services/projectService"
@@ -20,6 +22,10 @@ export default async function WorkPage({ searchParams }: WorkPageProps) {
   const { tag } = await searchParams
   const data = getWorkPageData(tag)
 
-  return <WorkContainer {...data} />
+  return (
+    <Suspense fallback={<WorkPageSkeleton />}>
+      <WorkContainer {...data} />
+    </Suspense>
+  )
 }
 

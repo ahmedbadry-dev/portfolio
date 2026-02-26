@@ -1,7 +1,9 @@
 import "./globals.css"
+import { Suspense } from "react"
 import type { Metadata, Viewport } from "next"
 import { Footer } from "@/components/layout/Footer"
 import { Navbar } from "@/components/layout/Navbar"
+import { RouteProgress } from "@/components/layout/RouteProgress"
 import { Toaster } from "@/components/ui/sonner"
 import { cn } from "@/lib/cn"
 import { getMetadataBase } from "@/lib/seo"
@@ -87,6 +89,9 @@ export default function RootLayout({
           "min-h-screen bg-background text-foreground antialiased overflow-x-hidden"
         )}
       >
+        <Suspense fallback={null}>
+          <RouteProgress />
+        </Suspense>
         <div className="relative mx-auto max-w-350 px-6 lg:px-8">
           <div className="relative min-h-screen overflow-x-hidden">
             <Navbar />

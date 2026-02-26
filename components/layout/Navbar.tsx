@@ -14,8 +14,12 @@ export function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
 
   useEffect(() => {
-    setIsMenuOpen(false)
-  }, [pathname])
+    if (!isMenuOpen) return
+    const frameId = window.requestAnimationFrame(() => {
+      setIsMenuOpen(false)
+    })
+    return () => window.cancelAnimationFrame(frameId)
+  }, [isMenuOpen, pathname])
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/70 backdrop-blur-xl">

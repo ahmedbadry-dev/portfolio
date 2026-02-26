@@ -1,5 +1,7 @@
 import type { Metadata } from "next"
+import { Suspense } from "react"
 import { notFound } from "next/navigation"
+import { CaseStudyPageSkeleton } from "@/components/layout/RouteSkeletons"
 import { getProjectBySlug } from "@/data/projects"
 import { CaseStudyContainer } from "@/features/case-study/CaseStudyContainer"
 import { absoluteUrl } from "@/lib/seo"
@@ -85,6 +87,10 @@ export default async function CaseStudyPage({ params }: Props) {
     notFound()
   }
 
-  return <CaseStudyContainer {...data} />
+  return (
+    <Suspense fallback={<CaseStudyPageSkeleton />}>
+      <CaseStudyContainer {...data} />
+    </Suspense>
+  )
 }
 

@@ -1,4 +1,6 @@
 import type { Metadata } from "next"
+import { Suspense } from "react"
+import { ContactPageSkeleton } from "@/components/layout/RouteSkeletons"
 import { ContactContainer } from "@/features/contact/ContactContainer"
 import { buildPageMetadata } from "@/lib/seo"
 
@@ -12,6 +14,10 @@ export function generateMetadata(): Metadata {
 }
 
 export default function ContactPage() {
-  return <ContactContainer />
+  return (
+    <Suspense fallback={<ContactPageSkeleton />}>
+      <ContactContainer />
+    </Suspense>
+  )
 }
 
