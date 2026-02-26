@@ -21,7 +21,8 @@ export const mdxComponents = {
 
   img: (props: ComponentPropsWithoutRef<"img">) => (
     // Keep MDX images fluid on small screens.
-    <img className="h-auto w-full max-w-full rounded-lg" loading="lazy" {...props} />
+    // eslint-disable-next-line @next/next/no-img-element
+    <img className="h-auto w-full max-w-full rounded-lg" loading="lazy" alt={props.alt ?? ""} {...props} />
   ),
 
   ul: (props: ComponentPropsWithoutRef<"ul">) => (

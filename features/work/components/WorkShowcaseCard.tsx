@@ -180,11 +180,11 @@ export function WorkShowcaseCard({
               return (
                 <motion.div
                   key={seed}
-                  initial={{ opacity: 0, x: from.x, y: from.y, filter: "blur(8px)" }}
-                  animate={{ opacity: 1, x: 0, y: 0, filter: "blur(0px)" }}
+                  initial={{ opacity: 0, x: from.x, y: from.y, scale: 0.985 }}
+                  animate={{ opacity: 1, x: 0, y: 0, scale: 1 }}
                   transition={{ duration: 0.55, ease: "easeOut", delay: index * 0.08 }}
                   whileHover={{ scale: 0.98 }}
-                  className="relative overflow-hidden rounded-2xl border border-border/40 bg-muted/20"
+                  className="relative overflow-hidden rounded-2xl border border-border/40 bg-muted/20 will-change-transform"
                 >
                   {img ? (
                     <div

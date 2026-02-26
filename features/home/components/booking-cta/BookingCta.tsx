@@ -41,7 +41,7 @@ export function BookingCta() {
           <Magnetic strength={25}>
             <Link
               href="/contact"
-              className="inline-flex w-full items-center justify-center rounded-full bg-primary px-8 py-3.5 text-base font-medium text-primary-foreground transition-all duration-300 hover:shadow-[0_0_40px_rgba(124,59,237,0.45)] sm:w-auto sm:px-10 sm:py-4 sm:text-lg"
+              className="inline-flex w-full items-center justify-center rounded-full bg-primary px-8 py-3.5 text-base font-medium text-primary-foreground transition-[transform,box-shadow] duration-300 sm:w-auto sm:px-10 sm:py-4 sm:text-lg hover:shadow-[0_0_40px_rgba(124,59,237,0.45)]"
             >
               Start a Conversation
             </Link>

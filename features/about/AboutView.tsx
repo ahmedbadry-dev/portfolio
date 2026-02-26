@@ -57,6 +57,7 @@ export function AboutView({ data }: AboutViewProps) {
                     alt="Portrait photo"
                     width={160}
                     height={160}
+                    sizes="(min-width: 768px) 33vw, 100vw"
                     className="h-full w-full object-cover"
                     priority
                   />

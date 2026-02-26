@@ -113,6 +113,7 @@ const Masonry: React.FC<MasonryProps> = ({
 
   const [containerRef, { width }] = useMeasure<HTMLDivElement>();
   const [imageRatios, setImageRatios] = useState<Record<string, number> | null>(null);
+  const itemRefs = useRef<Record<string, HTMLDivElement | null>>({});
 
   const getInitialPosition = useCallback((item: GridItem) => {
     const containerRect = containerRef.current?.getBoundingClientRect();
@@ -187,13 +188,15 @@ const Masonry: React.FC<MasonryProps> = ({
     if (!imageRatios) return;
 
     grid.forEach((item, index) => {
-      const selector = `[data-key="${item.id}"]`;
+      const element = itemRefs.current[item.id];
+      if (!element) return;
+
       const animProps = { x: item.x, y: item.y, width: item.w, height: item.h };
 
       if (!hasMounted.current) {
         const start = getInitialPosition(item);
         gsap.fromTo(
-          selector,
+          element,
           {
             opacity: 0,
             x: start.x,
@@ -212,7 +215,7 @@ const Masonry: React.FC<MasonryProps> = ({
           }
         );
       } else {
-        gsap.to(selector, {
+        gsap.to(element, {
           ...animProps,
           duration,
           ease,
@@ -225,8 +228,11 @@ const Masonry: React.FC<MasonryProps> = ({
   }, [grid, imageRatios, stagger, animateFrom, blurToFocus, duration, ease, getInitialPosition]);
 
   const handleMouseEnter = (id: string, element: HTMLElement) => {
+    const target = itemRefs.current[id];
+    if (!target) return;
+
     if (scaleOnHover) {
-      gsap.to(`[data-key="${id}"]`, {
+      gsap.to(target, {
         scale: hoverScale,
         duration: 0.3,
         ease: 'power2.out'
@@ -239,8 +245,11 @@ const Masonry: React.FC<MasonryProps> = ({
   };
 
   const handleMouseLeave = (id: string, element: HTMLElement) => {
+    const target = itemRefs.current[id];
+    if (!target) return;
+
     if (scaleOnHover) {
-      gsap.to(`[data-key="${id}"]`, {
+      gsap.to(target, {
         scale: 1,
         duration: 0.3,
         ease: 'power2.out'
@@ -261,7 +270,9 @@ const Masonry: React.FC<MasonryProps> = ({
       {grid.map(item => (
         <div
           key={item.id}
-          data-key={item.id}
+          ref={el => {
+            itemRefs.current[item.id] = el;
+          }}
           className={`absolute box-content ${item.url ? 'cursor-pointer' : ''}`}
           style={{ willChange: 'transform, width, height, opacity' }}
           onClick={() => {
