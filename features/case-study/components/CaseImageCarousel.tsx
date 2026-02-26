@@ -53,6 +53,7 @@ const CarouselSlide = memo(function CarouselSlide({
         src={src}
         alt={`${title} preview ${index + 1}`}
         fill
+        sizes="(min-width: 1280px) 1180px, (min-width: 1024px) 90vw, 100vw"
         className="object-cover"
         priority={index === 0}
       />

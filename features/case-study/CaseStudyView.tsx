@@ -1,4 +1,5 @@
 import Link from "next/link"
+import { Suspense } from "react"
 import {
   AlertTriangle,
   BookOpen,
@@ -24,6 +25,20 @@ import type { CaseStudyPageData } from "@/services/caseStudyService"
 
 type CaseStudyViewProps = CaseStudyPageData
 
+function CaseHeroSkeleton() {
+  return (
+    <div className="space-y-4 animate-pulse">
+      <div className="h-9 w-3/4 rounded bg-muted/45" />
+      <div className="h-5 w-full max-w-2xl rounded bg-muted/45" />
+      <div className="h-5 w-5/6 max-w-2xl rounded bg-muted/45" />
+    </div>
+  )
+}
+
+function CaseSectionCardSkeleton() {
+  return <div className="h-56 w-full rounded-xl bg-muted/45 animate-pulse" />
+}
+
 export function CaseStudyView({ project, sections, progressItems }: CaseStudyViewProps) {
   const liveDemoUrl = project.links.liveDemo.trim()
   const githubUrl = project.links.gitHub.trim()
@@ -32,14 +47,18 @@ export function CaseStudyView({ project, sections, progressItems }: CaseStudyVie
     <article className="py-14 md:py-20 lg:py-24">
       <Container>
         <div className="space-y-8 md:space-y-10">
-          <CaseImageCarousel
-            title={project.meta.title}
-            screenshots={project.screenshots}
-          />
+          <Suspense fallback={<div className="aspect-[16/10] w-full rounded-2xl bg-muted/45 animate-pulse sm:aspect-[16/8]" />}>
+            <CaseImageCarousel
+              title={project.meta.title}
+              screenshots={project.screenshots}
+            />
+          </Suspense>
 
-          <Reveal delay={0.06}>
-            <CaseStudyHero project={project} />
-          </Reveal>
+          <Suspense fallback={<CaseHeroSkeleton />}>
+            <Reveal delay={0.06}>
+              <CaseStudyHero project={project} />
+            </Reveal>
+          </Suspense>
 
           <Reveal delay={0.1}>
             <div className="grid grid-cols-1 gap-2.5 sm:flex sm:flex-wrap sm:items-center">
@@ -72,8 +91,9 @@ export function CaseStudyView({ project, sections, progressItems }: CaseStudyVie
 
         <div className="mt-8 grid gap-8 md:mt-12 md:gap-10 lg:items-start lg:grid-cols-[minmax(0,1fr)_220px] ">
           <div className="space-y-8">
-            <Reveal>
-              <CaseStudySectionCard
+            <Suspense fallback={<CaseSectionCardSkeleton />}>
+              <Reveal>
+                <CaseStudySectionCard
                 id="problem"
                 icon={AlertTriangle}
                 title="Problem"
@@ -87,11 +107,13 @@ export function CaseStudyView({ project, sections, progressItems }: CaseStudyVie
                     No problem statement was provided for this case study.
                   </p>
                 )}
-              </CaseStudySectionCard>
-            </Reveal>
+                </CaseStudySectionCard>
+              </Reveal>
+            </Suspense>
 
-            <Reveal delay={0.05}>
-              <CaseStudySectionCard
+            <Suspense fallback={<CaseSectionCardSkeleton />}>
+              <Reveal delay={0.05}>
+                <CaseStudySectionCard
                 id="approach"
                 icon={Route}
                 title="Approach"
@@ -107,11 +129,13 @@ export function CaseStudyView({ project, sections, progressItems }: CaseStudyVie
                     ))}
                   </ul>
                 )}
-              </CaseStudySectionCard>
-            </Reveal>
+                </CaseStudySectionCard>
+              </Reveal>
+            </Suspense>
 
-            <Reveal delay={0.1}>
-              <CaseStudySectionCard
+            <Suspense fallback={<CaseSectionCardSkeleton />}>
+              <Reveal delay={0.1}>
+                <CaseStudySectionCard
                 id="architecture"
                 icon={Boxes}
                 title="Architecture"
@@ -129,8 +153,9 @@ export function CaseStudyView({ project, sections, progressItems }: CaseStudyVie
                     <MDXRemote source={sections.deepArchitecture.source} components={mdxComponents} />
                   ) : null}
                 </div>
-              </CaseStudySectionCard>
-            </Reveal>
+                </CaseStudySectionCard>
+              </Reveal>
+            </Suspense>
 
             <Reveal delay={0.15}>
               <CaseStudySectionCard
