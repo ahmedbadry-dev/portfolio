@@ -4,12 +4,6 @@
 
 <!-- ========================================================= -->
 
-<p align="center">
-
-<img src="public/screenshots/banner.png" alt="AB.dev Portfolio Banner" width="100%" />
-
-</p>
-
 <h1 align="center">
 🚀 AB.dev — Frontend Engineering Portfolio
 </h1>
