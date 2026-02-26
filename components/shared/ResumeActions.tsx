@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useRef, useState } from "react"
+import { useCallback, useEffect, useRef, useState } from "react"
 import { Eye, ZoomIn, ZoomOut } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
@@ -37,29 +37,35 @@ export function ResumeActions({
   const offsetRef = useRef({ x: 0, y: 0 })
   const dragStartRef = useRef({ x: 0, y: 0, originX: 0, originY: 0 })
 
-  const applyTransform = () => {
+  const applyTransform = useCallback(() => {
     if (!imageRef.current) return
     const { x, y } = offsetRef.current
     imageRef.current.style.transform = `translate3d(${x}px, ${y}px, 0) scale(${zoomRef.current})`
-  }
+  }, [])
 
-  const scheduleTransform = () => {
+  const scheduleTransform = useCallback(() => {
     if (rafRef.current !== null) return
     rafRef.current = requestAnimationFrame(() => {
       applyTransform()
       rafRef.current = null
     })
-  }
+  }, [applyTransform])
 
   useEffect(() => {
     zoomRef.current = zoom
+    let timerId: ReturnType<typeof setTimeout> | undefined
     if (zoom <= 1) {
       offsetRef.current = { x: 0, y: 0 }
       draggingRef.current = false
-      setIsDragging(false)
+      timerId = setTimeout(() => {
+        setIsDragging(false)
+      }, 0)
     }
     scheduleTransform()
-  }, [zoom])
+    return () => {
+      if (timerId) clearTimeout(timerId)
+    }
+  }, [zoom, scheduleTransform])
 
   useEffect(() => {
     return () => {

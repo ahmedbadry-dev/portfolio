@@ -30,6 +30,26 @@ interface LightRaysProps {
   className?: string;
 }
 
+type UniformValue<T> = { value: T };
+
+type RaysUniforms = {
+  iTime: UniformValue<number>;
+  iResolution: UniformValue<[number, number]>;
+  rayPos: UniformValue<[number, number]>;
+  rayDir: UniformValue<[number, number]>;
+  raysColor: UniformValue<[number, number, number]>;
+  raysSpeed: UniformValue<number>;
+  lightSpread: UniformValue<number>;
+  rayLength: UniformValue<number>;
+  pulsating: UniformValue<number>;
+  fadeDistance: UniformValue<number>;
+  saturation: UniformValue<number>;
+  mousePos: UniformValue<[number, number]>;
+  mouseInfluence: UniformValue<number>;
+  noiseAmount: UniformValue<number>;
+  distortion: UniformValue<number>;
+};
+
 const DEFAULT_COLOR = "#ffffff";
 
 const hexToRgb = (hex: string): [number, number, number] => {
@@ -87,12 +107,12 @@ const LightRays: React.FC<LightRaysProps> = ({
   className = "",
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
-  const uniformsRef = useRef<any>(null);
+  const uniformsRef = useRef<RaysUniforms | null>(null);
   const rendererRef = useRef<Renderer | null>(null);
   const mouseRef = useRef({ x: 0.5, y: 0.5 });
   const smoothMouseRef = useRef({ x: 0.5, y: 0.5 });
   const animationIdRef = useRef<number | null>(null);
-  const meshRef = useRef<any>(null);
+  const meshRef = useRef<Mesh | null>(null);
   const cleanupFunctionRef = useRef<(() => void) | null>(null);
   const [isVisible, setIsVisible] = useState(false);
   const observerRef = useRef<IntersectionObserver | null>(null);
@@ -250,12 +270,12 @@ void main() {
   gl_FragColor  = color;
 }`;
 
-      const uniforms = {
+      const uniforms: RaysUniforms = {
         iTime: { value: 0 },
-        iResolution: { value: [1, 1] },
+        iResolution: { value: [1, 1] as [number, number] },
 
-        rayPos: { value: [0, 0] },
-        rayDir: { value: [0, 1] },
+        rayPos: { value: [0, 0] as [number, number] },
+        rayDir: { value: [0, 1] as [number, number] },
 
         raysColor: { value: hexToRgb(raysColor) },
         raysSpeed: { value: raysSpeed },
@@ -264,7 +284,7 @@ void main() {
         pulsating: { value: pulsating ? 1.0 : 0.0 },
         fadeDistance: { value: fadeDistance },
         saturation: { value: saturation },
-        mousePos: { value: [0.5, 0.5] },
+        mousePos: { value: [0.5, 0.5] as [number, number] },
         mouseInfluence: { value: mouseInfluence },
         noiseAmount: { value: noiseAmount },
         distortion: { value: distortion },
@@ -325,8 +345,7 @@ void main() {
         try {
           renderer.render({ scene: mesh });
           animationIdRef.current = requestAnimationFrame(loop);
-        } catch (error) {
-          console.warn("WebGL rendering error:", error);
+        } catch {
           return;
         }
       };
@@ -355,8 +374,8 @@ void main() {
             if (canvas && canvas.parentNode) {
               canvas.parentNode.removeChild(canvas);
             }
-          } catch (error) {
-            console.warn("Error during WebGL cleanup:", error);
+          } catch {
+            // noop
           }
         }
 
