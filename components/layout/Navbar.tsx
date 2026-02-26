@@ -70,19 +70,19 @@ export function Navbar() {
           <span className="relative h-4 w-5">
             <span
               className={cn(
-                "absolute left-0 top-0 h-0.5 w-5 origin-center rounded-full bg-current transition-all duration-300",
+                "absolute left-0 top-0 h-0.5 w-5 origin-center rounded-full bg-current transition-[top,transform] duration-300",
                 isMenuOpen && "top-[7px] rotate-45"
               )}
             />
             <span
               className={cn(
-                "absolute left-0 top-[7px] h-0.5 w-5 rounded-full bg-current transition-all duration-300",
+                "absolute left-0 top-[7px] h-0.5 w-5 rounded-full bg-current transition-opacity duration-300",
                 isMenuOpen && "opacity-0"
               )}
             />
             <span
               className={cn(
-                "absolute left-0 top-[14px] h-0.5 w-5 origin-center rounded-full bg-current transition-all duration-300",
+                "absolute left-0 top-[14px] h-0.5 w-5 origin-center rounded-full bg-current transition-[top,transform] duration-300",
                 isMenuOpen && "top-[7px] -rotate-45"
               )}
             />
