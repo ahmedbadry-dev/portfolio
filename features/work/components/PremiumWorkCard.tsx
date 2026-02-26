@@ -39,10 +39,6 @@ function PremiumWorkCard({
 
     return (
         <div className="relative group rounded-3xl transition-all duration-500">
-
-            {/* Outer Hover Glow */}
-            {/* <div className="absolute inset-0 rounded-3xl bg-gradient-to-r from-primary/30 via-transparent to-primary/30 opacity-0 blur-2xl transition-opacity duration-500 group-hover:opacity-60 " /> */}
-
             <Glass className="rounded-3xl p-12">
                 <StaggerContainer
                     className={cn(
