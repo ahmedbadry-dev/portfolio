@@ -25,7 +25,7 @@ export function WorkRow({
     <div
       className={cn(
         "group relative grid gap-10 rounded-2xl border border-border/50 bg-card/40 p-10 backdrop-blur-xl",
-        "transition-all duration-300 hover:-translate-y-1 hover:border-primary/40"
+        "transition-[transform,border-color] duration-300 hover:-translate-y-1 hover:border-primary/40"
       )}
     >
       <div className="grid gap-12 lg:grid-cols-[1.2fr_1fr_0.7fr] items-center">

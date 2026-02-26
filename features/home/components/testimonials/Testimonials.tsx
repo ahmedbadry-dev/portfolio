@@ -32,7 +32,7 @@ export function EngineeringPrinciples() {
             >
               <motion.div whileHover={{ y: -6 }} transition={{ duration: 0.3 }}>
                 <Magnetic strength={30}>
-                  <Glass className="rounded-3xl border border-border/40 p-6 backdrop-blur-2xl transition-all duration-300 hover:shadow-[0_0_40px_rgba(124,59,237,0.15)] sm:p-8 lg:p-10">
+                  <Glass className="rounded-3xl border border-border/40 p-6 backdrop-blur-2xl transition-[border-color,box-shadow] duration-300 sm:p-8 lg:p-10 hover:shadow-[0_0_40px_rgba(124,59,237,0.15)]">
                     <div className="space-y-4 sm:space-y-6">
                       <h3 className="text-lg font-medium tracking-tight sm:text-xl">
                         {item.title}
