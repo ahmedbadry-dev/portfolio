@@ -90,7 +90,7 @@ export function CaseStudyView({ project, sections, progressItems }: CaseStudyVie
         </div>
 
         <div className="mt-8 grid gap-8 md:mt-12 md:gap-10 lg:items-start lg:grid-cols-[minmax(0,1fr)_220px] ">
-          <div className="space-y-8">
+          <div className="min-w-0 space-y-8">
             <Suspense fallback={<CaseSectionCardSkeleton />}>
               <Reveal>
                 <CaseStudySectionCard
