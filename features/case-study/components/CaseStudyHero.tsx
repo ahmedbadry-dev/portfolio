@@ -52,12 +52,12 @@ export function CaseStudyHero({ project }: CaseStudyHeroProps) {
         <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
           {project.details.highlights.map((highlight) => (
             <Card key={highlight} className="border-border/70 bg-card/50 shadow-none">
-              <CardHeader className="pb-3">
+              <CardHeader className="px-4 pb-3 sm:px-6">
                 <CardTitle className="text-sm font-medium tracking-tight">
                   Highlight
                 </CardTitle>
               </CardHeader>
-              <CardContent className="pt-0">
+              <CardContent className="px-4 pt-0 sm:px-6">
                 <p className="text-sm leading-relaxed text-muted-foreground">
                   {highlight}
                 </p>
