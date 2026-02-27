@@ -49,32 +49,36 @@ export function HowIThink() {
       })
 
       cardsRef.current.forEach((card) => {
-        const path = card.querySelector(".branch-border")
+        const path = card.parentElement?.querySelector(".branch-border")
         const glow = card.querySelector(".card-glow")
 
-        gsap.to(path, {
-          strokeDashoffset: 0,
-          duration: 1.4,
-          ease: "power2.out",
-          scrollTrigger: {
-            trigger: card,
-            start: "top center",
-            toggleActions: "play none none reverse",
-          },
-        })
-
-        gsap.fromTo(
-          glow,
-          { opacity: 0 },
-          {
-            opacity: 0.6,
+        if (path) {
+          gsap.to(path, {
+            strokeDashoffset: 0,
+            duration: 1.9,
+            ease: "power1.out",
             scrollTrigger: {
               trigger: card,
-              start: "top center+=100",
+              start: "top center",
               toggleActions: "play none none reverse",
             },
-          }
-        )
+          })
+        }
+
+        if (glow) {
+          gsap.fromTo(
+            glow,
+            { opacity: 0 },
+            {
+              opacity: 0.6,
+              scrollTrigger: {
+                trigger: card,
+                start: "top center+=100",
+                toggleActions: "play none none reverse",
+              },
+            }
+          )
+        }
 
         gsap.to(card, {
           yPercent: -5,
@@ -124,7 +128,7 @@ export function HowIThink() {
               return (
                 <div
                   key={index}
-                  className="relative grid grid-cols-1 lg:grid-cols-2 items-center"
+                  className="relative grid grid-cols-1 items-center lg:grid-cols-2"
                 >
                   <div
                     className={cn(
@@ -133,50 +137,105 @@ export function HowIThink() {
                     )}
                   >
                     <svg
-                      className="absolute inset-0 w-full h-full pointer-events-none"
-                      viewBox="0 0 400 200"
+                      className="pointer-events-none absolute inset-0 hidden h-full w-full text-border/70 lg:block dark:text-border/80"
+                      viewBox="0 0 400 240"
                       preserveAspectRatio="none"
                     >
+                      <path
+                        d={
+                          isLeft
+                            ? `
+                              M398 120
+                              L332 120
+                              Q314 120 304 108
+                              L286 84
+                              Q272 64 244 64
+                              L62 64
+                              Q34 64 34 92
+                              L34 176
+                              Q34 204 62 204
+                              L274 204
+                              Q300 204 312 184
+                            `
+                            : `
+                              M2 120
+                              L68 120
+                              Q86 120 96 108
+                              L114 84
+                              Q128 64 156 64
+                              L338 64
+                              Q366 64 366 92
+                              L366 176
+                              Q366 204 338 204
+                              L126 204
+                              Q100 204 88 184
+                            `
+                        }
+                        fill="none"
+                        stroke="currentColor"
+                        strokeOpacity="0.35"
+                        strokeWidth="1"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
                       <path
                         className="branch-border"
                         d={
                           isLeft
                             ? `
-                              M200 0
-                              L200 100
-                              L20 100
-                              L20 20
-                              L380 20
-                              L380 180
-                              L20 180
-                              L20 100
+                              M398 120
+                              L332 120
+                              Q314 120 304 108
+                              L286 84
+                              Q272 64 244 64
+                              L62 64
+                              Q34 64 34 92
+                              L34 176
+                              Q34 204 62 204
+                              L274 204
+                              Q300 204 312 184
                             `
                             : `
-                              M200 0
-                              L200 100
-                              L380 100
-                              L380 20
-                              L20 20
-                              L20 180
-                              L380 180
-                              L380 100
+                              M2 120
+                              L68 120
+                              Q86 120 96 108
+                              L114 84
+                              Q128 64 156 64
+                              L338 64
+                              Q366 64 366 92
+                              L366 176
+                              Q366 204 338 204
+                              L126 204
+                              Q100 204 88 184
                             `
                         }
                         fill="none"
-                        stroke="currentColor"
-                        strokeWidth="1"
-                        strokeDasharray="1200"
-                        strokeDashoffset="1200"
+                        stroke="url(#branchGlowGradient)"
+                        strokeWidth="1.8"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeDasharray="760"
+                        strokeDashoffset="760"
+                        style={{
+                          filter: "drop-shadow(0 0 6px rgba(124,59,237,0.32)) drop-shadow(0 0 16px rgba(124,59,237,0.18))",
+                        }}
                       />
+                      <defs>
+                        <linearGradient id="branchGlowGradient" x1="0%" y1="50%" x2="100%" y2="50%">
+                          <stop offset="0%" stopColor="rgba(124,59,237,0.58)" />
+                          <stop offset="45%" stopColor="rgba(124,59,237,0.95)" />
+                          <stop offset="100%" stopColor="rgba(56,189,248,0.72)" />
+                        </linearGradient>
+                      </defs>
                     </svg>
 
                     <div
                       ref={(el) => {
                         if (el) cardsRef.current[index] = el
                       }}
-                      className="relative rounded-2xl border border-border/50 bg-card/40 p-5 backdrop-blur-xl sm:p-6 lg:border-none lg:p-8"
+                      className="relative rounded-2xl border border-border/50 bg-card/40 p-5 backdrop-blur-xl sm:p-6 lg:p-8"
                     >
-                      <div className="card-glow absolute inset-0 rounded-2xl bg-primary/20 blur-2xl opacity-0 pointer-events-none" />
+                      <div className="card-glow pointer-events-none absolute inset-0 rounded-2xl bg-primary/18 opacity-0 blur-xl" />
 
                       <h3 className="relative z-10 mb-3 text-lg font-medium sm:text-xl">
                         {step.title}

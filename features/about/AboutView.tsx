@@ -6,10 +6,32 @@ import { Container } from "@/components/layout/Container"
 import { AboutDeepDiveTabs } from "@/features/about/components/AboutDeepDiveTabs"
 import Reveal from "@/features/animations/motion/Reveal"
 import type { AboutPageData } from "@/services/aboutService"
-import me from '@/public/me/me1.png'
+import me from '@/public/me/me-8.png'
 
 type AboutViewProps = {
   data: AboutPageData
+}
+
+function AboutPhotoFrame() {
+  return (
+    <div className="relative aspect-square w-full">
+      <div className="absolute inset-0 rounded-[2rem] border border-border/50 bg-linear-to-br from-background/85 via-card/90 to-muted/55 shadow-[0_20px_80px_rgba(15,23,42,0.08)] backdrop-blur-xl dark:shadow-[0_24px_80px_rgba(0,0,0,0.38)]" />
+      <div className="absolute inset-[10px] rounded-[1.6rem] border border-white/35 bg-background/18 dark:border-white/10 dark:bg-white/4" />
+      <div className="relative h-full w-full overflow-hidden rounded-[1.7rem] p-[10px]">
+        <div className="relative h-full w-full overflow-hidden rounded-[1.35rem] bg-muted/30">
+          <Image
+            src={me}
+            alt="Portrait photo"
+            width={480}
+            height={480}
+            sizes="(min-width: 768px) 33vw, 100vw"
+            className="h-full w-full object-cover"
+            priority
+          />
+        </div>
+      </div>
+    </div>
+  )
 }
 
 export function AboutView({ data }: AboutViewProps) {
@@ -51,17 +73,7 @@ export function AboutView({ data }: AboutViewProps) {
               </Reveal>
 
               <Reveal className="order-1 md:order-2" delay={0.1}>
-                <div className="aspect-square w-full overflow-hidden rounded-lg border border-border bg-card">
-                  <Image
-                    src={me}
-                    alt="Portrait photo"
-                    width={160}
-                    height={160}
-                    sizes="(min-width: 768px) 33vw, 100vw"
-                    className="h-full w-full object-cover"
-                    priority
-                  />
-                </div>
+                <AboutPhotoFrame />
               </Reveal>
             </div>
 
