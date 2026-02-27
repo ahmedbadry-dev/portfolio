@@ -45,7 +45,7 @@ export function CaseStudyView({ project, sections, progressItems }: CaseStudyVie
 
   return (
     <article className="py-14 md:py-20 lg:py-24">
-      <Container>
+      <Container className="px-4 sm:px-6 lg:px-8">
         <div className="space-y-8 md:space-y-10">
           <Suspense fallback={<div className="aspect-[16/10] w-full rounded-2xl bg-muted/45 animate-pulse sm:aspect-[16/8]" />}>
             <CaseImageCarousel
@@ -253,7 +253,7 @@ export function CaseStudyView({ project, sections, progressItems }: CaseStudyVie
             </Reveal>
 
             <Reveal delay={0.35} fromScale={0.98}>
-              <section id="cta" className="rounded-xl border border-border/70 bg-card/45 p-5 sm:p-6 md:p-8">
+              <section id="cta" className="rounded-xl border border-border/70 bg-card/45 p-4 sm:p-6 md:p-8">
                 <div className="space-y-4 text-center">
                   <p className="mx-auto max-w-2xl text-base font-medium leading-relaxed tracking-tight sm:text-lg">
                     Building a serious product with high engineering standards?

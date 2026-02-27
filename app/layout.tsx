@@ -7,6 +7,7 @@ import { RouteProgress } from "@/components/layout/RouteProgress"
 import { Toaster } from "@/components/ui/sonner"
 import { cn } from "@/lib/cn"
 import { getMetadataBase } from "@/lib/seo"
+import { ThemeProvider } from "@/components/theme-provider"
 
 const defaultDescription =
   "Frontend Engineer building scalable Next.js + React systems with strong architecture, performance discipline, and polished UI."
@@ -83,25 +84,32 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className="dark">
+    <html lang="en" suppressHydrationWarning>
       <body
         className={cn(
           "min-h-screen bg-background text-foreground antialiased overflow-x-hidden"
         )}
       >
-        <Suspense fallback={null}>
-          <RouteProgress />
-        </Suspense>
-        <div className="relative mx-auto max-w-350 px-6 lg:px-8">
-          <div className="relative min-h-screen overflow-x-hidden">
-            <Navbar />
-            <main className="relative">
-              {children}
-              <Toaster position="top-center" richColors />
-            </main>
-            <Footer />
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="dark"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <Suspense fallback={null}>
+            <RouteProgress />
+          </Suspense>
+          <div className="relative mx-auto max-w-350 px-4 sm:px-6 lg:px-8">
+            <div className="relative min-h-screen overflow-x-hidden">
+              <Navbar />
+              <main className="relative">
+                {children}
+                <Toaster position="top-center" richColors />
+              </main>
+              <Footer />
+            </div>
           </div>
-        </div>
+        </ThemeProvider>
       </body>
     </html>
   )

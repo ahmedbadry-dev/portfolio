@@ -16,7 +16,7 @@ export const mdxComponents = {
   ),
 
   p: (props: ComponentPropsWithoutRef<"p">) => (
-    <p className="text-muted-foreground leading-relaxed mb-4" {...props} />
+    <p className="mb-4 break-words leading-relaxed text-muted-foreground" {...props} />
   ),
 
   img: (props: ComponentPropsWithoutRef<"img">) => (
@@ -30,21 +30,21 @@ export const mdxComponents = {
   ),
 
   li: (props: ComponentPropsWithoutRef<"li">) => (
-    <li className="flex items-start gap-2 text-muted-foreground leading-relaxed">
+    <li className="flex min-w-0 items-start gap-2 break-words text-muted-foreground leading-relaxed">
       <Dot className="mt-1 size-4 shrink-0 text-muted-foreground" />
-      <span {...props} />
+      <span className="min-w-0" {...props} />
     </li>
   ),
 
   hr: () => <div className="my-8 h-px w-full bg-border" />,
 
   code: (props: ComponentPropsWithoutRef<"code">) => (
-    <code className="rounded bg-muted px-1 py-0.5 text-[0.9em]" {...props} />
+    <code className="break-words rounded bg-muted px-1 py-0.5 text-[0.9em]" {...props} />
   ),
 
   pre: (props: ComponentPropsWithoutRef<"pre">) => (
     <div className="my-4 w-full overflow-x-auto rounded-lg border border-border/70 bg-muted/35 p-3">
-      <pre className="min-w-max text-sm leading-relaxed" {...props} />
+      <pre className="w-full min-w-0 text-sm leading-relaxed" {...props} />
     </div>
   ),
 
