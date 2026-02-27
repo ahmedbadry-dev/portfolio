@@ -38,13 +38,24 @@ export const mdxComponents = {
 
   hr: () => <div className="my-8 h-px w-full bg-border" />,
 
-  code: (props: ComponentPropsWithoutRef<"code">) => (
-    <code className="break-words rounded bg-muted px-1 py-0.5 text-[0.9em]" {...props} />
-  ),
+  code: ({ className, ...props }: ComponentPropsWithoutRef<"code">) => {
+    const isBlockCode = className?.includes("language-")
+
+    if (isBlockCode) {
+      return <code className="font-mono text-sm leading-relaxed" {...props} />
+    }
+
+    return (
+      <code
+        className="break-words rounded bg-muted px-1 py-0.5 font-mono text-[0.9em]"
+        {...props}
+      />
+    )
+  },
 
   pre: (props: ComponentPropsWithoutRef<"pre">) => (
-    <div className="my-4 w-full overflow-x-auto rounded-lg border border-border/70 bg-muted/35 p-3">
-      <pre className="w-full min-w-0 text-sm leading-relaxed" {...props} />
+    <div className="my-5 w-full overflow-x-auto rounded-xl border border-border/60 bg-muted/40 p-4">
+      <pre className="w-max min-w-full font-mono text-sm leading-relaxed" {...props} />
     </div>
   ),
 
