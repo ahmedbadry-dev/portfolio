@@ -122,7 +122,7 @@ export function Footer() {
 
               <Magnetic strength={30}>
                 <a
-                  href="https://github.com/yourusername"
+                  href="https://github.com/ahmedbadry-dev"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-muted-foreground hover:text-primary transition-colors"
@@ -133,7 +133,7 @@ export function Footer() {
 
               <Magnetic strength={30}>
                 <a
-                  href="https://linkedin.com/in/yourusername"
+                  href="https://www.linkedin.com/in/ahmedbadry-dev/"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-muted-foreground hover:text-primary transition-colors"
@@ -144,7 +144,7 @@ export function Footer() {
 
               <Magnetic strength={30}>
                 <a
-                  href="mailto:your@email.com"
+                  href="mailto:ahmedbadry.dev@gmail.com"
                   className="text-muted-foreground hover:text-primary transition-colors"
                 >
                   <Mail size={18} className="footer-icon" />
