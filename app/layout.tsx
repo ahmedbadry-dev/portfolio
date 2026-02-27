@@ -42,7 +42,7 @@ export const metadata: Metadata = {
     description: defaultDescription,
     images: [
       {
-        url: "/og-default.png",
+        url: "/opengraph-image",
         width: 1200,
         height: 630,
         alt: "Ahmed Badry - Frontend Engineer",
@@ -53,7 +53,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Ahmed Badry - Frontend Engineer",
     description: defaultDescription,
-    images: ["/og-default.png"],
+    images: ["/opengraph-image"],
     ...(twitterCreator ? { creator: twitterCreator } : {}),
   },
   icons: {

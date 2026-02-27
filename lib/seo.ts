@@ -42,7 +42,7 @@ export function buildPageMetadata({
   title,
   description,
   pathname,
-  image = "/og-default.png",
+  image = "/opengraph-image",
 }: BuildPageMetadataInput): Metadata {
   const canonical = absoluteUrl(pathname)
   const imageUrl = absoluteUrl(image)
