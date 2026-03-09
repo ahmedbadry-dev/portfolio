@@ -13,7 +13,7 @@ import { Mail, MessageCircle } from "lucide-react"
 
 const WHATSAPP_NUMBER = "01144155089"
 const WHATSAPP_LINK = "https://wa.me/201144155089"
-const EMAIL = "ahmedbadry.deb@gmail.com"
+const EMAIL = "ahmedbadry.dev@gmail.com"
 const MAILTO_LINK = `mailto:${EMAIL}`
 
 export default function ContactMoreInfo() {
