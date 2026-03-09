@@ -1,5 +1,6 @@
 import { Container } from "@/components/layout/Container"
 import ContactForm from "@/features/contact/components/ContactForm"
+import ContactMoreInfo from "@/features/contact/components/ContactMoreInfo"
 
 export function ContactView() {
   return (
@@ -18,6 +19,7 @@ export function ContactView() {
           <ContactForm />
         </div>
       </Container>
+      <ContactMoreInfo />
     </section>
   )
 }
