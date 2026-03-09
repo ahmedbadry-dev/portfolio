@@ -478,3 +478,33 @@ body {
   animation: shimmer-x 1.2s ease-in-out infinite;
   pointer-events: none;
 }
+
+@keyframes contact-more-info-bob {
+  0%,
+  18%,
+  100% {
+    transform: translateY(0) scale(1);
+  }
+
+  5% {
+    transform: translateY(-4px) scale(1.02);
+  }
+
+  10% {
+    transform: translateY(0) scale(1);
+  }
+
+  14% {
+    transform: translateY(-2px) scale(1.01);
+  }
+}
+
+.contact-more-info-bob {
+  animation: contact-more-info-bob 2.8s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .contact-more-info-bob {
+    animation: none;
+  }
+}
