@@ -145,7 +145,7 @@ const projectRecords: ProjectRecord[] = [
         '/screenshots/habit-tracker/mobile/mob-5.png',
       ],
       selectedWork: {
-        main: '/screenshots/habit-tracker/selected-work/ma.png',
+        main: '/screenshots/habit-tracker/selected-work/Gemini_Generated_Image_3qali73qali73qal.png',
         aside: '/screenshots/habit-tracker/selected-work/as.png',
       },
     },
@@ -215,7 +215,7 @@ const projectRecords: ProjectRecord[] = [
         '/screenshots/splitter/mobile/mob-4.png',
       ],
       selectedWork: {
-        main: '/screenshots/splitter/selected-work/sma.png',
+        main: '/screenshots/splitter/selected-work/Gemini_Generated_Image_u55tuiu55tuiu55t.png',
         aside: '/screenshots/splitter/selected-work/as.png',
       },
     },
@@ -288,7 +288,7 @@ const projectRecords: ProjectRecord[] = [
         '/screenshots/product-feedback/mobile/mob-5.png',
       ],
       selectedWork: {
-        main: '/screenshots/product-feedback/selected-work/ma.png',
+        main: '/screenshots/product-feedback/selected-work/Gemini_Generated_Image_4qeuen4qeuen4qeu.png',
         aside: '/screenshots/product-feedback/selected-work/as.png',
       },
     },

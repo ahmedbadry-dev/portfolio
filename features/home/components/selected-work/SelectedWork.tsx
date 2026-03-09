@@ -72,7 +72,6 @@ export function SelectedWork() {
     () =>
       visibleProjects.map((project) => {
         const mainImage = project.screenshots?.selectedWork.main
-        const asideImage = project.screenshots?.selectedWork.aside
 
         return (
           <SwapCard
@@ -80,24 +79,14 @@ export function SelectedWork() {
             className="overflow-hidden bg-card/95 p-0 shadow-2xl"
           >
             <WorkCardImg>
-              <div className="h-full md:grid md:grid-cols-3 md:gap-2">
-                <div className="relative h-full overflow-hidden rounded-xl md:col-span-2">
+              <div className="h-full">
+                <div className="relative h-full overflow-hidden rounded-xl">
                   <ShowcaseImage
                     src={mainImage}
                     alt={`${project.title} main screenshot`}
                     className="object-cover"
-                    sizes="(min-width: 768px) 66vw, 100vw"
+                    sizes="100vw"
                   />
-                </div>
-                <div className="hidden md:block">
-                  <div className="relative h-full overflow-hidden rounded-l-md">
-                    <ShowcaseImage
-                      src={asideImage}
-                      alt={`${project.title} aside screenshot`}
-                      className="rounded-l-md object-cover"
-                      sizes="(min-width: 768px) 22vw, 0px"
-                    />
-                  </div>
                 </div>
               </div>
             </WorkCardImg>
