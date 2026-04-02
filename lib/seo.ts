@@ -7,14 +7,10 @@ type BuildPageMetadataInput = {
   image?: string
 }
 
-const FALLBACK_SITE_URL = "https://your-domain-here.com"
+const DEVELOPMENT_FALLBACK_SITE_URL = "http://localhost:3000"
 
 function normalizeSiteUrl(input: string): string {
   const trimmed = input.trim()
-  if (!trimmed) {
-    return FALLBACK_SITE_URL
-  }
-
   const withProtocol = /^https?:\/\//i.test(trimmed)
     ? trimmed
     : `https://${trimmed}`
@@ -24,7 +20,19 @@ function normalizeSiteUrl(input: string): string {
 
 export function getSiteUrl(): string {
   const rawSiteUrl =
-    process.env.NEXT_PUBLIC_SITE_URL ?? process.env.VERCEL_URL ?? FALLBACK_SITE_URL
+    process.env.NEXT_PUBLIC_SITE_URL?.trim() ||
+    process.env.VERCEL_URL?.trim() ||
+    ""
+
+  if (!rawSiteUrl) {
+    if (process.env.NODE_ENV === "production") {
+      throw new Error(
+        "Missing NEXT_PUBLIC_SITE_URL (or VERCEL_URL) in production."
+      )
+    }
+
+    return DEVELOPMENT_FALLBACK_SITE_URL
+  }
 
   return normalizeSiteUrl(rawSiteUrl)
 }
