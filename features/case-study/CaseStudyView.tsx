@@ -25,6 +25,15 @@ import type { CaseStudyPageData } from "@/services/caseStudyService"
 
 type CaseStudyViewProps = CaseStudyPageData
 
+function renderStructuredSection(section?: string) {
+  const value = section?.trim()
+  if (!value) {
+    return null
+  }
+
+  return <p className="whitespace-pre-line leading-relaxed text-muted-foreground">{value}</p>
+}
+
 function CaseHeroSkeleton() {
   return (
     <div className="space-y-4 animate-pulse">
@@ -39,7 +48,12 @@ function CaseSectionCardSkeleton() {
   return <div className="h-56 w-full rounded-xl bg-muted/45 animate-pulse" />
 }
 
-export function CaseStudyView({ project, sections, progressItems }: CaseStudyViewProps) {
+export function CaseStudyView({
+  project,
+  sections,
+  structuredSections,
+  progressItems,
+}: CaseStudyViewProps) {
   const liveDemoUrl = project.links.liveDemo.trim()
   const githubUrl = project.links.gitHub.trim()
 
@@ -103,9 +117,11 @@ export function CaseStudyView({ project, sections, progressItems }: CaseStudyVie
                 {sections.problem?.source ? (
                   <MDXRemote source={sections.problem.source} components={mdxComponents} />
                 ) : (
-                  <p className="leading-relaxed text-muted-foreground">
-                    No problem statement was provided for this case study.
-                  </p>
+                  renderStructuredSection(structuredSections?.problem) ?? (
+                    <p className="leading-relaxed text-muted-foreground">
+                      No problem statement was provided for this case study.
+                    </p>
+                  )
                 )}
                 </CaseStudySectionCard>
               </Reveal>
@@ -123,11 +139,13 @@ export function CaseStudyView({ project, sections, progressItems }: CaseStudyVie
                 {sections.approach?.source ? (
                   <MDXRemote source={sections.approach.source} components={mdxComponents} />
                 ) : (
-                  <ul className="space-y-2 text-muted-foreground">
-                    {project.details.highlights.map((item) => (
-                      <li key={item}>{item}</li>
-                    ))}
-                  </ul>
+                  renderStructuredSection(structuredSections?.approach) ?? (
+                    <ul className="space-y-2 text-muted-foreground">
+                      {project.details.highlights.map((item) => (
+                        <li key={item}>{item}</li>
+                      ))}
+                    </ul>
+                  )
                 )}
                 </CaseStudySectionCard>
               </Reveal>
@@ -145,13 +163,17 @@ export function CaseStudyView({ project, sections, progressItems }: CaseStudyVie
                 <div className="space-y-6">
                   {sections.architecture?.source ? (
                     <MDXRemote source={sections.architecture.source} components={mdxComponents} />
-                  ) : null}
+                  ) : (
+                    renderStructuredSection(structuredSections?.architecture)
+                  )}
 
                   <ArchitectureVisual project={project} />
 
                   {sections.deepArchitecture?.source ? (
                     <MDXRemote source={sections.deepArchitecture.source} components={mdxComponents} />
-                  ) : null}
+                  ) : (
+                    renderStructuredSection(structuredSections?.deepArchitecture)
+                  )}
                 </div>
                 </CaseStudySectionCard>
               </Reveal>
@@ -175,9 +197,11 @@ export function CaseStudyView({ project, sections, progressItems }: CaseStudyVie
                 {sections.performance?.source ? (
                   <MDXRemote source={sections.performance.source} components={mdxComponents} />
                 ) : (
-                  <p className="leading-relaxed text-muted-foreground">
-                    Performance notes are not available for this project.
-                  </p>
+                  renderStructuredSection(structuredSections?.performance) ?? (
+                    <p className="leading-relaxed text-muted-foreground">
+                      Performance notes are not available for this project.
+                    </p>
+                  )
                 )}
               </CaseStudySectionCard>
             </Reveal>
@@ -193,7 +217,9 @@ export function CaseStudyView({ project, sections, progressItems }: CaseStudyVie
                 <div className="space-y-6">
                   {sections.security?.source ? (
                     <MDXRemote source={sections.security.source} components={mdxComponents} />
-                  ) : null}
+                  ) : (
+                    renderStructuredSection(structuredSections?.security)
+                  )}
 
                   {project.details.security.length > 0 ? (
                     <ul className="space-y-2">
@@ -219,7 +245,9 @@ export function CaseStudyView({ project, sections, progressItems }: CaseStudyVie
                 <div className="space-y-6">
                   {sections.lessons?.source ? (
                     <MDXRemote source={sections.lessons.source} components={mdxComponents} />
-                  ) : null}
+                  ) : (
+                    renderStructuredSection(structuredSections?.lessons)
+                  )}
 
                   {project.details.lessons.length > 0 ? (
                     <ul className="space-y-2">
@@ -245,9 +273,11 @@ export function CaseStudyView({ project, sections, progressItems }: CaseStudyVie
                 {sections.outcome?.source ? (
                   <MDXRemote source={sections.outcome.source} components={mdxComponents} />
                 ) : (
-                  <p className="leading-relaxed text-muted-foreground">
-                    Outcome details are not available for this project.
-                  </p>
+                  renderStructuredSection(structuredSections?.outcome) ?? (
+                    <p className="leading-relaxed text-muted-foreground">
+                      Outcome details are not available for this project.
+                    </p>
+                  )
                 )}
               </CaseStudySectionCard>
             </Reveal>

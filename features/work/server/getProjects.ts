@@ -1,5 +1,5 @@
-import { getWorkPageData } from "@/services/projectService"
+import { getWorkPageDataForPublicRead } from "@/services/projectService"
 
 export async function getProjects(tag: string) {
-  return getWorkPageData(tag)
+  return getWorkPageDataForPublicRead(tag)
 }
