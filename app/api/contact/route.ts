@@ -1,4 +1,6 @@
 import { NextResponse } from 'next/server'
+import { ConvexHttpClient } from "convex/browser"
+import { anyApi } from "convex/server"
 import { Resend } from 'resend'
 import { contactSchema } from '@/features/contact/schema'
 
@@ -57,7 +59,7 @@ export async function POST(request: Request) {
     <div style="font-family:Arial,sans-serif;line-height:1.5;color:#111827">
       <p style="margin:0 0 12px 0;">Hi ${name},</p>
       <p style="margin:0 0 12px 0;">Thanks for reaching out. I received your message and will get back to you soon.</p>
-      <p style="margin:16px 0 0 0;">Ahmed Badry<br/>Frontend Specialist</p>
+      <p style="margin:16px 0 0 0;">Ahmed Badry<br/>Frontend Engineer</p>
     </div>
   `
 
@@ -76,6 +78,16 @@ export async function POST(request: Request) {
       subject: 'Thanks for reaching out',
       html: userHtml,
     })
+
+    const convexUrl = process.env.CONVEX_URL
+    if (convexUrl) {
+      const convex = new ConvexHttpClient(convexUrl)
+      await convex.mutation(anyApi.contactSubmissions.create, {
+        name,
+        email,
+        message,
+      })
+    }
   } catch {
     return NextResponse.json(
       { success: false, message: 'Failed to send email.' },
