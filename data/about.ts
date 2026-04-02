@@ -1,7 +1,7 @@
 export const aboutHero = {
-  title: "Engineering Structured, Performance-Driven Web Systems",
+  title: "I Build Systems That Scale Before They Have To",
   description:
-    "I design scalable frontend architectures with server-first thinking, controlled rendering, and measurable performance decisions.",
+    "Frontend engineer focused on architecture decisions, rendering strategy, and measurable performance. I work at the intersection of product clarity and engineering discipline.",
 }
 
 export const engineeringPhilosophy = [
@@ -9,19 +9,19 @@ export const engineeringPhilosophy = [
     number: "01",
     title: "Architecture Before Implementation",
     description:
-      "I define boundaries, rendering strategy, and data flow before writing components to keep systems predictable and maintainable.",
+      "Boundaries, rendering mode, and data contracts come before any component. This keeps systems predictable when requirements shift.",
   },
   {
     number: "02",
-    title: "Performance Is a Product Feature",
+    title: "Performance Is a Product Constraint",
     description:
-      "Latency, hydration cost, and runtime weight are treated as first-class product constraints from day one.",
+      "TTFB, hydration cost, and bundle weight are first-class concerns - not optimizations added at the end. They shape decisions from day one.",
   },
   {
     number: "03",
-    title: "Decision Logs Over Assumptions",
+    title: "Tradeoffs Over Assumptions",
     description:
-      "I optimize for clarity in tradeoffs so teams can evolve confidently without rewriting foundational layers.",
+      "Every architecture decision has a cost. I document the reasoning so teams can evolve systems confidently without rewriting foundational layers.",
   },
 ]
 

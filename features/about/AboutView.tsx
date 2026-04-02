@@ -1,31 +1,57 @@
 import Image from "next/image"
 import Link from "next/link"
+import { ArrowRight, Cpu, Layout, Lightbulb, Zap } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Container } from "@/components/layout/Container"
 import { AboutDeepDiveTabs } from "@/features/about/components/AboutDeepDiveTabs"
 import Reveal from "@/features/animations/motion/Reveal"
 import type { AboutPageData } from "@/services/aboutService"
-import me from '@/public/me/me-8.png'
+import me from "@/public/me/me-8.png"
 
 type AboutViewProps = {
   data: AboutPageData
 }
 
-function AboutPhotoFrame() {
+const BUILD_STEPS = [
+  {
+    icon: Lightbulb,
+    step: "01",
+    title: "Understand",
+    desc: "Map user flows and product goals before writing a single component.",
+  },
+  {
+    icon: Layout,
+    step: "02",
+    title: "Architect",
+    desc: "Define rendering strategy, server/client boundaries, and data contracts.",
+  },
+  {
+    icon: Cpu,
+    step: "03",
+    title: "Build",
+    desc: "Implement with strict types, small reversible PRs, and testable module seams.",
+  },
+  {
+    icon: Zap,
+    step: "04",
+    title: "Optimize",
+    desc: "Measure hydration cost, bundle weight, and web vitals before shipping.",
+  },
+] as const
+
+function PhotoFrame() {
   return (
-    <div className="relative aspect-square w-full">
-      <div className="absolute inset-0 rounded-[2rem] border border-border/50 bg-linear-to-br from-background/85 via-card/90 to-muted/55 shadow-[0_20px_80px_rgba(15,23,42,0.08)] backdrop-blur-xl dark:shadow-[0_24px_80px_rgba(0,0,0,0.38)]" />
-      <div className="absolute inset-[10px] rounded-[1.6rem] border border-white/35 bg-background/18 dark:border-white/10 dark:bg-white/4" />
+    <div className="relative mx-auto aspect-square w-full max-w-sm md:mx-0">
+      <div className="absolute inset-0 rounded-[2rem] border border-border/50 bg-linear-to-br from-background/85 via-card/90 to-muted/55 backdrop-blur-xl" />
+      <div className="absolute inset-[10px] rounded-[1.6rem] border border-white/10" />
       <div className="relative h-full w-full overflow-hidden rounded-[1.7rem] p-[10px]">
         <div className="relative h-full w-full overflow-hidden rounded-[1.35rem] bg-muted/30">
           <Image
             src={me}
-            alt="Portrait photo"
-            width={480}
-            height={480}
-            sizes="(min-width: 768px) 33vw, 100vw"
-            className="h-full w-full object-cover"
+            alt="Ahmed Badry"
+            fill
+            sizes="(min-width: 768px) 33vw, 90vw"
+            className="object-cover"
             priority
           />
         </div>
@@ -35,175 +61,162 @@ function AboutPhotoFrame() {
 }
 
 export function AboutView({ data }: AboutViewProps) {
-  const {
-    aboutHero,
-    architectureDives,
-    corePillars,
-    engineeringPhilosophy,
-    realSystemsBuilt,
-  } = data
+  const { aboutHero, architectureDives, corePillars, engineeringPhilosophy, realSystemsBuilt } = data
 
   return (
-    <div className="py-16 md:py-24 lg:py-32">
-      <Container className="relative">
-        <div className="relative mx-auto max-w-5xl space-y-16 md:space-y-24 lg:space-y-32">
-          <section id="hero" className="relative isolate space-y-6 md:space-y-8">
-            <div className="grid items-center gap-8 md:grid-cols-[1.5fr_1fr] md:gap-10">
-              <Reveal className="order-2 space-y-5 md:order-1" delay={0.04}>
-                <h1 className="max-w-3xl text-3xl font-medium tracking-tight sm:text-4xl md:text-5xl md:leading-[1.05]">
+    <div className="py-16 md:py-24">
+      <Container>
+        <div className="mx-auto max-w-5xl space-y-24 md:space-y-32">
+          <section className="grid items-center gap-10 md:grid-cols-[1.5fr_1fr] md:gap-12">
+            <Reveal className="space-y-6" delay={0.04}>
+              <div className="space-y-3">
+                <p className="text-xs font-medium uppercase tracking-widest text-primary/80">
+                  Frontend Engineer
+                </p>
+                <h1 className="text-3xl font-bold leading-[1.08] tracking-tight sm:text-4xl md:text-5xl">
                   {aboutHero.title}
                 </h1>
-                <div className="h-px w-14 bg-border" />
-                <p className="max-w-2xl text-base leading-relaxed text-muted-foreground md:text-lg">
-                  {aboutHero.description}
-                </p>
-                <div className="grid grid-cols-1 gap-3 pt-1 sm:flex sm:flex-wrap sm:items-center">
-                  <Button asChild className="w-full sm:w-auto">
-                    <Link href="/work">View Work</Link>
-                  </Button>
-                  <Button asChild variant="outline" className="w-full sm:w-auto">
-                    <a
-                      href="/cv/cv.pdf"
-                      download="cv.pdf"
-                    >
-                      Download Resume
-                    </a>
-                  </Button>
-                </div>
-              </Reveal>
-
-              <Reveal className="order-1 md:order-2" delay={0.1}>
-                <AboutPhotoFrame />
-              </Reveal>
-            </div>
-
-            <div className="h-px w-full bg-border" />
-          </section>
-
-          <section id="philosophy" className="space-y-8 md:space-y-12">
-            <Reveal>
-              <h2 className="text-2xl font-semibold tracking-tight">
-                Engineering Philosophy
-              </h2>
-            </Reveal>
-            <div className="space-y-8 md:space-y-12">
-              {engineeringPhilosophy.map((item, index) => (
-                <Reveal key={item.number} delay={index * 0.05}>
-                  <article className="grid gap-4 pb-8 md:grid-cols-[120px_1fr] md:gap-5 md:pb-10">
-                    <p className="text-4xl font-semibold tracking-tight text-foreground/15 md:text-5xl">
-                      {item.number}
-                    </p>
-                    <div className="space-y-2">
-                      <h3 className="text-xl font-medium tracking-tight">
-                        {item.title}
-                      </h3>
-                      <p className="leading-relaxed text-muted-foreground">
-                        {item.description}
-                      </p>
-                    </div>
-                  </article>
-                </Reveal>
-              ))}
-            </div>
-          </section>
-        </div>
-      </Container>
-
-      <section id="pillars" className="py-16 md:py-24 lg:py-32">
-        <Container>
-          <div className="mx-auto max-w-[1200px] space-y-10">
-            <Reveal>
-              <h2 className="text-2xl font-semibold tracking-tight">
-                Core Engineering Pillars
-              </h2>
-            </Reveal>
-
-            <div className="grid gap-4 sm:gap-6 md:grid-cols-2 xl:grid-cols-3">
-              {corePillars.map((pillar, index) => (
-                <Reveal key={pillar.title} delay={index * 0.05}>
-                  <Card className="border-border/90 bg-card/50 shadow-none">
-                    <CardHeader>
-                      <CardTitle>{pillar.title}</CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                      <ul className="space-y-2 text-sm text-muted-foreground">
-                        {pillar.points.map((point) => (
-                          <li key={point} className="flex items-start gap-2">
-                            <span className="mt-2 h-1 w-1 rounded-full bg-muted-foreground/65" />
-                            <span>{point}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </CardContent>
-                  </Card>
-                </Reveal>
-              ))}
-            </div>
-          </div>
-        </Container>
-      </section>
-
-      <Container>
-        <div className="mx-auto max-w-[900px] space-y-16 md:space-y-24 lg:space-y-32">
-          <section id="deep-dive" className="space-y-8">
-            <Reveal>
-              <h2 className="text-2xl font-semibold tracking-tight">
-                Architecture Deep Dive
-              </h2>
-            </Reveal>
-            <Reveal delay={0.05}>
-              <p className="max-w-2xl leading-relaxed text-muted-foreground">
-                Representative architecture decisions across systems where
-                rendering strategy, boundaries, and maintainability were primary
-                constraints.
+              </div>
+              <p className="max-w-lg text-base leading-relaxed text-muted-foreground md:text-lg">
+                {aboutHero.description}
               </p>
+              <div className="flex flex-wrap gap-3">
+                <Button asChild size="lg">
+                  <Link href="/work">
+                    View Work <ArrowRight className="size-4" />
+                  </Link>
+                </Button>
+                <Button asChild variant="outline" size="lg">
+                  <a href="/cv/cv.pdf" download>
+                    Download Resume
+                  </a>
+                </Button>
+              </div>
             </Reveal>
-            <Reveal delay={0.08}>
+            <Reveal delay={0.1}>
+              <PhotoFrame />
+            </Reveal>
+          </section>
+
+          <section className="space-y-8">
+            <Reveal delay={0.04}>
+              <div className="space-y-1">
+                <h2 className="text-2xl font-semibold tracking-tight">How I Build</h2>
+                <p className="text-sm text-muted-foreground">
+                  A repeatable process - from ambiguity to production-ready systems.
+                </p>
+              </div>
+            </Reveal>
+            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+              {BUILD_STEPS.map((step, i) => {
+                const Icon = step.icon
+                return (
+                  <Reveal key={step.step} delay={0.04 + i * 0.06}>
+                    <div className="relative h-full space-y-3 rounded-xl border border-border/60 bg-card/40 p-5">
+                      <div className="flex items-center justify-between">
+                        <div className="rounded-md border border-primary/20 bg-primary/10 p-2">
+                          <Icon className="size-4 text-primary" />
+                        </div>
+                        <span className="select-none text-3xl font-bold tabular-nums text-foreground/10">
+                          {step.step}
+                        </span>
+                      </div>
+                      <h3 className="font-semibold tracking-tight">{step.title}</h3>
+                      <p className="text-sm leading-relaxed text-muted-foreground">{step.desc}</p>
+                    </div>
+                  </Reveal>
+                )
+              })}
+            </div>
+          </section>
+
+          <section className="space-y-8">
+            <Reveal delay={0.04}>
+              <h2 className="text-2xl font-semibold tracking-tight">Engineering Principles</h2>
+            </Reveal>
+            <div className="space-y-6">
+              {engineeringPhilosophy.map((item, i) => (
+                <Reveal key={item.number} delay={0.04 + i * 0.05}>
+                  <div className="grid items-start gap-4 border-b border-border/40 pb-6 last:border-0 last:pb-0 md:grid-cols-[80px_1fr] md:gap-6">
+                    <span className="text-5xl font-bold leading-none tracking-tight tabular-nums text-foreground/10">
+                      {item.number}
+                    </span>
+                    <div className="space-y-1.5">
+                      <h3 className="font-semibold tracking-tight">{item.title}</h3>
+                      <p className="text-sm leading-relaxed text-muted-foreground">{item.description}</p>
+                    </div>
+                  </div>
+                </Reveal>
+              ))}
+            </div>
+          </section>
+
+          <section className="space-y-8">
+            <Reveal delay={0.04}>
+              <h2 className="text-2xl font-semibold tracking-tight">Core Engineering Pillars</h2>
+            </Reveal>
+            <div className="grid gap-4 md:grid-cols-3">
+              {corePillars.map((pillar, i) => (
+                <Reveal key={pillar.title} delay={0.04 + i * 0.05}>
+                  <div className="h-full space-y-4 rounded-xl border border-border/60 bg-card/40 p-5">
+                    <h3 className="text-sm font-semibold tracking-tight">{pillar.title}</h3>
+                    <ul className="space-y-2">
+                      {pillar.points.map((point) => (
+                        <li key={point} className="flex items-start gap-2 text-sm text-muted-foreground">
+                          <span className="mt-2 h-1 w-1 shrink-0 rounded-full bg-primary/60" />
+                          {point}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </Reveal>
+              ))}
+            </div>
+          </section>
+
+          <section className="space-y-8">
+            <Reveal delay={0.04}>
+              <div className="space-y-1">
+                <h2 className="text-2xl font-semibold tracking-tight">Architecture Deep Dive</h2>
+                <p className="text-sm text-muted-foreground">
+                  Real decisions across rendering strategy, boundaries, and maintainability.
+                </p>
+              </div>
+            </Reveal>
+            <Reveal delay={0.09}>
               <AboutDeepDiveTabs items={architectureDives} />
             </Reveal>
           </section>
 
-          <section id="systems" className="space-y-8">
-            <Reveal>
-              <h2 className="text-2xl font-semibold tracking-tight">
-                Real Systems Built
-              </h2>
+          <section className="space-y-8">
+            <Reveal delay={0.04}>
+              <h2 className="text-2xl font-semibold tracking-tight">Real Systems Built</h2>
             </Reveal>
-            <div className="divide-y divide-border border-y border-border">
-              {realSystemsBuilt.map((system, index) => (
-                <Reveal key={system.title} delay={index * 0.05}>
-                  <article className="py-5">
-                    <h3 className="text-[15px] font-semibold tracking-tight">
-                      {system.title}
-                    </h3>
-                    <p className="mt-1 max-w-3xl text-sm leading-relaxed text-muted-foreground">
-                      {system.summary}
-                    </p>
-                  </article>
+            <div className="grid gap-4 md:grid-cols-3">
+              {realSystemsBuilt.map((system, i) => (
+                <Reveal key={system.title} delay={0.04 + i * 0.05}>
+                  <div className="h-full space-y-2 rounded-xl border border-border/60 bg-card/40 p-5">
+                    <h3 className="text-[15px] font-semibold tracking-tight">{system.title}</h3>
+                    <p className="text-sm leading-relaxed text-muted-foreground">{system.summary}</p>
+                  </div>
                 </Reveal>
               ))}
             </div>
           </section>
 
-          <section id="cta" className="pt-4 text-center md:pt-8">
-            <Reveal>
-              <p className="mx-auto max-w-2xl text-lg font-medium leading-relaxed tracking-tight md:text-2xl">
-                If you&apos;re building a serious product and value structure over
-                surface - let&apos;s collaborate.
+          <Reveal delay={0.04}>
+            <section className="space-y-5 rounded-2xl border border-primary/20 bg-primary/5 p-8 text-center md:p-12">
+              <p className="mx-auto max-w-xl text-lg font-medium tracking-tight md:text-xl">
+                If you&apos;re building a serious product and value structure over surface - let&apos;s
+                collaborate.
               </p>
-            </Reveal>
-            <Reveal delay={0.06}>
-              <div className="mt-8">
-                <Button asChild size="lg" className="w-full sm:w-auto">
-                  <Link href="/contact">Start a Conversation</Link>
-                </Button>
-              </div>
-            </Reveal>
-          </section>
+              <Button asChild size="lg">
+                <Link href="/contact">Start a Conversation</Link>
+              </Button>
+            </section>
+          </Reveal>
         </div>
       </Container>
     </div>
   )
 }
-
-

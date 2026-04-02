@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useRef, useState } from "react"
+import { useState } from "react"
 import Link from "next/link"
 import Image from "next/image"
 import { usePathname } from "next/navigation"
@@ -11,18 +11,25 @@ import { ThemeToggle } from "@/components/shared/themeToggle"
 
 export function Navbar() {
   const pathname = usePathname()
-  const [isMenuOpen, setIsMenuOpen] = useState(false)
-  const previousPathnameRef = useRef(pathname)
+  const [menuState, setMenuState] = useState({
+    open: false,
+    originPath: pathname,
+  })
+  const isMenuOpen = menuState.open && menuState.originPath === pathname
 
-  useEffect(() => {
-    if (previousPathnameRef.current !== pathname) {
-      setIsMenuOpen(false)
-      previousPathnameRef.current = pathname
-      return
-    }
+  const closeMenu = () => {
+    setMenuState({ open: false, originPath: pathname })
+  }
 
-    previousPathnameRef.current = pathname
-  }, [pathname])
+  const toggleMenu = () => {
+    setMenuState((prev) => {
+      const currentlyOpen = prev.open && prev.originPath === pathname
+      if (currentlyOpen) {
+        return { open: false, originPath: pathname }
+      }
+      return { open: true, originPath: pathname }
+    })
+  }
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/70 backdrop-blur-xl">
@@ -78,7 +85,7 @@ export function Navbar() {
             type="button"
             aria-label={isMenuOpen ? "Close menu" : "Open menu"}
             aria-expanded={isMenuOpen}
-            onClick={() => setIsMenuOpen((prev) => !prev)}
+            onClick={toggleMenu}
             className="relative z-[60] inline-flex h-11 w-11 items-center justify-center rounded-xl border border-border/50 bg-card/70 text-foreground transition-colors"
           >
             <span className="sr-only">Toggle navigation menu</span>
@@ -114,7 +121,7 @@ export function Navbar() {
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.22, ease: "easeOut" }}
                 className="fixed inset-0 z-40 bg-background/60 backdrop-blur-sm md:hidden"
-                onClick={() => setIsMenuOpen(false)}
+                onClick={closeMenu}
               />
               <motion.nav
                 initial={{ opacity: 0, y: -12, scale: 0.98 }}
@@ -133,7 +140,7 @@ export function Navbar() {
                       <Link
                         key={link.href}
                         href={link.href}
-                        onClick={() => setIsMenuOpen(false)}
+                        onClick={closeMenu}
                         className={cn(
                           "rounded-xl px-4 py-3 text-sm transition-colors duration-200",
                           isActive
