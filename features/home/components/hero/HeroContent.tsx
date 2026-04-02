@@ -69,7 +69,7 @@ export default function HeroContent() {
                         <span className="h-full">Frontend</span>
                         <div className="relative inline-block px-5 py-3 sm:px-6 sm:py-4">
                             <span className="text-lg font-medium text-foreground sm:text-xl lg:text-3xl">
-                                Specialist
+                                Engineer
                             </span>
 
                             {/* corners */}
@@ -83,8 +83,8 @@ export default function HeroContent() {
 
                 <StaggerItem>
                     <div className="space-y-2 text-sm text-muted-foreground sm:space-y-3 sm:text-base lg:text-lg">
-                        <p>Building cutting-edge web experiences</p>
-                        <p>Elevating performance & design</p>
+                        <p>Designing systems that scale - architecture-first, performance-default.</p>
+                        <p>Next.js · TypeScript · Fullstack</p>
                     </div>
                 </StaggerItem>
 

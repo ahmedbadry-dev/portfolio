@@ -3,7 +3,6 @@
 import { Container } from "@/components/layout/Container"
 import CardSwap, { Card as SwapCard } from "@/components/CardSwap"
 import { useEffect, useMemo, useState } from "react"
-import { projects } from "@/data/projects"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
@@ -11,6 +10,7 @@ import { ArrowUpRight } from "lucide-react"
 import { WorkCardImg } from "@/features/home/components/selected-work/WorkCardImg"
 import { useSelectedWorkController } from "@/features/home/components/selected-work/useSelectedWorkController"
 import Image from "next/image"
+import type { Project } from "@/data/projects"
 
 function ShowcaseImage({
   src,
@@ -43,13 +43,17 @@ function ShowcaseImage({
   )
 }
 
-export function SelectedWork() {
+type SelectedWorkProps = {
+  projects: Project[]
+}
+
+export function SelectedWork({ projects }: SelectedWorkProps) {
   const router = useRouter()
   const [isMobile, setIsMobile] = useState(false)
   const { featuredProjects, activeProject, handleActiveCardChange } =
     useSelectedWorkController(projects)
   const visibleProjects = featuredProjects
-  const activeProjectHref = activeProject ? `/projects/${activeProject.slug}` : "/projects"
+  const activeProjectHref = activeProject ? `/projects/${activeProject.slug}` : "/work"
   const hasLighthouse = typeof activeProject?.lighthouse === "number"
   const hasTtfb = typeof activeProject?.ttfb === "number"
   const hasPerformanceMetrics = hasLighthouse || hasTtfb
@@ -95,6 +99,34 @@ export function SelectedWork() {
       }),
     [visibleProjects]
   )
+
+  if (visibleProjects.length === 0) {
+    return (
+      <section className="relative mt-12 overflow-hidden py-20 sm:mt-8 md:mt-0 md:py-32">
+        <Container>
+          <div className="rounded-3xl border border-border/50 bg-background/40 p-6 text-center sm:p-8">
+            <p className="text-sm uppercase tracking-[0.2em] text-muted-foreground">
+              Selected Work
+            </p>
+            <h2 className="mt-4 text-2xl font-semibold tracking-tight md:text-4xl">
+              Projects are being prepared
+            </h2>
+            <p className="mx-auto mt-4 max-w-xl text-sm text-muted-foreground md:text-base">
+              Featured projects are not available yet. Browse the full work list.
+            </p>
+            <div className="mt-6">
+              <Button asChild>
+                <Link href="/work">
+                  View Work
+                  <ArrowUpRight className="size-4" />
+                </Link>
+              </Button>
+            </div>
+          </div>
+        </Container>
+      </section>
+    )
+  }
 
 
   return (

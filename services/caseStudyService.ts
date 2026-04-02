@@ -1,4 +1,11 @@
-import { getProjectRecord, getProjectSlugs } from "@/services/projectService"
+import {
+  getCanonicalProjectForPublicRead,
+  getProjectRecord,
+  getProjectRecordForPublicRead,
+  getProjectSlugs,
+  getProjectSlugsForPublicReadData,
+} from "@/services/projectService"
+import type { CanonicalCaseStudySections } from "@/lib/projects/schema"
 import {
   findMdxSection,
   getMDXBySlug,
@@ -19,25 +26,39 @@ export type CaseStudySections = {
 
 export type CaseStudyPageData = {
   project: NonNullable<ReturnType<typeof getProjectRecord>>
-  source: string
+  source: string | null
   sections: CaseStudySections
+  structuredSections?: CanonicalCaseStudySections
   progressItems: Array<{ id: string; label: string }>
 }
 
-export function getCaseStudyStaticParams() {
-  return getProjectSlugs().map((slug) => ({ slug }))
-}
+const CASE_STUDY_PROGRESS_ITEMS: Array<{ id: string; label: string }> = [
+  { id: "problem", label: "Problem" },
+  { id: "approach", label: "Approach" },
+  { id: "architecture", label: "Architecture" },
+  { id: "performance", label: "Performance" },
+  { id: "security", label: "Security" },
+  { id: "lessons", label: "Lessons" },
+  { id: "outcome", label: "Outcome" },
+  { id: "cta", label: "CTA" },
+]
 
-export function getCaseStudyPageData(slug: string): CaseStudyPageData | null {
-  const project = getProjectRecord(slug)
-  const source = getMDXBySlug(slug)
-
-  if (!project || !source) {
-    return null
+function buildSectionsFromSource(source: string | null): CaseStudySections {
+  if (!source) {
+    return {
+      problem: null,
+      approach: null,
+      architecture: null,
+      deepArchitecture: null,
+      performance: null,
+      security: null,
+      lessons: null,
+      outcome: null,
+    }
   }
 
   const parsedSections = parseMdxSections(source)
-  const sections: CaseStudySections = {
+  return {
     problem: findMdxSection(parsedSections, "Problem"),
     approach: findMdxSection(parsedSections, "Overview"),
     architecture: findMdxSection(parsedSections, "Architecture Strategy"),
@@ -47,18 +68,51 @@ export function getCaseStudyPageData(slug: string): CaseStudyPageData | null {
     lessons: findMdxSection(parsedSections, "What I Learned"),
     outcome: findMdxSection(parsedSections, "Outcome"),
   }
+}
 
-  const progressItems = [
-    { id: "problem", label: "Problem" },
-    { id: "approach", label: "Approach" },
-    { id: "architecture", label: "Architecture" },
-    { id: "performance", label: "Performance" },
-    { id: "security", label: "Security" },
-    { id: "lessons", label: "Lessons" },
-    { id: "outcome", label: "Outcome" },
-    { id: "cta", label: "CTA" },
-  ]
+export function getCaseStudyStaticParams() {
+  return getProjectSlugs().map((slug) => ({ slug }))
+}
 
-  return { project, source, sections, progressItems }
+export async function getCaseStudyStaticParamsForPublicRead() {
+  const slugs = await getProjectSlugsForPublicReadData()
+  return slugs.map((slug) => ({ slug }))
+}
+
+export function getCaseStudyPageData(slug: string): CaseStudyPageData | null {
+  const project = getProjectRecord(slug)
+  const source = getMDXBySlug(slug)
+
+  if (!project) {
+    return null
+  }
+
+  const sections = buildSectionsFromSource(source)
+
+  return { project, source, sections, progressItems: CASE_STUDY_PROGRESS_ITEMS }
+}
+
+export async function getCaseStudyPageDataForPublicRead(
+  slug: string
+): Promise<CaseStudyPageData | null> {
+  const project = await getProjectRecordForPublicRead(slug)
+  const canonicalProject = await getCanonicalProjectForPublicRead(slug)
+
+  if (!project) {
+    return null
+  }
+
+  const mdxSlug = canonicalProject?.caseStudy.mdxSlug?.trim() || slug
+  const source = getMDXBySlug(mdxSlug)
+  const sections = buildSectionsFromSource(source)
+  const structuredSections = canonicalProject?.caseStudy.sections
+
+  return {
+    project,
+    source,
+    sections,
+    structuredSections,
+    progressItems: CASE_STUDY_PROGRESS_ITEMS,
+  }
 }
 

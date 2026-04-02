@@ -2,13 +2,14 @@ import type { Metadata } from "next"
 import { Suspense } from "react"
 import { notFound } from "next/navigation"
 import { CaseStudyPageSkeleton } from "@/components/layout/RouteSkeletons"
-import { getProjectBySlug } from "@/data/projects"
+import { PageViewTracker } from "@/features/analytics/components/PageViewTracker"
 import { CaseStudyContainer } from "@/features/case-study/CaseStudyContainer"
 import { absoluteUrl } from "@/lib/seo"
 import {
-  getCaseStudyPageData,
-  getCaseStudyStaticParams,
+  getCaseStudyPageDataForPublicRead,
+  getCaseStudyStaticParamsForPublicRead,
 } from "@/services/caseStudyService"
+import { getProjectRecordForPublicRead } from "@/services/projectService"
 
 interface Props {
   params: Promise<{
@@ -16,13 +17,13 @@ interface Props {
   }>
 }
 
-export function generateStaticParams() {
-  return getCaseStudyStaticParams()
+export async function generateStaticParams() {
+  return getCaseStudyStaticParamsForPublicRead()
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params
-  const project = getProjectBySlug(slug)
+  const project = await getProjectRecordForPublicRead(slug)
 
   if (!project) {
     return {
@@ -81,16 +82,19 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function CaseStudyPage({ params }: Props) {
   const { slug } = await params
-  const data = getCaseStudyPageData(slug)
+  const data = await getCaseStudyPageDataForPublicRead(slug)
 
   if (!data) {
     notFound()
   }
 
   return (
-    <Suspense fallback={<CaseStudyPageSkeleton />}>
-      <CaseStudyContainer {...data} />
-    </Suspense>
+    <>
+      <PageViewTracker routeType="project" slug={slug} />
+      <Suspense fallback={<CaseStudyPageSkeleton />}>
+        <CaseStudyContainer {...data} />
+      </Suspense>
+    </>
   )
 }
 

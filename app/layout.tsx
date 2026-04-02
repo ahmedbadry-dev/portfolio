@@ -8,6 +8,7 @@ import { Toaster } from "@/components/ui/sonner"
 import { cn } from "@/lib/cn"
 import { getMetadataBase } from "@/lib/seo"
 import { ThemeProvider } from "@/components/theme-provider"
+import { ConvexClientProvider } from "@/components/ConvexClientProvider"
 
 const defaultDescription =
   "Frontend Engineer building scalable Next.js + React systems with strong architecture, performance discipline, and polished UI."
@@ -90,26 +91,28 @@ export default function RootLayout({
           "min-h-screen bg-background text-foreground antialiased overflow-x-hidden"
         )}
       >
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="dark"
-          enableSystem
-          disableTransitionOnChange
-        >
-          <Suspense fallback={null}>
-            <RouteProgress />
-          </Suspense>
-          <div className="relative mx-auto max-w-350 px-4 sm:px-6 lg:px-8">
-            <div className="relative min-h-screen overflow-x-hidden">
-              <Navbar />
-              <main className="relative">
-                {children}
-                <Toaster position="top-center" richColors />
-              </main>
-              <Footer />
+        <ConvexClientProvider>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="dark"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <Suspense fallback={null}>
+              <RouteProgress />
+            </Suspense>
+            <div className="relative mx-auto max-w-350 px-4 sm:px-6 lg:px-8">
+              <div className="relative min-h-screen overflow-x-hidden">
+                <Navbar />
+                <main className="relative">
+                  {children}
+                  <Toaster position="top-center" richColors />
+                </main>
+                <Footer />
+              </div>
             </div>
-          </div>
-        </ThemeProvider>
+          </ThemeProvider>
+        </ConvexClientProvider>
       </body>
     </html>
   )

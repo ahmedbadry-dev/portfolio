@@ -1,4 +1,4 @@
-import { getCaseStudyPageData } from "@/services/caseStudyService"
+import { getCaseStudyPageDataForPublicRead } from "@/services/caseStudyService"
 import type { ProjectScreenshots } from "@/data/projects"
 
 export type CaseStudy = {
@@ -29,11 +29,11 @@ export type CaseStudy = {
   ttfb?: number
   imageCount?: number
   screenshots: ProjectScreenshots
-  source: string
+  source: string | null
 }
 
 export async function getCaseBySlug(slug: string): Promise<CaseStudy | null> {
-  const data = getCaseStudyPageData(slug)
+  const data = await getCaseStudyPageDataForPublicRead(slug)
   if (!data) {
     return null
   }

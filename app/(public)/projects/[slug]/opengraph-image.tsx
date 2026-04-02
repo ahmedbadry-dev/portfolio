@@ -1,5 +1,5 @@
 import { ImageResponse } from "next/og"
-import { getProjectBySlug } from "@/data/projects"
+import { getProjectRecordForPublicRead } from "@/services/projectService"
 
 export const runtime = "nodejs"
 export const alt = "Project case study preview"
@@ -39,7 +39,7 @@ function getMetricLine(
 
 export default async function ProjectOgImage({ params }: ProjectOgImageProps) {
   const { slug } = await params
-  const project = getProjectBySlug(slug)
+  const project = await getProjectRecordForPublicRead(slug)
 
   if (!project) {
     return new ImageResponse(
