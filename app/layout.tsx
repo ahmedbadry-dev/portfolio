@@ -84,7 +84,13 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning><head>
+      <script
+        defer
+        src="https://cloud.umami.is/script.js"
+        data-website-id="e62ecab8-0d93-422d-8f03-9fccf64d9093"
+      />
+    </head>
       <body
         className={cn(
           "min-h-screen bg-background text-foreground antialiased overflow-x-hidden"
