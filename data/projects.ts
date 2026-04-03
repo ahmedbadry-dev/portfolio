@@ -74,6 +74,99 @@ export type Project = {
 const projectRecords: ProjectRecord[] = [
   {
     meta: {
+      slug: 'z-social-platform',
+      title: 'Z-Social',
+      type: 'fullstack',
+      tags: [
+        'Next.js',
+        'Fullstack',
+        'Realtime',
+        'Social Graph',
+        'TypeScript',
+        'App Router',
+      ],
+      stack: [
+        'Next.js 16',
+        'TypeScript',
+        'Convex',
+        'Better Auth',
+        'Tailwind CSS v4',
+        'UploadThing',
+        'Zustand',
+        'Zod',
+      ],
+      status: 'production',
+    },
+    shortDescription:
+      'Z-Social is a full-stack Next.js 16 + Convex social platform that implements authenticated real-time feed, messaging, notifications, follow-requests for private accounts, and search over posts/usernames.',
+    seo: {
+      title: 'Z-Social Case Study',
+      description:
+        'A technical case study of a Next.js 16 and Convex social network with real-time feed, messaging, notifications, and privacy-aware follow workflows.',
+    },
+    details: {
+      highlights: [
+        'Implemented a hybrid feed system that combines follow-based pagination with discovery injection from friends-of-friends and engagement-ranked strangers.',
+        'Built real-time direct messaging with optimistic UI, image upload flow, cancel/retry handling, read-state updates, typing status, and online presence.',
+        'Implemented privacy-aware social graph behavior with private accounts, follow requests (pending/accepted/rejected), and conditional profile/post visibility.',
+      ],
+      architecture: {
+        rendering:
+          'The app uses Next.js App Router with server-rendered route shells and metadata, then hydrates client feature modules that subscribe to live Convex queries.',
+        data: 'Convex is used as the backend/data layer with typed schema tables, indexes/search indexes, and query/mutation functions consumed via `useQuery`, `useMutation`, and `usePaginatedQuery`.',
+        domain:
+          'Domain logic is organized in Convex modules (`posts`, `comments`, `follows`, `messages`, `notifications`, `users`) covering feed ranking, reactions, mentions, follow-requests, messaging, and profile/privacy rules.',
+        performance:
+          'The app preloads critical queries on the server (`preloadAuthQuery`), paginates heavy lists with infinite scroll, and defers non-critical UI (dialogs) through dynamic imports.',
+      },
+      complexity: [
+        'Designing and implementing a multi-tier feed algorithm (follow feed + discovery candidates + social context labels + weighted trending score) while preserving paginated UX.',
+        'Maintaining a reliable optimistic messaging pipeline for text/image messages with upload lifecycle, reconciliation against real-time query results, and cancel/retry behavior.',
+      ],
+      security: [
+        'Access control is enforced both at routing and backend levels using `proxy.ts` cookie checks and Convex auth guards (`requireAuth`/`requireAuthUserId`) in mutations.',
+        'Authorization checks are applied to sensitive mutations (e.g., editing/deleting posts, deleting notifications) and upload routes require authenticated middleware in UploadThing.',
+      ],
+      lessons: [
+        'Optimistic interfaces must include reconciliation logic against authoritative real-time data to avoid duplicated or stale UI states.',
+        'Privacy features require consistent cross-module enforcement; account privacy and online-status settings must be respected by profile visibility, follow flows, and presence queries.',
+      ],
+    },
+    metrics: {
+      lighthouse: 95,
+      ttfb: 520,
+    },
+    imageCount: 7,
+    screenshots: {
+      desktop: [
+        '/screenshots/z-social-platform/crs-1.png',
+        '/screenshots/z-social-platform/crs-2.png',
+        '/screenshots/z-social-platform/crs-3.png',
+        '/screenshots/z-social-platform/crs-4.png',
+        '/screenshots/z-social-platform/crs-5.png',
+        '/screenshots/z-social-platform/crs-6.png',
+        '/screenshots/z-social-platform/crs-7.png',
+        '/screenshots/z-social-platform/crs-8.png',
+        '/screenshots/z-social-platform/crs-9.png',
+        '/screenshots/z-social-platform/crs-10.png',
+      ],
+      mobile: [
+        '/screenshots/z-social-platform/mobile/m-explore.png',
+        '/screenshots/z-social-platform/mobile/m-profile.png',
+        '/screenshots/z-social-platform/mobile/m-feed.png',
+      ],
+      selectedWork: {
+        main: '/screenshots/z-social-platform/selected-work/s-work.png',
+        aside: '',
+      },
+    },
+    links: {
+      liveDemo: 'https://z-social-rouge.vercel.app',
+      gitHub: 'https://github.com/ahmedbadry-dev/z-social',
+    },
+  },
+  {
+    meta: {
       slug: 'habit-tracker',
       title: 'Habit Tracker',
       type: 'fullstack',
@@ -124,7 +217,7 @@ const projectRecords: ProjectRecord[] = [
     },
     metrics: {
       lighthouse: 90,
-      ttfb: 120,
+      ttfb: 420,
     },
     imageCount: 12,
     screenshots: {

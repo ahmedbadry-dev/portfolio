@@ -4,9 +4,10 @@ import { startTransition, useCallback, useMemo, useState } from 'react'
 import type { Project } from '@/data/projects'
 
 const FEATURED_SLUGS = [
+  'z-social-platform',
   'habit-tracker',
   'product-feedback',
-  'splitter',
+  // 'splitter',
 ] as const
 
 export function useSelectedWorkController(projects: Project[]) {

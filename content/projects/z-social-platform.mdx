@@ -1,0 +1,86 @@
+---
+title: 'Z-Social'
+slug: 'z-social-platform'
+type: 'fullstack'
+status: 'production'
+stack:
+  - next
+  - react
+  - typescript
+  - convex
+  - better-auth
+  - tailwindcss
+  - uploadthing
+  - zod
+  - zustand
+  - react-hook-form
+  - nuqs
+  - motion
+---
+
+## Overview
+
+Z-Social is a full-stack social networking application built with Next.js 16 App Router and Convex.  
+It delivers authenticated real-time feed, messaging, notifications, search, and profile workflows in a single web app.  
+The core goal is to provide a modern social experience with privacy-aware follow mechanics and responsive real-time updates.
+
+## The Problem
+
+- Deliver a social feed that supports both followed content and meaningful discovery for users with sparse networks.
+- Support real-time one-to-one messaging with media while keeping the UI responsive under network variability.
+- Implement privacy controls (private profiles, follow requests, online visibility) without breaking core engagement flows.
+- Keep auth, uploads, notifications, and profile operations consistent across server-rendered routes and client-interactive screens.
+
+## Architecture Strategy
+
+### Rendering Model
+
+The app uses Next.js App Router with server components for route/layout composition and metadata generation, then hydrates client feature components for interactive real-time behavior through Convex subscriptions.
+
+### Data Strategy
+
+Convex serves as backend, database, and real-time transport, with typed tables/indexes/search-indexes and dedicated modules for posts, comments, follows, messages, notifications, users, and search.
+
+### Domain Logic
+
+Business logic is implemented in Convex mutations/queries: feed construction and discovery injection, reaction/comment/mention notifications, private-account follow-request workflows, messaging presence/read-state, and profile visibility gating.
+
+## Performance Strategy
+
+- Preloads critical authenticated data with `preloadAuthQuery` in server layouts/pages to reduce initial client waterfalls.
+- Uses paginated queries (`usePaginatedQuery`) and intersection-based infinite scrolling for feed and notifications.
+- Defers non-critical UI with `next/dynamic` (`ssr: false`) for edit/delete dialogs.
+- Uses lazy media loading (`next/image` with lazy loading and video pause-on-scroll via `IntersectionObserver`).
+- Debounces search input before querying (`useDebounce`) to limit unnecessary backend traffic.
+
+## Security Model
+
+- Route access is guarded in `proxy.ts` by session-token cookie checks, redirecting unauthenticated users away from protected routes.
+- Backend mutations enforce authentication through `requireAuth` / `requireAuthUserId` helpers and return `Unauthorized` when missing auth.
+- Ownership/authorization checks are enforced before destructive actions (for example, post edit/delete and notification deletion).
+- UploadThing routes (`postMedia`, `avatar`, `chatImage`) require authenticated middleware and enforce file type/size limits.
+
+## Complex Engineering Challenges
+
+- Building a feed system that combines follow-based content with discovery injection and social-context labeling while preserving pagination and UX continuity.
+- Implementing optimistic messaging with image uploads, cancellation/retry paths, and reconciliation against live query results to avoid duplicates.
+- Coordinating privacy controls (`isPrivate`, `showOnlineStatus`) across profile rendering, follow-request state transitions, and presence display.
+- Supporting mention parsing in posts/comments and converting matches into targeted notification records.
+
+## Deep Architecture
+
+(See architecture visual below.)
+
+## What I Learned
+
+- Real-time products need explicit optimistic-state reconciliation rules, not just optimistic updates.
+- Privacy requirements must be treated as domain invariants and enforced consistently across all relevant modules.
+- Hybrid rendering works best when initial route data is server-preloaded and high-frequency updates stay on live client subscriptions.
+- Typed backend modules and shared validation reduce feature drift as social-domain complexity grows.
+
+## Outcome
+
+- Delivered a deployed social platform with authenticated feed, search, explore, messaging, notifications, and profile/settings flows.
+- Implemented private-account follow requests and conditional profile/post visibility.
+- Added media upload workflows for posts, avatars, and chat images with auth-gated upload endpoints.
+- Added custom OG generation for posts/pages and polished interaction patterns (animations, skeletons, responsive mobile behavior).
