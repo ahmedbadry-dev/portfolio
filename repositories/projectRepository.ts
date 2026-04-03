@@ -22,6 +22,13 @@ type ConvexProjectReadResult =
   | { ok: true; project: CanonicalProject | null }
   | { ok: false }
 
+/**
+ * MIGRATION DEBT: This ordering is a holdover from before Convex migration.
+ * When Convex `featured` + `sortOrder` fields are fully validated as the
+ * source of truth for home page ordering, remove this constant and update
+ * compareFeaturedForHome to sort purely by sortOrder then updatedAt.
+ * Do NOT remove until that validation is complete.
+ */
 const LEGACY_FEATURED_SLUG_ORDER = [
   "habit-tracker",
   "product-feedback",
@@ -30,6 +37,9 @@ const LEGACY_FEATURED_SLUG_ORDER = [
 
 function getProjectsReadSource(): ProjectsReadSource {
   const raw = process.env.PROJECTS_READ_SOURCE?.trim().toLowerCase()
+  // "auto" and "convex" intentionally behave identically in this implementation.
+  // "auto" is reserved for future differentiation (e.g., feature-flag-controlled
+  // switching between read sources). Do not collapse them without a migration plan.
   if (raw === "local" || raw === "convex" || raw === "auto") {
     return raw
   }
@@ -76,16 +86,26 @@ async function fetchCanonicalProjectsFromConvex(): Promise<ConvexProjectsReadRes
     const client = new ConvexHttpClient(convexUrl)
     const result = await client.query(anyApi.projects.listPublic, {})
     if (!Array.isArray(result)) {
+      console.error(
+        "[projectRepository] Convex projects list read returned invalid shape, falling back to local data."
+      )
       return { ok: false }
     }
 
     const projects = result.filter(isCanonicalProject)
     if (result.length > 0 && projects.length === 0) {
+      console.error(
+        "[projectRepository] Convex projects list read returned non-canonical project data, falling back to local data."
+      )
       return { ok: false }
     }
 
     return { ok: true, projects }
-  } catch {
+  } catch (error) {
+    console.error(
+      "[projectRepository] Convex projects list read failed, falling back to local data:",
+      error
+    )
     return { ok: false }
   }
 }
@@ -104,6 +124,8 @@ function compareFeaturedForHome(
   a: Pick<CanonicalProject, "slug" | "sortOrder" | "updatedAt">,
   b: Pick<CanonicalProject, "slug" | "sortOrder" | "updatedAt">
 ): number {
+  // Backwards-compatibility sort: preserves legacy featured slug order until
+  // Convex `featured` + `sortOrder` is fully validated as the sole source of truth.
   const aRank = LEGACY_FEATURED_SLUG_ORDER.indexOf(
     a.slug as (typeof LEGACY_FEATURED_SLUG_ORDER)[number]
   )
@@ -182,10 +204,21 @@ async function fetchCanonicalProjectBySlugFromConvex(
       return { ok: true, project: null }
     }
     if (!isCanonicalProject(result)) {
+      console.error(
+        "[projectRepository] Convex project read returned non-canonical data for slug:",
+        slug,
+        "— falling back to local data."
+      )
       return { ok: false }
     }
     return { ok: true, project: result }
-  } catch {
+  } catch (error) {
+    console.error(
+      "[projectRepository] Convex project read failed for slug:",
+      slug,
+      "— falling back to local data:",
+      error
+    )
     return { ok: false }
   }
 }

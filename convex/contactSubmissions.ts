@@ -1,8 +1,5 @@
-import { mutationGeneric, queryGeneric } from "convex/server"
+import { mutation, query } from "./_generated/server"
 import { v } from "convex/values"
-
-const query = queryGeneric
-const mutation = mutationGeneric
 
 function requireAdminKey(adminKey: string): void {
   const expected = process.env.CONVEX_ADMIN_MUTATION_KEY
@@ -33,6 +30,16 @@ export const create = mutation({
     message: v.string(),
   },
   handler: async (ctx, args) => {
+    if (args.name.length > 200) {
+      throw new Error("name exceeds maximum allowed length.")
+    }
+    if (args.email.length > 320) {
+      throw new Error("email exceeds maximum allowed length.")
+    }
+    if (args.message.length > 5000) {
+      throw new Error("message exceeds maximum allowed length.")
+    }
+
     return await ctx.db.insert("contactSubmissions", {
       ...args,
       createdAt: Date.now(),

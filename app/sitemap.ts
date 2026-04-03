@@ -1,6 +1,6 @@
 import type { MetadataRoute } from "next"
 import { absoluteUrl } from "@/lib/seo"
-import { getProjectSlugsForPublicReadData } from "@/services/projectService"
+import { getCanonicalProjectsForPublicRead } from "@/repositories/projectRepository"
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const staticRoutes = ["/", "/about", "/work", "/contact"]
@@ -11,10 +11,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: pathname === "/" ? 1 : 0.8,
   }))
 
-  const slugs = await getProjectSlugsForPublicReadData()
-  const projectEntries: MetadataRoute.Sitemap = slugs.map((slug) => ({
-    url: absoluteUrl(`/projects/${slug}`),
-    lastModified: new Date(),
+  const projects = await getCanonicalProjectsForPublicRead()
+  const projectEntries: MetadataRoute.Sitemap = projects.map((project) => ({
+    url: absoluteUrl(`/projects/${project.slug}`),
+    lastModified:
+      typeof project.updatedAt === "number" && project.updatedAt > 0
+        ? new Date(project.updatedAt)
+        : new Date(),
     changeFrequency: "monthly",
     priority: 0.7,
   }))

@@ -1,4 +1,4 @@
-import { mutationGeneric, queryGeneric } from "convex/server"
+import { mutation, query } from "./_generated/server"
 import { v } from "convex/values"
 import {
   getProjectBySlug as getLocalProjectBySlug,
@@ -7,8 +7,6 @@ import {
 } from "../data/projects"
 import { localRecordToCanonicalProjectInput } from "../lib/projects/adapters"
 
-const query = queryGeneric
-const mutation = mutationGeneric
 const FEATURED_SEED_SLUGS = ["habit-tracker", "product-feedback", "splitter"] as const
 
 const projectTypeValidator = v.union(
@@ -425,8 +423,11 @@ export const listPublic = query({
 })
 
 export const listAdmin = query({
-  args: {},
-  handler: async (ctx) => {
+  args: {
+    adminKey: v.string(),
+  },
+  handler: async (ctx, args) => {
+    requireProjectAdminKey(args.adminKey)
     const projects = await ctx.db.query("projects").collect()
     return projects.sort(compareBySortOrderThenUpdatedAt)
   },
@@ -446,8 +447,12 @@ export const getBySlug = query({
 })
 
 export const getById = query({
-  args: { id: v.id("projects") },
+  args: {
+    adminKey: v.string(),
+    id: v.id("projects"),
+  },
   handler: async (ctx, args) => {
+    requireProjectAdminKey(args.adminKey)
     return await ctx.db.get(args.id)
   },
 })

@@ -1,8 +1,8 @@
 import { NextResponse } from "next/server"
-import { z } from "zod"
 import { requireAdminRequest } from "@/lib/admin/auth"
 import { removeProjectInConvex, updateProjectInConvex } from "@/lib/admin/convex"
 import { canonicalProjectInputSchema } from "@/lib/projects/validation"
+import { toValidationMessage } from "@/lib/utils/validation"
 
 type UpdateProjectPayload = {
   project?: unknown
@@ -12,15 +12,6 @@ type ProjectRouteParams = {
   params: Promise<{
     id: string
   }>
-}
-
-function toValidationMessage(error: z.ZodError): string {
-  const first = error.issues[0]
-  if (!first) {
-    return "Validation failed."
-  }
-  const path = first.path.join(".")
-  return path ? `${path}: ${first.message}` : first.message
 }
 
 export async function PATCH(request: Request, { params }: ProjectRouteParams) {

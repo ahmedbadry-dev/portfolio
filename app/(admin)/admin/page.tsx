@@ -64,7 +64,8 @@ function AdminContent() {
   const [isUpdatingSubmission, setIsUpdatingSubmission] = useState(false)
   const [projectsCount, setProjectsCount] = useState<number | null>(null)
   const [isLoadingProjectsCount, setIsLoadingProjectsCount] = useState(true)
-  const [error, setError] = useState("")
+  const [submissionsError, setSubmissionsError] = useState("")
+  const [projectsError, setProjectsError] = useState("")
 
   const sortedSubmissions = useMemo(
     () =>
@@ -79,7 +80,7 @@ function AdminContent() {
 
   const fetchSubmissions = useCallback(async () => {
     setIsLoadingSubmissions(true)
-    setError("")
+    setSubmissionsError("")
     try {
       const response = await fetch("/api/admin/submissions", {
         method: "GET",
@@ -98,7 +99,7 @@ function AdminContent() {
         fetchError instanceof Error
           ? fetchError.message
           : "Failed to load submissions."
-      setError(message)
+      setSubmissionsError(message)
     } finally {
       setIsLoadingSubmissions(false)
     }
@@ -106,6 +107,7 @@ function AdminContent() {
 
   const fetchProjectsCount = useCallback(async () => {
     setIsLoadingProjectsCount(true)
+    setProjectsError("")
     try {
       const response = await fetch("/api/admin/projects", {
         method: "GET",
@@ -126,8 +128,13 @@ function AdminContent() {
       }
 
       setProjectsCount(parsed.data.length)
-    } catch {
+    } catch (fetchError) {
+      const message =
+        fetchError instanceof Error
+          ? fetchError.message
+          : "Failed to load projects."
       setProjectsCount(null)
+      setProjectsError(message)
     } finally {
       setIsLoadingProjectsCount(false)
     }
@@ -166,7 +173,7 @@ function AdminContent() {
         mutationError instanceof Error
           ? mutationError.message
           : "Failed to mark submission as read."
-      setError(message)
+      setSubmissionsError(message)
     } finally {
       setIsUpdatingSubmission(false)
     }
@@ -193,7 +200,7 @@ function AdminContent() {
         mutationError instanceof Error
           ? mutationError.message
           : "Failed to delete submission."
-      setError(message)
+      setSubmissionsError(message)
     } finally {
       setIsUpdatingSubmission(false)
     }
@@ -208,9 +215,15 @@ function AdminContent() {
         loadingProjects={isLoadingProjectsCount}
       />
 
-      {error ? (
+      {submissionsError ? (
         <div className="rounded-md border border-destructive/30 bg-destructive/10 px-3 py-2 text-sm text-destructive">
-          {error}
+          {submissionsError}
+        </div>
+      ) : null}
+
+      {projectsError ? (
+        <div className="rounded-md border border-destructive/30 bg-destructive/10 px-3 py-2 text-sm text-destructive">
+          {projectsError}
         </div>
       ) : null}
 

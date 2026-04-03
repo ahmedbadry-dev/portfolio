@@ -9,7 +9,7 @@ import {
 const ANALYTICS_VISITOR_COOKIE = "ab_vid"
 const ANALYTICS_VISITOR_COOKIE_MAX_AGE_SECONDS = 60 * 60 * 24 * 180
 const BOT_USER_AGENT_PATTERN =
-  /(bot|crawler|spider|crawling|facebookexternalhit|discordbot|slackbot|whatsapp|telegrambot|preview)/i
+  /(bot|crawler|spider|crawling|facebookexternalhit|discordbot|slackbot|whatsapp|telegrambot|preview|headlesschrome|python-(requests|urllib)|curl|wget|go-http-client)/i
 
 const payloadSchema = z
   .object({

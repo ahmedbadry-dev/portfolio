@@ -1,8 +1,5 @@
-import { mutationGeneric, queryGeneric } from "convex/server"
+import { mutation, query } from "./_generated/server"
 import { v } from "convex/values"
-
-const query = queryGeneric
-const mutation = mutationGeneric
 const ROUTE_TYPES = ["home", "work", "project"] as const
 const DEFAULT_COOLDOWN_SECONDS = 60
 
@@ -112,17 +109,19 @@ export const record = mutation({
     const windowStart = now - cooldownMs
     const recentByVisitor = await ctx.db
       .query("pageViews")
-      .withIndex("by_visitor_route_visited", (q) => q.eq("visitorId", visitorId))
+      .withIndex("by_visitor_route_visited", (q) =>
+        q
+          .eq("visitorId", visitorId)
+          .eq("routeKey", routeKey)
+          .gte("visitedAt", windowStart)
+      )
       .collect()
 
-    const latestVisitedAt = recentByVisitor.reduce((latest, entry) => {
-      if (entry.routeKey !== routeKey) return latest
-      if (typeof entry.visitedAt !== "number") return latest
-      if (entry.visitedAt < windowStart) return latest
-      return entry.visitedAt > latest ? entry.visitedAt : latest
-    }, 0)
-
-    if (latestVisitedAt > 0 && now - latestVisitedAt < cooldownMs) {
+    if (recentByVisitor.length > 0) {
+      const latestVisitedAt = recentByVisitor.reduce(
+        (latest, entry) => (entry.visitedAt > latest ? entry.visitedAt : latest),
+        0
+      )
       return {
         counted: false,
         deduped: true,
@@ -159,6 +158,9 @@ export const summary = query({
   handler: async (ctx, args) => {
     requireAnalyticsAdminKey(args.adminKey)
 
+    // Full table scan: acceptable at personal portfolio scale (hundreds to low thousands of rows).
+    // At higher volume, consider aggregating counts per route into a separate summary document
+    // updated incrementally on each record mutation, avoiding the scan entirely.
     const all = await ctx.db.query("pageViews").collect()
     let totalViews = 0
     let homeViews = 0

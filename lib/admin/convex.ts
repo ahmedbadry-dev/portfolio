@@ -11,7 +11,9 @@ function getClient() {
 
 export async function listAdminProjectsFromConvex() {
   const client = getClient()
-  return client.query(anyApi.projects.listAdmin, {})
+  return client.query(anyApi.projects.listAdmin, {
+    adminKey: getConvexAdminMutationKey(),
+  })
 }
 
 export async function createProjectInConvex(project: CanonicalProjectInputValidated) {

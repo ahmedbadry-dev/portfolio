@@ -36,6 +36,7 @@ const CASE_STUDY_PROGRESS_ITEMS: Array<{ id: string; label: string }> = [
   { id: "problem", label: "Problem" },
   { id: "approach", label: "Approach" },
   { id: "architecture", label: "Architecture" },
+  { id: "deepArchitecture", label: "Deep Architecture" },
   { id: "performance", label: "Performance" },
   { id: "security", label: "Security" },
   { id: "lessons", label: "Lessons" },

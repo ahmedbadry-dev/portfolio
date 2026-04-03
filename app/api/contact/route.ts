@@ -7,6 +7,15 @@ import { contactSchema } from '@/features/contact/schema'
 const SENDER = 'Portfolio <onboarding@resend.dev>'
 const OWNER_EMAIL = 'ahmedbadry.dev@gmail.com'
 
+function escapeHtml(str: string): string {
+  return str
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;')
+}
+
 export async function POST(request: Request) {
   let payload: unknown
 
@@ -44,20 +53,23 @@ export async function POST(request: Request) {
 
   const resend = new Resend(apiKey)
   const timestamp = new Date().toISOString()
+  const escapedName = escapeHtml(name)
+  const escapedEmail = escapeHtml(email)
+  const escapedMessage = escapeHtml(message).replace(/\n/g, '<br/>')
 
   const ownerHtml = `
     <div style="font-family:Arial,sans-serif;line-height:1.5;color:#111827">
       <h2 style="margin:0 0 12px 0;font-size:18px;">New Contact Message from Portfolio</h2>
-      <p style="margin:0 0 8px 0;"><strong>Name:</strong> ${name}</p>
-      <p style="margin:0 0 8px 0;"><strong>Email:</strong> ${email}</p>
-      <p style="margin:0 0 8px 0;"><strong>Message:</strong><br/>${message.replace(/\n/g, '<br/>')}</p>
+      <p style="margin:0 0 8px 0;"><strong>Name:</strong> ${escapedName}</p>
+      <p style="margin:0 0 8px 0;"><strong>Email:</strong> ${escapedEmail}</p>
+      <p style="margin:0 0 8px 0;"><strong>Message:</strong><br/>${escapedMessage}</p>
       <p style="margin:12px 0 0 0;color:#6b7280;"><strong>Timestamp:</strong> ${timestamp}</p>
     </div>
   `
 
   const userHtml = `
     <div style="font-family:Arial,sans-serif;line-height:1.5;color:#111827">
-      <p style="margin:0 0 12px 0;">Hi ${name},</p>
+      <p style="margin:0 0 12px 0;">Hi ${escapedName},</p>
       <p style="margin:0 0 12px 0;">Thanks for reaching out. I received your message and will get back to you soon.</p>
       <p style="margin:16px 0 0 0;">Ahmed Badry<br/>Frontend Engineer</p>
     </div>
